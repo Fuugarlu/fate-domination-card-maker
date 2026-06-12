@@ -1,0 +1,13 @@
+import { MasterCardCreation } from "../pages/MasterCardCreation/MasterCardCreation";
+import { SideBar } from "../pages/SideBar";
+
+export default function Home() {
+  return (
+    <div className="flex">
+      <div className="w-[250px]">
+      <SideBar />
+      </div>
+      <MasterCardCreation />
+    </div>
+  );
+}
