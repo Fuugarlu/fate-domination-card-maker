@@ -54,6 +54,7 @@ export const Card = ({
   cardAttack,
   cardMana,
   attackTypes,
+  grayscaleFilter,
 }: {
   pic: string | null;
   name: string;
@@ -65,19 +66,20 @@ export const Card = ({
   cardAttack: string | null;
   cardMana: string | null;
   attackTypes: boolean[];
+  grayscaleFilter: boolean;
 }) => {
   return (
     <div
       style={isPreview ? { zoom: 0.5 } : {}}
-      className={
-        !isPreview ? "absolute left-[-9999px]" : "flex flex-col items-center"
-      }
+      className={`
+        ${!isPreview ? "absolute left-[-9999px]" : "flex flex-col items-center"}
+      `}
       id={isPreview ? "card-preview" : "card-to-save"}
     >
       <div className="fixed">
         <div
           id="card"
-          className="relative overflow-hidden "
+          className={`relative overflow-hidden ${grayscaleFilter && "grayscale "}`}
           style={{
             width: 750,
             height: 1050,
