@@ -1,0 +1,10 @@
+export { default as vp0 } from "./0 VP.png";
+export { default as vp1 } from "./1 VP.png";
+export { default as vp2 } from "./2 VP.png";
+export { default as vp3 } from "./3 VP.png";
+export { default as vp4 } from "./4 VP.png";
+export { default as vp5 } from "./5 VP.png";
+export { default as vp6 } from "./6 VP.png";
+export { default as vp7 } from "./7 VP.png";
+export { default as vp8 } from "./8 VP.png";
+export { default as vp9 } from "./9 VP.png";

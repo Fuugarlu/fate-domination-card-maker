@@ -23,8 +23,9 @@ const ImageCropper = ({
       const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels);
       console.log("donee", { croppedImage });
       setCroppedImage(croppedImage);
-      setZoom(1);
-      setCropperVisible(false);
+      // setZoom(1);
+      // setCropperVisible(false);
+      cancelCropper();
     } catch (e) {
       console.error(e);
     }
@@ -56,53 +57,74 @@ const ImageCropper = ({
     }
   };
 
-  return (
-    <div className="ImageCropper">
-      {imageSrc && cropperVisible ? (
-        <div>
-          <div className="crop-container">
-            <Cropper
-              image={imageSrc}
-              crop={crop}
-              zoom={zoom}
-              aspect={7 / 8}
-              onCropChange={setCrop}
-              onCropComplete={onCropComplete}
-              onZoomChange={setZoom}
-            />
-          </div>
-          <div className="absolute top-0 left-1/2 -translate-x-1/2">
-            LOL
-            <input
-              type="range"
-              id="cowbell"
-              name="cowbell"
-              min={1}
-              max={3}
-              step={0.1}
-              defaultValue={1}
-              aria-labelledby="Zoom"
-              onChange={(e) => setZoom(Number(e.target.value))}
-            />
-          </div>
+  function cancelCropper() {
+    setCropperVisible(false);
+    setImageSrc(null);
+    setCrop({ x: 0, y: 0 });
+    setZoom(1);
+  }
 
-          <div>
-            <button
-              onClick={showCroppedImage}
-              color="primary"
-              className="absolute top-10 left-1/2 -translate-x-1/2"
-            >
-              Show Result
-            </button>{" "}
+  return (
+    <div className="ImageCropper w-full">
+      {imageSrc && cropperVisible ? (
+        <div className="flex flex-col gap-2">
+          <div className="relative w-full h-[500px]">
+            <div className="crop-container">
+              <Cropper
+                image={imageSrc}
+                crop={crop}
+                zoom={zoom}
+                aspect={7 / 8}
+                onCropChange={setCrop}
+                onCropComplete={onCropComplete}
+                onZoomChange={setZoom}
+                showGrid={true}
+              />
+            </div>
           </div>
-          {/* {croppedImage && <img src={croppedImage} />} */}
+          <div className="flex justify-between">
+              <div className="flex items-center gap-2">
+                Zoom
+                <input
+                  type="range"
+                  id="cowbell"
+                  name="cowbell"
+                  min={1}
+                  max={3}
+                  step={0.1}
+                  defaultValue={1}
+                  aria-labelledby="Zoom"
+                  onChange={(e) => setZoom(Number(e.target.value))}
+                  className=""
+                />
+              {Math.round((zoom - 1) * (100 - 0)) / (3 - 1)}%
+              </div>
+
+              <div className="flex gap-2">
+                <button onClick={() => cancelCropper()} className="px-6 py-2 bg-gray-500 text-white rounded cursor-pointer">
+                  Cancel
+                </button>{" "}
+                <button onClick={showCroppedImage} className="px-6 py-2 bg-blue-500 text-white rounded cursor-pointer">
+                  Confirm
+                </button>{" "}
+              </div>
+            </div>
         </div>
       ) : (
         <div>
-        <label htmlFor="image-upload" className="px-4 py-2 bg-blue-500 text-white rounded cursor-pointer">
-          <input type="file" id="image-upload" onChange={onFileChange} accept="image/*" className="hidden" />
-          Upload Image
-        </label>
+          <label
+            htmlFor="image-upload"
+            className="px-4 py-2 bg-blue-500 text-white rounded cursor-pointer"
+          >
+            <input
+              type="file"
+              id="image-upload"
+              onChange={onFileChange}
+              accept="image/*"
+              className="hidden"
+            />
+            Upload Image
+          </label>
         </div>
       )}
     </div>

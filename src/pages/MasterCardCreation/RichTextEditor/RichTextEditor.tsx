@@ -54,7 +54,7 @@ const RichTextEditor = ({
     <p><span style="font-size: 30px; line-height: 1.1;"><em>Other example</em> - <strong>Passive/Combat:</strong> Pay 1 Mana to [cry on command].</span></p>`,
     editorProps: {
       attributes: {
-        class: "h-50 rounded p-2 border border-gray-300 bg-blue-900 w-full",
+        class: "h-40 rounded p-2 border border-gray-300 bg-blue-900 w-full",
       },
       handlePaste(view, event) {
         const text = event.clipboardData?.getData("text/plain");

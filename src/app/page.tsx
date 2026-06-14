@@ -3,10 +3,7 @@ import { SideBar } from "../pages/SideBar";
 
 export default function Home() {
   return (
-    <div className="flex">
-      <div className="w-[250px]">
-      <SideBar />
-      </div>
+    <div className="flex mt-12">
       <MasterCardCreation />
     </div>
   );

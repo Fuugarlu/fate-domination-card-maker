@@ -1,0 +1,10 @@
+export { default as mana0 } from "./0 Mana.png";
+export { default as mana1 } from "./1 Mana.png";
+export { default as mana2 } from "./2 Mana.png";
+export { default as mana3 } from "./3 Mana.png";
+export { default as mana4 } from "./4 Mana.png";
+export { default as mana5 } from "./5 Mana.png";
+export { default as mana6 } from "./6 Mana.png";
+export { default as mana7 } from "./7 Mana.png";
+export { default as mana8 } from "./8 Mana.png";
+export { default as mana9 } from "./9 Mana.png";
