@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { formInput } from "@/src/types/formTypes";
 import { updateForm } from "@/src/utils/formUtils";
 import { SERVANT_TYPES } from "@/src/constants/servantConstants";
-
-
 
 type Props = {
   form: formInput;
@@ -11,6 +9,8 @@ type Props = {
 };
 
 export const ServantAttackTypesInput = (prop: Props) => {
+  const [specialFontSize, setSpecialFontSize] = useState<number>(30);
+
   function addOrChangeServantAttack(
     attackIndex: number,
     attackType: string,
@@ -84,6 +84,29 @@ export const ServantAttackTypesInput = (prop: Props) => {
     });
   }
 
+  // TODO: attack types type, not just constant
+  function changeSpecialCardType(attackIndex: number, newType: string) {
+    prop.setForm((prev) => {
+      const servantCards = prev.servantCards ? [...prev.servantCards] : [];
+
+      const existingIndex = servantCards.findIndex(
+        (card) => card.index === attackIndex,
+      );
+
+      if (existingIndex === -1) return prev;
+
+      servantCards[existingIndex] = {
+        ...servantCards[existingIndex],
+        cardType: newType,
+      };
+
+      return {
+        ...prev,
+        servantCards,
+      };
+    });
+  }
+
   return (
     <div>
       {" "}
@@ -93,7 +116,11 @@ export const ServantAttackTypesInput = (prop: Props) => {
           id="servantClass"
           name="servantClass"
           onChange={(e) =>
-            updateForm("servantClass", e.target.value ? e.target.value : null, prop.setForm)
+            updateForm(
+              "servantClass",
+              e.target.value ? e.target.value : null,
+              prop.setForm,
+            )
           }
         >
           <option value="">None</option>
@@ -135,21 +162,52 @@ export const ServantAttackTypesInput = (prop: Props) => {
             </button>
           </div>
         ))}
-        <button
-          onClick={() =>
-            addOrChangeServantAttack(
-              Math.max(
-                ...(prop.form.servantCards?.map((card) => card.index) ?? [0]),
-              ) + 1,
-              "special",
-              "",
-            )
-          }
-        >
-          Add Special
-        </button>
+        <div className="flex">
+          <button
+            onClick={() =>
+              addOrChangeServantAttack(
+                Math.max(
+                  ...(prop.form.servantCards?.map((card) => card.index) ?? [0]),
+                ) + 1,
+                "special",
+                "",
+              )
+            }
+          >
+            Add Special
+          </button>
+
+          {/* return {
+        ...prev,
+        servantCards,
+      }; */}
+
+          <button
+            onClick={() => {
+              prop.setForm((prev) => ({
+                ...prev,
+                servantCardsSpecialFontSize:
+                  prev.servantCardsSpecialFontSize - 2,
+              }));
+            }}
+          >
+            ---
+          </button>
+          <button
+            onClick={() => {
+              prop.setForm((prev) => ({
+                ...prev,
+                servantCardsSpecialFontSize:
+                  prev.servantCardsSpecialFontSize + 2,
+              }));
+            }}
+          >
+            {" "}
+            +++
+          </button>
+        </div>
         {prop.form.servantCards?.slice(3).map((card) => (
-          <div className="flex flex-row" key={card.index}>
+          <div className="flex flex-row items-center" key={card.index}>
             <img src={"./attack-types-text/" + card.cardType + ".png"} />
             <input
               placeholder={"2,3,4"}
@@ -164,6 +222,25 @@ export const ServantAttackTypesInput = (prop: Props) => {
             <button onClick={() => deleteServantAttack(card.index)}>
               DELETE
             </button>
+
+            <label htmlFor="eventMana">Type:</label>
+            <select
+              id="eventMana"
+              name="eventMana"
+              onChange={(e) =>
+                changeSpecialCardType(card.index, e.target.value ?? null)
+              }
+            >
+              <option value="strength">STR</option>
+              <option value="agility">ag</option>
+              <option value="magic">mag</option>
+              <option value="special">sp</option>
+              {Array.from({ length: 10 }, (_, i) => (
+                <option key={i} value={i}>
+                  {i}
+                </option>
+              ))}
+            </select>
           </div>
         ))}
       </div>

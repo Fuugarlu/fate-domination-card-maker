@@ -13,4 +13,5 @@ export type formInput = {
   grayscaleFilter: boolean;
   servantClass: string | null;
   servantCards: servantCardType[] | null;
+  servantCardsSpecialFontSize: number;
 };

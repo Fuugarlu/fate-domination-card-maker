@@ -86,6 +86,7 @@ export const Card = ({
   grayscaleFilter,
   servantClass,
   servantCards,
+  servantCardsSpecialFontSize
 }: {
   pic: string | null;
   name: string;
@@ -100,6 +101,7 @@ export const Card = ({
   grayscaleFilter: boolean;
   servantClass: string | null;
   servantCards: servantCardType[] | null;
+  servantCardsSpecialFontSize: number;
 }) => {
   return (
     <div
@@ -149,7 +151,7 @@ export const Card = ({
             className="absolute text-white whitespace-nowrap"
             style={{
               left: 33,
-              top: 768 + (50 - nameFontSize),
+              top: 770 + (50 - nameFontSize),
               fontSize: nameFontSize,
               fontFamily: '"Times New Roman"',
             }}
@@ -244,7 +246,7 @@ export const Card = ({
 
           {/* Attack Type */}
           <div className="absolute" style={{ top: 10, left: 10 }}>
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-1">
               {attackTypes[0] && <img src="attack-types-card/strength.png" />}
               {attackTypes[1] && <img src="attack-types-card/agility.png" />}
               {attackTypes[2] && <img src="attack-types-card/magic.png" />}
@@ -278,7 +280,7 @@ export const Card = ({
               style={{
                 top: 860,
                 left: 50,
-                width: "620px",
+                width: "650px",
                 fontFamily: '"Times New Roman"',
               }}
             >
@@ -306,6 +308,7 @@ export const Card = ({
                 </div>
                 <div
                   className={`flex gap-2 w-full justify-center ${servantCards.slice(3).length > 6 ? "-mt-4" : ""} ${servantCards.slice(3).length > 3 ? "text-3xl" : "text-4xl"}`}
+                  style={{fontSize: servantCardsSpecialFontSize + "px"}}
                 >
                   {getServantChunked(servantCards.slice(3)).map(
                     (group, colIndex) => (
@@ -321,7 +324,7 @@ export const Card = ({
                             key={i}
                             className={
                               getCardColor(cardItem.cardType) +
-                              " flex flex-row gap-1"
+                              " flex flex-row gap-1 items-center"
                             }
                           >
                             <img

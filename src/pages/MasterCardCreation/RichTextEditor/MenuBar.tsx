@@ -30,7 +30,7 @@ const emojiList = [
 
 const DEFAULT_TEXT_SIZE = "30px";
 
-export const MenuBar = ({ editor }: { editor: Editor | null }) => {
+export const MenuBar = ({ editor, setLastFontUsed }: { editor: Editor | null, setLastFontUsed: React.Dispatch<React.SetStateAction<string>> }) => {
   if (!editor) {
     return null;
   }
@@ -44,15 +44,17 @@ export const MenuBar = ({ editor }: { editor: Editor | null }) => {
       editor.getAttributes("textStyle").fontSize || DEFAULT_TEXT_SIZE;
     const numericSize = parseInt(currentSize, 10);
     const newSize = increment ? numericSize + 2 : numericSize - 2; // Increments or decrements by 2px
+    const newSizeString = newSize + "px";
     const end = editor.state.doc.content.size;
     editor
       .chain()
       .focus()
       .selectAll()
-      .setFontSize(`${newSize}px`)
+      .setFontSize(`${newSizeString}`)
       .setLineHeight("1.1")
       .setTextSelection(editor.state.doc.content.size)
       .run();
+      setLastFontUsed(newSizeString);
   }
 
   function addEmoji(editor: Editor, emojiName: string): void {

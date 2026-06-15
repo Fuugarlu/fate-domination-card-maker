@@ -12,6 +12,7 @@ import { servantCardType } from "@/src/types/servantTypes";
 import { formInput } from "@/src/types/formTypes";
 import { updateForm } from "@/src/utils/formUtils";
 import { ServantAttackTypesInput } from "./FormComponents/ServantAttackTypesInput";
+import "./master-card-creation.scss";
 
 const emptyState = {
   pic: null as string | null,
@@ -26,6 +27,7 @@ const emptyState = {
   grayscaleFilter: false,
   servantClass: null as string | null,
   servantCards: [] as servantCardType[] | null,
+  servantCardsSpecialFontSize: 36,
 };
 
 const initialState = {
@@ -53,9 +55,7 @@ export const MasterCardCreation = () => {
 
   const mainUpdateForm = <K extends keyof formInput>(
     key: K,
-    value:
-      | (formInput)[K]
-      | ((prev: (formInput)[K]) => (formInput)[K]),
+    value: formInput[K] | ((prev: formInput[K]) => formInput[K]),
   ) => {
     updateForm(key, value, setForm);
   };
@@ -90,16 +90,17 @@ export const MasterCardCreation = () => {
           {/* <ExportImportFeature /> */}
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-4 items-start">
-              <label className="">
-                <h2 className="font-semibold mb-1">Master Name</h2>
+              {/* Name */}
+              <h2 className="font-semibold mb-1">Master Name</h2>
+              <div className="flex flex-row align-center gap-3">
                 <input
                   name="masterName"
                   defaultValue={form.masterName}
                   className="bg-white text-black rounded p-1"
                   onChange={(e) => mainUpdateForm("masterName", e.target.value)}
                 />
-
-                <div className="flex items-center gap-0">
+                {/* Name Font Size */}
+                <div className="flex items-center">
                   <button
                     type="button"
                     onClick={() =>
@@ -108,14 +109,14 @@ export const MasterCardCreation = () => {
                         form.masterNameFontSize - 2,
                       )
                     }
-                    className="w-10 h-10 flex items-center justify-center border border-black cursor-pointer text-xl"
+                    className="w-9 h-9 flex items-center justify-center border border-black cursor-pointer text-xl bg-blue-900 rounded-l"
                     title="Decrease font"
                   >
                     <MdTextDecrease />
                   </button>
 
                   <div
-                    className="w-10 h-10 flex items-center justify-center border border-black bg-blue-500 text-center"
+                    className="w-11 h-9 flex items-center justify-center border border-black bg-blue-500 text-center"
                     style={{ marginLeft: -1 }}
                   >
                     <div className="text-sm">{form.masterNameFontSize}px</div>
@@ -129,15 +130,14 @@ export const MasterCardCreation = () => {
                         form.masterNameFontSize + 2,
                       )
                     }
-                    className="w-10 h-10 flex items-center justify-center border border-black cursor-pointer text-xl"
+                    className="w-9 h-9 flex items-center justify-center border border-black cursor-pointer text-xl bg-blue-900 rounded-r"
                     title="Increase font"
                     style={{ marginLeft: -1 }}
                   >
                     <MdTextIncrease />
                   </button>
                 </div>
-              </label>
-
+              </div>
               <>
                 <h2 className="font-semibold mb-1">Master Ability</h2>
 
@@ -154,12 +154,16 @@ export const MasterCardCreation = () => {
               {/* <input name="masterName" className="bg-white text-black" /> */}
               <ImageCropper
                 croppedImage={form.pic}
-                setCroppedImage={(croppedPic) => mainUpdateForm("pic", croppedPic)}
+                setCroppedImage={(croppedPic) =>
+                  mainUpdateForm("pic", croppedPic)
+                }
               />
             </div>
 
+            {/* Everything Else */}
             <div className="grid grid-cols-2">
               <div className="flex flex-col">
+                {/* Mana */}
                 <div>
                   Mana
                   <input
@@ -173,7 +177,7 @@ export const MasterCardCreation = () => {
                     }
                   />
                 </div>
-
+                {/* Attack */}
                 <div>
                   Attack
                   <input
@@ -187,20 +191,20 @@ export const MasterCardCreation = () => {
                     }
                   />
                 </div>
-
-                <div className="flex flex-col">
-                  Attack Types
-                  {form.attackTypes.map((isChecked, i) => (
-                    <label key={i} className="flex gap-1">
-                      <input
-                        type="checkbox"
-                        checked={isChecked}
-                        onChange={() => handleAttackTypeChange(i)}
-                      />
-                      {ATTACK_TYPES[i]}
-                    </label>
-                  ))}
-                </div>
+              </div>
+              {/* Attack Types (top left) */}
+              <div className="flex flex-col">
+                Attack Types
+                {form.attackTypes.map((isChecked, i) => (
+                  <label key={i} className="flex gap-1">
+                    <input
+                      type="checkbox"
+                      checked={isChecked}
+                      onChange={() => handleAttackTypeChange(i)}
+                    />
+                    {ATTACK_TYPES[i]}
+                  </label>
+                ))}
               </div>
 
               <div className="flex flex-col">

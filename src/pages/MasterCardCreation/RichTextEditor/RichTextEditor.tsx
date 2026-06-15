@@ -1,6 +1,11 @@
 import "./rich-text-editor.scss";
 
-import { Color, FontSize, LineHeight, TextStyle } from "@tiptap/extension-text-style";
+import {
+  Color,
+  FontSize,
+  LineHeight,
+  TextStyle,
+} from "@tiptap/extension-text-style";
 import {
   EditorContent,
   EditorContext,
@@ -11,7 +16,7 @@ import {
   useEditorState,
 } from "@tiptap/react";
 import { BubbleMenu, FloatingMenu } from "@tiptap/react/menus";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import FontFamily from "@tiptap/extension-text-style/font-family";
 import Bold from "@tiptap/extension-bold";
 import Italic from "@tiptap/extension-italic";
@@ -66,7 +71,8 @@ const RichTextEditor = ({
 
         event.preventDefault();
 
-        const currentFontSize = editor.getAttributes("textStyle").fontSize || "30px";
+        const currentFontSize =
+          editor.getAttributes("textStyle").fontSize || "30px";
 
         editor
           .chain()
@@ -96,11 +102,36 @@ const RichTextEditor = ({
     enablePasteRules: false,
   });
 
+  const [lastFontUsed, setLastFontUsed] = useState<string>("30px");
+
+  useEffect(() => {
+    if (!editor) return;
+
+    const handleUpdate = () => {
+      if (editor.isEmpty) {
+
+        editor
+          .chain()
+          .focus()
+          .selectAll()
+          .setTextSelection(editor.state.doc.content.size)
+          .setFontSize(lastFontUsed)
+          .run();
+      }
+    };
+
+    editor.on("update", handleUpdate);
+
+    return () => {
+      editor.off("update", handleUpdate);
+    };
+  }, [editor, lastFontUsed]);
+
   return (
     <div className="flex flex-col w-full overflow-scroll">
       {editor && (
         <>
-          <MenuBar editor={editor} />
+          <MenuBar editor={editor} setLastFontUsed={setLastFontUsed} />
           <EditorContent editor={editor} />
         </>
       )}
