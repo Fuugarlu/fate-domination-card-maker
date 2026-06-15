@@ -2,7 +2,6 @@
 
 import { servantCardType } from "@/src/types/servantTypes";
 import masterTemplate from "./master-template.png";
-import * as vp from "@/public/objective-vp";
 
 function getCardIcon(key: string) {
   switch (key.toLowerCase()) {
@@ -69,9 +68,7 @@ function AbilityText({ text }: { text: string }) {
         fontFamily: '"Times New Roman"',
       }}
       dangerouslySetInnerHTML={{ __html: text }}
-    >
-      {/* {text} */}
-    </div>
+    ></div>
   );
 }
 
@@ -275,22 +272,6 @@ export const Card = ({
           {ability && <AbilityText text={ability} />}
 
           {/* Servant Info */}
-          {/* {servantCards && (
-            <div
-              className="absolute text-4xl"
-              style={{ top: 868, left: 60, fontFamily: '"Times New Roman"' }}
-            >
-              <div className="grid grid-flow-col grid-rows-3 gap-x-5 gap-y-1">
-              {servantCards.map((cardItem, i) => (
-                <div key={i} className={`${getCardColor(cardItem[1])}`}>
-                  <img src={getCardIcon(cardItem[1])} />
-                  {cardItem.at(1)}
-                </div>
-              ))}
-              </div>
-            </div>
-          )} */}
-
           {servantCards && (
             <div
               className="absolute text-4xl"
@@ -306,22 +287,23 @@ export const Card = ({
                 style={{ maxHeight: "170px" }}
               >
                 {/* Strength/Agility/Magic basic attacks */}
-                {/* TODO: remove basic icon option (ex. in illya servant) */}
                 <div className="flex flex-col gap-2 flex-shrink-0">
-                  {servantCards.slice(0, 3).filter(card => card.showIcon == true).map((cardItem, i) => (
-                    <div
-                      key={i}
-                      className={`relative flex gap-1 ${getCardColor(cardItem.cardType)}`}
-                    >
-                      <img
-                        style={{ width: "50px", height: "44px" }}
-                        src={getCardIcon(cardItem.cardType)}
-                      />
-                      {cardItem.values}
-                    </div>
-                  ))}
+                  {servantCards
+                    .slice(0, 3)
+                    .filter((card) => card.showIcon == true)
+                    .map((cardItem, i) => (
+                      <div
+                        key={i}
+                        className={`relative flex gap-1 ${getCardColor(cardItem.cardType)}`}
+                      >
+                        <img
+                          style={{ width: "50px", height: "44px" }}
+                          src={getCardIcon(cardItem.cardType)}
+                        />
+                        {cardItem.values}
+                      </div>
+                    ))}
                 </div>
-                {/* Could change this so that it's more centered if there's up to 3? */}
                 <div
                   className={`flex gap-2 w-full justify-center ${servantCards.slice(3).length > 6 ? "-mt-4" : ""} ${servantCards.slice(3).length > 3 ? "text-3xl" : "text-4xl"}`}
                 >
@@ -338,7 +320,8 @@ export const Card = ({
                           <div
                             key={i}
                             className={
-                              getCardColor(cardItem.cardType) + " flex flex-row gap-1"
+                              getCardColor(cardItem.cardType) +
+                              " flex flex-row gap-1"
                             }
                           >
                             <img

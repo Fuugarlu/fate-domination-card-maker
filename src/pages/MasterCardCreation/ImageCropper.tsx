@@ -23,13 +23,10 @@ const ImageCropper = ({
       const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels);
       console.log("donee", { croppedImage });
       setCroppedImage(croppedImage);
-      // setZoom(1);
-      // setCropperVisible(false);
       cancelCropper();
     } catch (e) {
       console.error(e);
     }
-    // TODO: Resize to the correct size here, currently it just crops the image but doesn't resize it to the correct size for the card
   };
 
   const [imageSrc, setImageSrc] = React.useState<string | null>(null);

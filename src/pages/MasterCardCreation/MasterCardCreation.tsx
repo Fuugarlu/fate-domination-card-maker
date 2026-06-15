@@ -9,13 +9,9 @@ import { ExportImportFeature } from "./export/export";
 import { MdTextDecrease, MdTextIncrease } from "react-icons/md";
 import { ATTACK_TYPES, SERVANT_TYPES } from "@/src/constants/servantConstants";
 import { servantCardType } from "@/src/types/servantTypes";
-
-// type servantCardType = [
-//   number,
-//   attackTypesType,
-//   string | null,
-//   boolean
-// ]
+import { formInput } from "@/src/types/formTypes";
+import { updateForm } from "@/src/utils/formUtils";
+import { ServantAttackTypesInput } from "./FormComponents/ServantAttackTypesInput";
 
 const emptyState = {
   pic: null as string | null,
@@ -49,157 +45,23 @@ const initialState = {
 };
 
 export const MasterCardCreation = () => {
-  const [form, setForm] = useState(initialState);
-
-  function addOrChangeServantAttack(
-    attackIndex: number,
-    attackType: string,
-    attackValues: string,
-  ) {
-    setForm((prev) => {
-      const servantCards = prev.servantCards ? [...prev.servantCards] : [];
-
-      const existingIndex = servantCards.findIndex(
-        (card) => card.index === attackIndex,
-      );
-
-      const newCard = {
-        index: attackIndex,
-        cardType: attackType,
-        values: attackValues,
-        showIcon: true,
-      };
-
-      if (existingIndex === -1) {
-        servantCards.push(newCard);
-      } else {
-        servantCards[existingIndex] = newCard;
-      }
-
-      return {
-        ...prev,
-        servantCards,
-      };
-    });
-  }
-
-  function deleteServantAttack(attackIndex: number) {
-    setForm((prev) => {
-      const servantCards = prev.servantCards ? [...prev.servantCards] : [];
-
-      const existingIndex = servantCards.findIndex(
-        (card) => card.index === attackIndex,
-      );
-
-      if (existingIndex !== -1) {
-        servantCards.splice(existingIndex, 1);
-      }
-
-      return {
-        ...prev,
-        servantCards,
-      };
-    });
-  }
-
-  function toggleHideServantAttack(attackIndex: number) {
-    setForm((prev) => {
-      const servantCards = prev.servantCards ? [...prev.servantCards] : [];
-
-      const existingIndex = servantCards.findIndex(
-        (card) => card.index === attackIndex,
-      );
-
-      if (existingIndex === -1) return prev;
-
-      servantCards[existingIndex] = {
-        ...servantCards[existingIndex],
-        showIcon: !servantCards[existingIndex].showIcon,
-      };
-
-      return {
-        ...prev,
-        servantCards,
-      };
-    });
-  }
-  // const [specialForms, setSpecialForms] = useState<string[][]>([]);
-
-  // const addSpecialForm = () => {
-  //   setSpecialForms((prev) => [
-  //     ...prev,
-  //     [
-  //       "3",
-  //       "",
-  //       ["Luck", "Surveil", "Preparation"][Math.floor(Math.random() * 3)],
-  //     ],
-  //   ]);
-  // };
-
-  // const deleteSpecialForm = (index: number) => {
-  //   setSpecialForms((prev) => prev.filter((_, i) => i !== index));
-  // };
-
-  // const addServantCard = (type: string) => {
-  //   if (form.servantCards) {
-  //     updateForm("servantCards", [...form.servantCards, [type, ""]]);
-  //   }
-  // };
-
-  // const updateServantCard = (index: number, value: string) => {
-  //   if (form.servantCards) {
-  //     updateForm(
-  //       "servantCards",
-  //       form.servantCards.map((card, i) =>
-  //         i === index ? [card[0], value] : card,
-  //       ),
-  //     );
-  //   }
-  // };
-
-  const deleteServantcard = (index: number) => {
-    if (form.servantCards) {
-      updateForm(
-        "servantCards",
-        form.servantCards.filter((_, i) => i !== index),
-      );
-    }
-  };
+  const [form, setForm] = useState<formInput>(initialState);
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
 
-  const updateForm = <K extends keyof typeof initialState>(
+  const mainUpdateForm = <K extends keyof formInput>(
     key: K,
     value:
-      | (typeof initialState)[K]
-      | ((prev: (typeof initialState)[K]) => (typeof initialState)[K]),
+      | (formInput)[K]
+      | ((prev: (formInput)[K]) => (formInput)[K]),
   ) => {
-    setForm((prev) => ({
-      ...prev,
-      [key]:
-        typeof value === "function"
-          ? (value as (p: any) => any)(prev[key])
-          : value,
-    }));
+    updateForm(key, value, setForm);
   };
 
-  // const cardProps = {
-  //   pic: form.pic,
-  //   name: form.masterName,
-  //   nameFontSize: form.masterNameFontSize,
-  //   ability: form.masterAbility,
-  //   objectiveValue: form.objectiveValue,
-  //   eventMana: form.eventMana,
-  //   cardAttack: form.cardAttack,
-  //   cardMana: form.cardMana,
-  //   attackTypes: form.attackTypes,
-  //   servantCards: form.servantCards
-  // };
-
   const handleAttackTypeChange = (index: number) => {
-    updateForm(
+    mainUpdateForm(
       "attackTypes",
       form.attackTypes.map((val, i) => (i === index ? !val : val)),
     );
@@ -234,14 +96,14 @@ export const MasterCardCreation = () => {
                   name="masterName"
                   defaultValue={form.masterName}
                   className="bg-white text-black rounded p-1"
-                  onChange={(e) => updateForm("masterName", e.target.value)}
+                  onChange={(e) => mainUpdateForm("masterName", e.target.value)}
                 />
 
                 <div className="flex items-center gap-0">
                   <button
                     type="button"
                     onClick={() =>
-                      updateForm(
+                      mainUpdateForm(
                         "masterNameFontSize",
                         form.masterNameFontSize - 2,
                       )
@@ -262,7 +124,7 @@ export const MasterCardCreation = () => {
                   <button
                     type="button"
                     onClick={() =>
-                      updateForm(
+                      mainUpdateForm(
                         "masterNameFontSize",
                         form.masterNameFontSize + 2,
                       )
@@ -282,7 +144,7 @@ export const MasterCardCreation = () => {
                 <RichTextEditor
                   masterAbility={form.masterAbility}
                   setMasterAbility={(abilityText) =>
-                    updateForm("masterAbility", abilityText)
+                    mainUpdateForm("masterAbility", abilityText)
                   }
                 />
                 {/* <input name="masterAbility" className="bg-white text-black" onChange={(e) => setMasterAbility(e.target.value)} /> */}
@@ -292,7 +154,7 @@ export const MasterCardCreation = () => {
               {/* <input name="masterName" className="bg-white text-black" /> */}
               <ImageCropper
                 croppedImage={form.pic}
-                setCroppedImage={(croppedPic) => updateForm("pic", croppedPic)}
+                setCroppedImage={(croppedPic) => mainUpdateForm("pic", croppedPic)}
               />
             </div>
 
@@ -304,7 +166,7 @@ export const MasterCardCreation = () => {
                     maxLength={2}
                     placeholder={"Blank, X, or 1-2 digits"}
                     onChange={(e) =>
-                      updateForm(
+                      mainUpdateForm(
                         "cardMana",
                         e.target.value.toUpperCase() || null,
                       )
@@ -318,7 +180,7 @@ export const MasterCardCreation = () => {
                     maxLength={2}
                     placeholder={"Blank, X, or 1-2 digits"}
                     onChange={(e) =>
-                      updateForm(
+                      mainUpdateForm(
                         "cardAttack",
                         e.target.value.toUpperCase() || null,
                       )
@@ -348,7 +210,7 @@ export const MasterCardCreation = () => {
                     id="eventMana"
                     name="eventMana"
                     onChange={(e) =>
-                      updateForm(
+                      mainUpdateForm(
                         "eventMana",
                         e.target.value ? Number(e.target.value) : null,
                       )
@@ -369,7 +231,7 @@ export const MasterCardCreation = () => {
                     id="objective"
                     name="objective"
                     onChange={(e) =>
-                      updateForm(
+                      mainUpdateForm(
                         "objectiveValue",
                         e.target.value ? Number(e.target.value) : null,
                       )
@@ -390,7 +252,7 @@ export const MasterCardCreation = () => {
                     <input
                       type="checkbox"
                       onChange={(e) =>
-                        updateForm("grayscaleFilter", e.target.checked)
+                        mainUpdateForm("grayscaleFilter", e.target.checked)
                       }
                     />
                     Grayscale filter
@@ -399,98 +261,10 @@ export const MasterCardCreation = () => {
               </div>
 
               {/* Servant Options */}
-              <div>
-                <label htmlFor="servantClass">Servant Class:</label>
-                <select
-                  id="servantClass"
-                  name="servantClass"
-                  onChange={(e) =>
-                    updateForm(
-                      "servantClass",
-                      e.target.value ? e.target.value : null,
-                    )
-                  }
-                >
-                  <option value="">None</option>
-                  <option value="" disabled>
-                    --STANDARD--
-                  </option>
-                  {SERVANT_TYPES.STANDARD.map((servantType, i) => (
-                    <option key={i} value={servantType}>
-                      {servantType}
-                    </option>
-                  ))}
-                  <option value="" disabled>
-                    -----EXTRA-----
-                  </option>
-                  {SERVANT_TYPES.EXTRA.map((servantType, i) => (
-                    <option key={i} value={servantType}>
-                      {servantType}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                {form.servantCards?.slice(0, 3).map((card, index) => (
-                  <div className="flex flex-row" key={card.index}>
-                    <img
-                      src={"./attack-types-text/" + card.cardType + ".png"}
-                    />
-                    <input
-                      disabled={!card.showIcon}
-                      placeholder={"2,3,4"}
-                      onChange={(e) =>
-                        addOrChangeServantAttack(
-                          card.index,
-                          card.cardType,
-                          e.target.value,
-                        )
-                      }
-                    />
-                    <button onClick={() => toggleHideServantAttack(card.index)}>
-                      {card.showIcon ? "HIDE ICON" : "SHOW ICON"}
-                    </button>
-                  </div>
-                ))}
-                <button
-                  onClick={() =>
-                    addOrChangeServantAttack(
-                      Math.max(
-                        ...(form.servantCards?.map((card) => card.index) ?? [
-                          0,
-                        ]),
-                      ) + 1,
-                      "special",
-                      "",
-                    )
-                  }
-                >
-                  Add Special
-                </button>
-                {form.servantCards?.slice(3).map((card) => (
-                  <div className="flex flex-row" key={card.index}>
-                    <img
-                      src={"./attack-types-text/" + card.cardType + ".png"}
-                    />
-                    <input
-                      placeholder={"2,3,4"}
-                      onChange={(e) =>
-                        addOrChangeServantAttack(
-                          card.index,
-                          card.cardType,
-                          e.target.value,
-                        )
-                      }
-                    />
-                    <button onClick={() => deleteServantAttack(card.index)}>
-                      DELETE
-                    </button>
-                  </div>
-                ))}
-              </div>
+              <ServantAttackTypesInput form={form} setForm={setForm} />
             </div>
           </form>
+
           <button
             onClick={() => downloadCard()}
             className="px-4 py-2 bg-blue-500 text-white rounded cursor-pointer mt-3 w-full"
