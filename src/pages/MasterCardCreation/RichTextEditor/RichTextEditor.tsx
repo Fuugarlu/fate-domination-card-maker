@@ -1,6 +1,6 @@
 import "./rich-text-editor.scss";
 
-import { FontSize, LineHeight, TextStyle } from "@tiptap/extension-text-style";
+import { Color, FontSize, LineHeight, TextStyle } from "@tiptap/extension-text-style";
 import {
   EditorContent,
   EditorContext,
@@ -38,7 +38,8 @@ const RichTextEditor = ({
       Text,
       Bold,
       Italic,
-      // Underline,
+      // Underline, // TODO: maybe? check if needed feature
+      Color,
       TextStyle,
       FontSize,
       LineHeight,

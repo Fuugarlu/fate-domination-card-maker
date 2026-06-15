@@ -6,11 +6,19 @@ import { FaBold } from "react-icons/fa";
 import { FaItalic } from "react-icons/fa";
 import { MenuBarState, menuBarStateSelector } from "./MenuBarState";
 
-import { MdTextIncrease } from "react-icons/md";
+import { MdOutlineFormatColorText, MdTextIncrease } from "react-icons/md";
 import { MdTextDecrease } from "react-icons/md";
+import { BiColorFill } from "react-icons/bi";
 
-import { strength, agility, magic, special, noblephantasm } from "@/public/attack-types-text";
+import {
+  strength,
+  agility,
+  magic,
+  special,
+  noblephantasm,
+} from "@/public/attack-types-text";
 import { capitalizeString } from "@/src/app/utils/TextUtils";
+import { IoColorPalette } from "react-icons/io5";
 
 const emojiList = [
   { name: "strength", image: strength },
@@ -141,9 +149,64 @@ export const MenuBar = ({ editor }: { editor: Editor | null }) => {
               title={capitalizeString(name)}
               style={{ marginLeft: idx === 0 ? 0 : -1 }}
             >
-              <img src={image.src} alt={capitalizeString(name)} className="w-8 h-8 object-contain" />
+              <img
+                src={image.src}
+                alt={capitalizeString(name)}
+                className="w-8 h-8 object-contain"
+              />
             </button>
           ))}
+        </div>
+
+        {/* Colors */}
+        <div className="flex items-center gap-0">
+          <MdOutlineFormatColorText />
+          <button
+            onClick={() => editor.chain().focus().setColor("#ff3f24").run()}
+            className={`w-10 h-10 flex items-center justify-center border border-black cursor-pointer ${editorState.isRed ? "is-active" : ""}`}
+            data-testid="setRed"
+          >
+            Red
+          </button>
+          <button
+            onClick={() => editor.chain().focus().setColor("#ebcb3d").run()}
+            className={`w-10 h-10 flex items-center justify-center border border-black cursor-pointer ${editorState.isYellow ? "is-active" : ""}`}
+            data-testid="setYellow"
+          >
+            Yellow
+          </button>
+          <button
+            onClick={() => editor.chain().focus().setColor("#58c2ff").run()}
+            className={`w-10 h-10 flex items-center justify-center border border-black cursor-pointer ${editorState.isBlue ? "is-active" : ""}`}
+            data-testid="setBlue"
+          >
+            Blue
+          </button>
+          <button
+            onClick={() => editor.chain().focus().setColor("#58ff6c").run()}
+            className={`w-10 h-10 flex items-center justify-center border border-black cursor-pointer ${editorState.isGreen ? "is-active" : ""}`}
+            data-testid="setGreen"
+          >
+            Green
+          </button>
+          <button
+            onClick={() => editor.chain().focus().unsetColor().run()}
+            className={`w-10 h-10 flex items-center justify-center border border-black cursor-pointer`}
+            data-testid="unsetColor"
+          >
+            White
+          </button>
+          <div className="flex w-10 relative">
+            <input
+              type="color"
+              onInput={(event) =>
+                editor.chain().focus().setColor(event.currentTarget.value).run()
+              }
+              value={editorState.color ?? "#000000"}
+              data-testid="setColor"
+            />
+            <BiColorFill className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" fontSize={20}/>
+          </div>
         </div>
       </nav>
     </div>
