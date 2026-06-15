@@ -1,15 +1,47 @@
 "use client";
 
+import { servantCardType } from "@/src/types/servantTypes";
 import masterTemplate from "./master-template.png";
 import * as vp from "@/public/objective-vp";
 
-// function getVpSrc(value: number | null): string | null {
-//   if (value === null || value === undefined) return null;
-//   const key = `vp${value}` as keyof typeof vp;
-//   const img = (vp as any)[key];
-//   if (!img) return null;
-//   return typeof img === "string" ? img : img?.src ?? null;
-// }
+function getCardIcon(key: string) {
+  switch (key.toLowerCase()) {
+    case "strength":
+      return "./attack-types-text/strength.png";
+    case "agility":
+      return "./attack-types-text/agility.png";
+    case "magic":
+      return "./attack-types-text/magic.png";
+    case "special":
+      return "./attack-types-text/special.png";
+  }
+}
+
+function getCardColor(key: string) {
+  switch (key.toLowerCase()) {
+    case "strength":
+      return "text-red-500";
+    case "agility":
+      return "text-green-500";
+    case "magic":
+      return "text-blue-500";
+    case "special":
+      return "text-white";
+  }
+}
+
+function getServantChunked(servantCards: servantCardType[]) {
+  let chunk_size = getServantSplitCount(servantCards);
+  const chunked = [];
+  for (let i = 0; i < servantCards.length; i += chunk_size) {
+    chunked.push(servantCards.slice(i, i + chunk_size));
+  }
+  return chunked;
+}
+
+function getServantSplitCount(servantCards: servantCardType[]) {
+  return servantCards.length >= 7 ? 4 : 3;
+}
 
 function AbilityText({ text }: { text: string }) {
   let fontSize = 30;
@@ -55,10 +87,12 @@ export const Card = ({
   cardMana,
   attackTypes,
   grayscaleFilter,
+  servantClass,
+  servantCards,
 }: {
   pic: string | null;
   name: string;
-  ability: string;
+  ability: string | null;
   isPreview: boolean;
   nameFontSize: number;
   objectiveValue: number | null;
@@ -67,6 +101,8 @@ export const Card = ({
   cardMana: string | null;
   attackTypes: boolean[];
   grayscaleFilter: boolean;
+  servantClass: string | null;
+  servantCards: servantCardType[] | null;
 }) => {
   return (
     <div
@@ -154,75 +190,175 @@ export const Card = ({
 
           {/* Mana & Attack */}
           {/* Attack */}
-          {cardAttack != null && <div
-            className="absolute"
-            style={{
-              right: 16,
-              top: 768,
-            }}
-          >
-            <div className="relative">
-              <img src={"./attack-card/attack.png"} />
-              <div
-                className="absolute"
-                style={{
-                  left: "35%",
-                  fontSize: "64px",
-                  fontFamily: '"Times New Roman"',
-                  top: "50%",
-                  transform: "translate(-65%, -50%)",
-                }}
-              >
-                {cardAttack}
+          {cardAttack != null && (
+            <div
+              className="absolute"
+              style={{
+                right: 16,
+                top: 768,
+              }}
+            >
+              <div className="relative">
+                <img src={"./attack-card/attack.png"} />
+                <div
+                  className="absolute"
+                  style={{
+                    left: "35%",
+                    fontSize: "64px",
+                    fontFamily: '"Times New Roman"',
+                    top: "50%",
+                    transform: "translate(-65%, -50%)",
+                  }}
+                >
+                  {cardAttack}
+                </div>
               </div>
             </div>
-          </div>}
+          )}
 
           {/* Mana */}
-          {cardMana != null && <div
-            className="absolute"
-            style={{
-              right: 176,
-              top: 768,
-            }}
-          >
-            <div className="relative">
-              <img src={"./attack-card/mana.png"} />
-              <div
-                className="absolute"
-                style={{
-                  left: "33%",
-                  // top: 0,
-                  fontSize: "64px",
-                  fontFamily: '"Times New Roman"',
-                  top: "50%",
-                  transform: "translate(-67%, -50%)",
-                  color: "#15e86f",
-                }}
-              >
-                {cardMana}
+          {cardMana != null && (
+            <div
+              className="absolute"
+              style={{
+                right: 176,
+                top: 768,
+              }}
+            >
+              <div className="relative">
+                <img src={"./attack-card/mana.png"} />
+                <div
+                  className="absolute"
+                  style={{
+                    left: "33%",
+                    // top: 0,
+                    fontSize: "64px",
+                    fontFamily: '"Times New Roman"',
+                    top: "50%",
+                    transform: "translate(-67%, -50%)",
+                    color: "#15e86f",
+                  }}
+                >
+                  {cardMana}
+                </div>
               </div>
             </div>
-          </div>}
+          )}
 
           {/* Attack Type */}
-          <div className="absolute" style={{top: 10, left: 10}}>
-                <div className="flex flex-col">
-                  {attackTypes[0] && <img src="attack-types-card/strength.png"/>}
-                  {attackTypes[1] && <img src="attack-types-card/agility.png"/>}
-                  {attackTypes[2] && <img src="attack-types-card/magic.png"/>}
-                  {attackTypes[3] && <img src="attack-types-card/special.png"/>}
-                  {attackTypes[4] && <img src="attack-types-card/noblephantasm.png"/>}
-                  
-                </div>
+          <div className="absolute" style={{ top: 10, left: 10 }}>
+            <div className="flex flex-col">
+              {attackTypes[0] && <img src="attack-types-card/strength.png" />}
+              {attackTypes[1] && <img src="attack-types-card/agility.png" />}
+              {attackTypes[2] && <img src="attack-types-card/magic.png" />}
+              {attackTypes[3] && <img src="attack-types-card/special.png" />}
+              {attackTypes[4] && (
+                <img src="attack-types-card/noblephantasm.png" />
+              )}
+            </div>
           </div>
 
+          {/* Servant Class */}
+          {servantClass !== null && (
+            <div
+              className="absolute"
+              style={{
+                right: 20,
+                top: 20,
+              }}
+            >
+              <img src={"./servant-classes/" + servantClass + ".png"} />
+            </div>
+          )}
+
           {/* Ability */}
-          <AbilityText text={ability} />
+          {ability && <AbilityText text={ability} />}
+
+          {/* Servant Info */}
+          {/* {servantCards && (
+            <div
+              className="absolute text-4xl"
+              style={{ top: 868, left: 60, fontFamily: '"Times New Roman"' }}
+            >
+              <div className="grid grid-flow-col grid-rows-3 gap-x-5 gap-y-1">
+              {servantCards.map((cardItem, i) => (
+                <div key={i} className={`${getCardColor(cardItem[1])}`}>
+                  <img src={getCardIcon(cardItem[1])} />
+                  {cardItem.at(1)}
+                </div>
+              ))}
+              </div>
+            </div>
+          )} */}
+
+          {servantCards && (
+            <div
+              className="absolute text-4xl"
+              style={{
+                top: 860,
+                left: 50,
+                width: "620px",
+                fontFamily: '"Times New Roman"',
+              }}
+            >
+              <div
+                className="flex w-full justify-between"
+                style={{ maxHeight: "170px" }}
+              >
+                {/* Strength/Agility/Magic basic attacks */}
+                {/* TODO: remove basic icon option (ex. in illya servant) */}
+                <div className="flex flex-col gap-2 flex-shrink-0">
+                  {servantCards.slice(0, 3).filter(card => card.showIcon == true).map((cardItem, i) => (
+                    <div
+                      key={i}
+                      className={`relative flex gap-1 ${getCardColor(cardItem.cardType)}`}
+                    >
+                      <img
+                        style={{ width: "50px", height: "44px" }}
+                        src={getCardIcon(cardItem.cardType)}
+                      />
+                      {cardItem.values}
+                    </div>
+                  ))}
+                </div>
+                {/* Could change this so that it's more centered if there's up to 3? */}
+                <div
+                  className={`flex gap-2 w-full justify-center ${servantCards.slice(3).length > 6 ? "-mt-4" : ""} ${servantCards.slice(3).length > 3 ? "text-3xl" : "text-4xl"}`}
+                >
+                  {getServantChunked(servantCards.slice(3)).map(
+                    (group, colIndex) => (
+                      <div
+                        key={colIndex}
+                        className={`grid grid-flow-col gap-1`}
+                        style={{
+                          gridTemplateRows: `repeat(${getServantSplitCount(servantCards.slice(3))}, minmax(0, 1fr))`,
+                        }}
+                      >
+                        {group.map((cardItem, i) => (
+                          <div
+                            key={i}
+                            className={
+                              getCardColor(cardItem.cardType) + " flex flex-row gap-1"
+                            }
+                          >
+                            <img
+                              style={{ width: "50px", height: "44px" }}
+                              src={getCardIcon(cardItem.cardType)}
+                            />
+                            {cardItem.values}
+                          </div>
+                        ))}
+                      </div>
+                    ),
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
         <div className="flex justify-center">
           <div className="text-2xl italic mt-2">
-            Card is displayed at 50% zoom.
+            Card is previewed at 50% zoom.
           </div>
         </div>
       </div>

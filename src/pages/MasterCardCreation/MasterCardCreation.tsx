@@ -7,14 +7,15 @@ import html2canvas from "html2canvas";
 import RichTextEditor from "./RichTextEditor/RichTextEditor";
 import { ExportImportFeature } from "./export/export";
 import { MdTextDecrease, MdTextIncrease } from "react-icons/md";
+import { ATTACK_TYPES, SERVANT_TYPES } from "@/src/constants/servantConstants";
+import { servantCardType } from "@/src/types/servantTypes";
 
-const ATTACK_TYPES = [
-  "Strength",
-  "Agility",
-  "Magic",
-  "Special",
-  "Noble Phantasm",
-];
+// type servantCardType = [
+//   number,
+//   attackTypesType,
+//   string | null,
+//   boolean
+// ]
 
 const emptyState = {
   pic: null as string | null,
@@ -27,24 +28,143 @@ const emptyState = {
   attackTypes: [false, false, false, false, false],
   masterAbility: "",
   grayscaleFilter: false,
+  servantClass: null as string | null,
+  servantCards: [] as servantCardType[] | null,
 };
 
 const initialState = {
-  pic: emptyState.pic,
+  ...emptyState,
+  servantCards: [
+    { index: 0, cardType: "Strength", values: "", showIcon: true },
+    { index: 1, cardType: "Agility", values: "", showIcon: true },
+    { index: 2, cardType: "Magic", values: "", showIcon: true },
+  ] as servantCardType[],
+  // servantCards: [["0", ""], ["1", ""], ["2", "2,2,3,3"], ["0", "Saber Install"], ["0", "Berserker Install"], ["1", "Archer Install"], ["1", "Assassin Install"], ["1", "Lancer Install"], ["2", "Caster Install"], ["3", "Rider Install"], ["3", "Luck"]],
+  // servantCards: [["0", ""], ["1", ""], ["2", "2,2,3,3"], ["3", "Avenger Class"],["3", "Avenger Class"],["3", "Avenger Class"],["3", "Avenger Class"],["3", "Avenger Class"],["3", "Avenger Class"],],
+  // servantCards: [["0", "0"], ["1", "0"], ["2", "0,2,3,3"], ["3", "Surveil"],["3", "Surveil"],["3", "Surveil"],],
   masterName: "Original Character",
-  masterNameFontSize: emptyState.masterNameFontSize,
-  objectiveValue: emptyState.objectiveValue,
-  eventMana: emptyState.eventMana,
-  cardAttack: emptyState.cardAttack,
-  cardMana: emptyState.cardMana,
-  attackTypes: emptyState.attackTypes,
-  grayscaleFilter: emptyState.grayscaleFilter,
-  masterAbility: `<p><span style="font-size: 30px; line-height: 1.1;"><em>Example</em> - Add some abilities!</span></p>
-<p><span style="font-size: 30px; line-height: 1.1;"><em>Other example</em> - <strong>Passive/Combat:</strong> Pay 1 Mana to [cry on command].</span></p>`,
+  masterAbility: emptyState.masterAbility,
+  // masterAbility: `<p><span style="font-size: 30px; line-height: 1.1;"><em>Example</em> - Add some abilities!</span></p>
+  // <p><span style="font-size: 30px; line-height: 1.1;"><em>Other example</em> - <strong>Passive/Combat:</strong> Pay 1 Mana to [cry on command].</span></p>`,
 };
 
 export const MasterCardCreation = () => {
   const [form, setForm] = useState(initialState);
+
+  function addOrChangeServantAttack(
+    attackIndex: number,
+    attackType: string,
+    attackValues: string,
+  ) {
+    setForm((prev) => {
+      const servantCards = prev.servantCards ? [...prev.servantCards] : [];
+
+      const existingIndex = servantCards.findIndex(
+        (card) => card.index === attackIndex,
+      );
+
+      const newCard = {
+        index: attackIndex,
+        cardType: attackType,
+        values: attackValues,
+        showIcon: true,
+      };
+
+      if (existingIndex === -1) {
+        servantCards.push(newCard);
+      } else {
+        servantCards[existingIndex] = newCard;
+      }
+
+      return {
+        ...prev,
+        servantCards,
+      };
+    });
+  }
+
+  function deleteServantAttack(attackIndex: number) {
+    setForm((prev) => {
+      const servantCards = prev.servantCards ? [...prev.servantCards] : [];
+
+      const existingIndex = servantCards.findIndex(
+        (card) => card.index === attackIndex,
+      );
+
+      if (existingIndex !== -1) {
+        servantCards.splice(existingIndex, 1);
+      }
+
+      return {
+        ...prev,
+        servantCards,
+      };
+    });
+  }
+
+  function toggleHideServantAttack(attackIndex: number) {
+    setForm((prev) => {
+      const servantCards = prev.servantCards ? [...prev.servantCards] : [];
+
+      const existingIndex = servantCards.findIndex(
+        (card) => card.index === attackIndex,
+      );
+
+      if (existingIndex === -1) return prev;
+
+      servantCards[existingIndex] = {
+        ...servantCards[existingIndex],
+        showIcon: !servantCards[existingIndex].showIcon,
+      };
+
+      return {
+        ...prev,
+        servantCards,
+      };
+    });
+  }
+  // const [specialForms, setSpecialForms] = useState<string[][]>([]);
+
+  // const addSpecialForm = () => {
+  //   setSpecialForms((prev) => [
+  //     ...prev,
+  //     [
+  //       "3",
+  //       "",
+  //       ["Luck", "Surveil", "Preparation"][Math.floor(Math.random() * 3)],
+  //     ],
+  //   ]);
+  // };
+
+  // const deleteSpecialForm = (index: number) => {
+  //   setSpecialForms((prev) => prev.filter((_, i) => i !== index));
+  // };
+
+  // const addServantCard = (type: string) => {
+  //   if (form.servantCards) {
+  //     updateForm("servantCards", [...form.servantCards, [type, ""]]);
+  //   }
+  // };
+
+  // const updateServantCard = (index: number, value: string) => {
+  //   if (form.servantCards) {
+  //     updateForm(
+  //       "servantCards",
+  //       form.servantCards.map((card, i) =>
+  //         i === index ? [card[0], value] : card,
+  //       ),
+  //     );
+  //   }
+  // };
+
+  const deleteServantcard = (index: number) => {
+    if (form.servantCards) {
+      updateForm(
+        "servantCards",
+        form.servantCards.filter((_, i) => i !== index),
+      );
+    }
+  };
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -65,17 +185,18 @@ export const MasterCardCreation = () => {
     }));
   };
 
-  const cardProps = {
-    pic: form.pic,
-    name: form.masterName,
-    nameFontSize: form.masterNameFontSize,
-    ability: form.masterAbility,
-    objectiveValue: form.objectiveValue,
-    eventMana: form.eventMana,
-    cardAttack: form.cardAttack,
-    cardMana: form.cardMana,
-    attackTypes: form.attackTypes,
-  };
+  // const cardProps = {
+  //   pic: form.pic,
+  //   name: form.masterName,
+  //   nameFontSize: form.masterNameFontSize,
+  //   ability: form.masterAbility,
+  //   objectiveValue: form.objectiveValue,
+  //   eventMana: form.eventMana,
+  //   cardAttack: form.cardAttack,
+  //   cardMana: form.cardMana,
+  //   attackTypes: form.attackTypes,
+  //   servantCards: form.servantCards
+  // };
 
   const handleAttackTypeChange = (index: number) => {
     updateForm(
@@ -275,6 +396,98 @@ export const MasterCardCreation = () => {
                     Grayscale filter
                   </label>
                 </div>
+              </div>
+
+              {/* Servant Options */}
+              <div>
+                <label htmlFor="servantClass">Servant Class:</label>
+                <select
+                  id="servantClass"
+                  name="servantClass"
+                  onChange={(e) =>
+                    updateForm(
+                      "servantClass",
+                      e.target.value ? e.target.value : null,
+                    )
+                  }
+                >
+                  <option value="">None</option>
+                  <option value="" disabled>
+                    --STANDARD--
+                  </option>
+                  {SERVANT_TYPES.STANDARD.map((servantType, i) => (
+                    <option key={i} value={servantType}>
+                      {servantType}
+                    </option>
+                  ))}
+                  <option value="" disabled>
+                    -----EXTRA-----
+                  </option>
+                  {SERVANT_TYPES.EXTRA.map((servantType, i) => (
+                    <option key={i} value={servantType}>
+                      {servantType}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                {form.servantCards?.slice(0, 3).map((card, index) => (
+                  <div className="flex flex-row" key={card.index}>
+                    <img
+                      src={"./attack-types-text/" + card.cardType + ".png"}
+                    />
+                    <input
+                      disabled={!card.showIcon}
+                      placeholder={"2,3,4"}
+                      onChange={(e) =>
+                        addOrChangeServantAttack(
+                          card.index,
+                          card.cardType,
+                          e.target.value,
+                        )
+                      }
+                    />
+                    <button onClick={() => toggleHideServantAttack(card.index)}>
+                      {card.showIcon ? "HIDE ICON" : "SHOW ICON"}
+                    </button>
+                  </div>
+                ))}
+                <button
+                  onClick={() =>
+                    addOrChangeServantAttack(
+                      Math.max(
+                        ...(form.servantCards?.map((card) => card.index) ?? [
+                          0,
+                        ]),
+                      ) + 1,
+                      "special",
+                      "",
+                    )
+                  }
+                >
+                  Add Special
+                </button>
+                {form.servantCards?.slice(3).map((card) => (
+                  <div className="flex flex-row" key={card.index}>
+                    <img
+                      src={"./attack-types-text/" + card.cardType + ".png"}
+                    />
+                    <input
+                      placeholder={"2,3,4"}
+                      onChange={(e) =>
+                        addOrChangeServantAttack(
+                          card.index,
+                          card.cardType,
+                          e.target.value,
+                        )
+                      }
+                    />
+                    <button onClick={() => deleteServantAttack(card.index)}>
+                      DELETE
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
           </form>
