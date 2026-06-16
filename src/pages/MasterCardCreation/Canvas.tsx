@@ -111,7 +111,7 @@ export const Card = ({
       `}
       id={isPreview ? "card-preview" : "card-to-save"}
     >
-      <div className="fixed">
+      <div className="mt-4 xl:fixed">
         <div
           id="card"
           className={`relative overflow-hidden ${grayscaleFilter && "grayscale "}`}

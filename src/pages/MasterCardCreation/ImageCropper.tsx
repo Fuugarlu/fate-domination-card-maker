@@ -15,13 +15,9 @@ const ImageCropper = ({
   const [cropperVisible, setCropperVisible] = useState<boolean>(true);
 
   const showCroppedImage = async () => {
-    console.log("button clicked");
-    console.log({ imageSrc });
-    console.log({ croppedAreaPixels });
     try {
       if (!imageSrc || !croppedAreaPixels) return;
       const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels);
-      console.log("donee", { croppedImage });
       setCroppedImage(croppedImage);
       cancelCropper();
     } catch (e) {
@@ -34,7 +30,6 @@ const ImageCropper = ({
   const [zoom, setZoom] = useState(1);
   const onCropComplete = (croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels);
-    console.log("crop Complete", croppedArea, croppedAreaPixels);
   };
 
   function readFile(file: File): Promise<string | ArrayBuffer | null> {
@@ -62,10 +57,10 @@ const ImageCropper = ({
   }
 
   return (
-    <div className="ImageCropper w-full">
+    <div className="ImageCropper">
       {imageSrc && cropperVisible ? (
         <div className="flex flex-col gap-2">
-          <div className="relative w-full h-[500px]">
+          <div className="relative h-[500px]">
             <div className="crop-container">
               <Cropper
                 image={imageSrc}
@@ -80,38 +75,44 @@ const ImageCropper = ({
             </div>
           </div>
           <div className="flex justify-between">
-              <div className="flex items-center gap-2">
-                Zoom
-                <input
-                  type="range"
-                  id="cowbell"
-                  name="cowbell"
-                  min={1}
-                  max={3}
-                  step={0.1}
-                  defaultValue={1}
-                  aria-labelledby="Zoom"
-                  onChange={(e) => setZoom(Number(e.target.value))}
-                  className=""
-                />
+            <div className="flex items-center gap-2">
+              Zoom
+              <input
+                type="range"
+                id="cowbell"
+                name="cowbell"
+                min={1}
+                max={3}
+                step={0.1}
+                defaultValue={1}
+                aria-labelledby="Zoom"
+                onChange={(e) => setZoom(Number(e.target.value))}
+                className=""
+              />
               {Math.round((zoom - 1) * (100 - 0)) / (3 - 1)}%
-              </div>
-
-              <div className="flex gap-2">
-                <button onClick={() => cancelCropper()} className="px-6 py-2 bg-gray-500 text-white rounded cursor-pointer">
-                  Cancel
-                </button>{" "}
-                <button onClick={showCroppedImage} className="px-6 py-2 bg-blue-500 text-white rounded cursor-pointer">
-                  Confirm
-                </button>{" "}
-              </div>
             </div>
+
+            <div className="flex gap-2">
+              <button
+                onClick={() => cancelCropper()}
+                className="cropper-button bg-gray-500"
+              >
+                Cancel
+              </button>{" "}
+              <button
+                onClick={showCroppedImage}
+                className="cropper-button bg-blue-500"
+              >
+                Confirm
+              </button>{" "}
+            </div>
+          </div>
         </div>
       ) : (
         <div>
           <label
             htmlFor="image-upload"
-            className="px-4 py-2 bg-blue-500 text-white rounded cursor-pointer"
+            className="cropper-button cropper-button-upload bg-blue-500 block flex justify-center items-center"
           >
             <input
               type="file"
@@ -120,7 +121,7 @@ const ImageCropper = ({
               accept="image/*"
               className="hidden"
             />
-            Upload Image
+            <span>Upload Image</span>
           </label>
         </div>
       )}

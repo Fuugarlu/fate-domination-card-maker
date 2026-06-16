@@ -30,7 +30,13 @@ const emojiList = [
 
 const DEFAULT_TEXT_SIZE = "30px";
 
-export const MenuBar = ({ editor, setLastFontUsed }: { editor: Editor | null, setLastFontUsed: React.Dispatch<React.SetStateAction<string>> }) => {
+export const MenuBar = ({
+  editor,
+  setLastFontUsed,
+}: {
+  editor: Editor | null;
+  setLastFontUsed: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   if (!editor) {
     return null;
   }
@@ -54,7 +60,7 @@ export const MenuBar = ({ editor, setLastFontUsed }: { editor: Editor | null, se
       .setLineHeight("1.1")
       .setTextSelection(editor.state.doc.content.size)
       .run();
-      setLastFontUsed(newSizeString);
+    setLastFontUsed(newSizeString);
   }
 
   function addEmoji(editor: Editor, emojiName: string): void {
@@ -83,132 +89,159 @@ export const MenuBar = ({ editor, setLastFontUsed }: { editor: Editor | null, se
   }
 
   return (
-    <div className="w-full overflow-x-auto">
-      <nav className="flex items-center gap-8 p-2 bg-gray-700 rounded-t">
+    <div className="w-full flex overflow-x-auto">
+      <nav className="flex flex-col w-full p-2 bg-gray-700 rounded-t">
         {/* Text style buttons */}
-        <div className="flex items-center gap-0">
-          <button
-            type="button"
-            onClick={() => editor.chain().focus().toggleBold().run()}
-            disabled={!editorState.canBold}
-            className={`w-10 h-10 flex items-center justify-center border border-black cursor-pointer ${editorState.isBold ? "is-active bg-blue-500" : ""}`}
-            title="Bold"
-          >
-            <FaBold />
-          </button>
+        <div className="flex items-center gap-3 py-2 bg-gray-700 rounded-t">
+          <div className="flex items-center gap-0">
+            <button
+              type="button"
+              onClick={() => editor.chain().focus().toggleBold().run()}
+              disabled={!editorState.canBold}
+              className={`menu-bar-button ${editorState.isBold ? "is-active bg-blue-500" : ""}`}
+              title="Bold"
+            >
+              <FaBold />
+            </button>
 
-          <button
-            type="button"
-            onClick={() => editor.chain().focus().toggleItalic().run()}
-            disabled={!editorState.canItalic}
-            className={`w-10 h-10 flex items-center justify-center border border-black cursor-pointer ${editorState.isItalic ? "is-active bg-blue-500" : ""}`}
-            title="Italic"
-            style={{ marginLeft: -1 }}
-          >
-            <FaItalic />
-          </button>
-        </div>
-
-        {/* Font size controls */}
-        <div className="flex items-center gap-0">
-          <button
-            type="button"
-            onClick={() => changeFontSize(editor, false)}
-            className="w-10 h-10 flex items-center justify-center border border-black cursor-pointer text-xl"
-            title="Decrease font"
-          >
-            <MdTextDecrease />
-          </button>
-
-          <div
-            className="w-10 h-10 flex items-center justify-center border border-black bg-blue-500 text-center"
-            style={{ marginLeft: -1 }}
-          >
-            <div className="text-sm">
-              {editor.getAttributes("textStyle").fontSize || DEFAULT_TEXT_SIZE}
-            </div>
+            <button
+              type="button"
+              onClick={() => editor.chain().focus().toggleItalic().run()}
+              disabled={!editorState.canItalic}
+              className={`menu-bar-button ${editorState.isItalic ? "is-active bg-blue-500" : ""}`}
+              title="Italic"
+              style={{ marginLeft: -1 }}
+            >
+              <FaItalic />
+            </button>
           </div>
 
-          <button
-            type="button"
-            onClick={() => changeFontSize(editor, true)}
-            className="w-10 h-10 flex items-center justify-center border border-black cursor-pointer text-xl"
-            title="Increase font"
-            style={{ marginLeft: -1 }}
-          >
-            <MdTextIncrease />
-          </button>
-        </div>
-
-        {/* Emoji buttons */}
-        <div className="flex items-center gap-0">
-          {emojiList.map(({ name, image }, idx) => (
+          {/* Font size controls */}
+          <div className="flex items-center gap-0">
             <button
-              key={name}
               type="button"
-              onClick={() => addEmoji(editor, name)}
-              className="w-10 h-10 flex items-center justify-center border border-black cursor-pointer"
-              title={capitalizeString(name)}
-              style={{ marginLeft: idx === 0 ? 0 : -1 }}
+              onClick={() => changeFontSize(editor, false)}
+              className="menu-bar-button text-xl"
+              title="Decrease font"
             >
-              <img
-                src={image.src}
-                alt={capitalizeString(name)}
-                className="w-8 h-8 object-contain"
-              />
+              <MdTextDecrease />
             </button>
-          ))}
-        </div>
 
+            <div
+              className="w-10 h-10 flex items-center justify-center border border-black bg-blue-500 text-center"
+              style={{ marginLeft: -1 }}
+            >
+              <div className="text-sm">
+                {editor.getAttributes("textStyle").fontSize ||
+                  DEFAULT_TEXT_SIZE}
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => changeFontSize(editor, true)}
+              className="menu-bar-button text-xl"
+              title="Increase font"
+              style={{ marginLeft: -1 }}
+            >
+              <MdTextIncrease />
+            </button>
+          </div>
+
+          {/* Emoji buttons */}
+          <div className="flex items-center gap-0">
+            {emojiList.map(({ name, image }, idx) => (
+              <button
+                key={name}
+                type="button"
+                onClick={() => addEmoji(editor, name)}
+                className="menu-bar-button"
+                title={capitalizeString(name)}
+                style={{ marginLeft: idx === 0 ? 0 : -1 }}
+              >
+                <img
+                  src={image.src}
+                  alt={capitalizeString(name)}
+                  className="w-8 h-8 object-contain"
+                />
+              </button>
+            ))}
+          </div>
+        </div>
         {/* Colors */}
         <div className="flex items-center gap-0">
-          <MdOutlineFormatColorText />
           <button
             onClick={() => editor.chain().focus().setColor("#ff3f24").run()}
-            className={`w-10 h-10 flex items-center justify-center border border-black cursor-pointer ${editorState.isRed ? "is-active" : ""}`}
+            className={`menu-bar-button ${editorState.isRed ? "is-active" : ""}`}
             data-testid="setRed"
           >
-            Red
+            <div
+              className="rounded-full color-circle"
+              style={{ backgroundColor: "#ff3f24" }}
+            ></div>
           </button>
           <button
             onClick={() => editor.chain().focus().setColor("#ebcb3d").run()}
-            className={`w-10 h-10 flex items-center justify-center border border-black cursor-pointer ${editorState.isYellow ? "is-active" : ""}`}
+            className={`menu-bar-button no-left-border ${editorState.isYellow ? "is-active" : ""}`}
             data-testid="setYellow"
           >
-            Yellow
+            <div
+              className="rounded-full color-circle"
+              style={{ backgroundColor: "#ebcb3d" }}
+            ></div>
           </button>
           <button
             onClick={() => editor.chain().focus().setColor("#58c2ff").run()}
-            className={`w-10 h-10 flex items-center justify-center border border-black cursor-pointer ${editorState.isBlue ? "is-active" : ""}`}
+            className={`menu-bar-button no-left-border ${editorState.isBlue ? "is-active" : ""}`}
             data-testid="setBlue"
           >
-            Blue
+            <div
+              className="rounded-full color-circle"
+              style={{ backgroundColor: "#58c2ff" }}
+            ></div>
           </button>
           <button
             onClick={() => editor.chain().focus().setColor("#58ff6c").run()}
-            className={`w-10 h-10 flex items-center justify-center border border-black cursor-pointer ${editorState.isGreen ? "is-active" : ""}`}
+            className={`menu-bar-button no-left-border ${editorState.isGreen ? "is-active" : ""}`}
             data-testid="setGreen"
           >
-            Green
+            <div
+              className="rounded-full color-circle"
+              style={{ backgroundColor: "#58ff6c" }}
+            ></div>
           </button>
           <button
             onClick={() => editor.chain().focus().unsetColor().run()}
-            className={`w-10 h-10 flex items-center justify-center border border-black cursor-pointer`}
+            className={`menu-bar-button no-left-border`}
             data-testid="unsetColor"
           >
-            White
+            <div
+              className="rounded-full color-circle"
+              style={{ backgroundColor: "#ffffff" }}
+            ></div>
           </button>
-          <div className="flex w-10 relative">
-            <input
-              type="color"
-              onInput={(event) =>
-                editor.chain().focus().setColor(event.currentTarget.value).run()
-              }
-              value={editorState.color ?? "#000000"}
-              data-testid="setColor"
-            />
-            <BiColorFill className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" fontSize={20}/>
-          </div>
+          <div className="flex justify-center items-center w-10 h-10 relative menu-bar-button no-left-border">
+            {/* <div className="rounded-full color-circle relative"> */}
+              <input
+                type="color"
+                onInput={(event) =>
+                  editor
+                    .chain()
+                    .focus()
+                    .setColor(event.currentTarget.value)
+                    .run()
+                }
+                value={editorState.color ?? "#000000"}
+                data-testid="setColor"
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-0 rounded-full"
+                style={{ width: 32, height: 32 }}
+              />
+              {/* <BiColorFill
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                fontSize={20}
+              /> */}
+            </div>
+          {/* </div> */}
         </div>
       </nav>
     </div>

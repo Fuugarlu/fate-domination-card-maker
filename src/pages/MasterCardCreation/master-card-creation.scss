@@ -1,11 +1,44 @@
-input {
-  border-radius: 8px;
-  background: #192145;
+input[type="text"],
+select {
+  width: 229px;
   height: 36px;
+  padding: 0.25rem;
   color: white;
+  background: #192145;
   border: 1px solid lightblue;
+  border-radius: 8px;
+}
+
+select {
+  cursor: pointer;
 }
 
 input::placeholder {
-//   color: lightgray;
+  //   color: lightgray;
+}
+
+.category-header {
+  text-transform: uppercase;
+  text-decoration: underline;
+}
+
+h2.field-header,
+label.field-header {
+  font-weight: 600;
+}
+
+.input-block {
+  margin-bottom: 1rem;
+}
+
+.cropper-button {
+  width: 7rem;
+  height: 2.5rem;
+  color: white;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.cropper-button-upload {
+  width: 9rem;
 }
