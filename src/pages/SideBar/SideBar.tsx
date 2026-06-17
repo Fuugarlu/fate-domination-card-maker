@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { IoHome } from "react-icons/io5";
 import { PiDiamondsFourFill } from "react-icons/pi";
 import { GiSwordInStone } from "react-icons/gi";
-import { IoLocationSharp } from "react-icons/io5";
 import { IoShapes } from "react-icons/io5";
 import { FaInfoCircle } from "react-icons/fa";
 import { SideBarItem } from "./SideBarItem";
@@ -11,12 +10,11 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 
 const menuItems = [
-  { label: "Master", icon: PiDiamondsFourFill, link: "master" },
-  { label: "Servant", icon: GiSwordInStone, link: "servant" },
-  { label: "Objective", icon: IoLocationSharp, link: "objective" },
-  { label: "Misc", icon: IoShapes, link: "misc" },
+  { label: "Main", icon: PiDiamondsFourFill, link: "" },
+  { label: "Master Box", icon: IoShapes, link: "master-box" },
   { label: "Master Token", icon: FaRegUserCircle, link: "master-token" },
   { label: "Master Standee", icon: FaRegUser, link: "master-standee" },
+  { label: "NPC [WIP]", icon: GiSwordInStone, link: "npc" },
 ];
 
 export const SideBar = () => {

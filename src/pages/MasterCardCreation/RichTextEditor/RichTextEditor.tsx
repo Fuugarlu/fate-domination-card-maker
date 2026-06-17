@@ -56,11 +56,10 @@ const RichTextEditor = ({
         },
       }),
     ],
-    content: `<p><span style="font-size: 30px; line-height: 1.1;"><em>Example</em> - Add some abilities!</span></p>
-    <p><span style="font-size: 30px; line-height: 1.1;"><em>Other example</em> - <strong>Passive/Combat:</strong> Pay 1 Mana to [cry on command].</span></p>`,
+    content: masterAbility,
     editorProps: {
       attributes: {
-        class: "h-40 rounded p-2 border border-gray-300 bg-blue-900 w-full",
+        class: "h-40 rounded p-2 border border-gray-300 bg-blue-900 hover:bg-blue-700 w-full",
       },
       handlePaste(view, event) {
         const text = event.clipboardData?.getData("text/plain");
@@ -127,6 +126,14 @@ const RichTextEditor = ({
     };
   }, [editor, lastFontUsed]);
 
+  useEffect(() => {
+    if (editor && masterAbility == "") {
+      editor.commands.clearContent();
+    }
+
+  }, [editor, masterAbility])
+  
+  
   return (
     <div className="flex flex-col w-full overflow-scroll">
       {editor && (

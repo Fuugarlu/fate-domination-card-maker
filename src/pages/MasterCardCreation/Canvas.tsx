@@ -2,6 +2,7 @@
 
 import { servantCardType } from "@/src/types/servantTypes";
 import masterTemplate from "./master-template.png";
+import { formInput } from "@/src/types/formTypes";
 
 function getCardIcon(key: string) {
   switch (key.toLowerCase()) {
@@ -16,18 +17,18 @@ function getCardIcon(key: string) {
   }
 }
 
-function getCardColor(key: string) {
-  switch (key.toLowerCase()) {
-    case "strength":
-      return "text-red-500";
-    case "agility":
-      return "text-green-500";
-    case "magic":
-      return "text-blue-500";
-    case "special":
-      return "text-white";
-  }
-}
+// function getCardColor(key: string) {
+//   switch (key.toLowerCase()) {
+//     case "strength":
+//       return "text-red-500";
+//     case "agility":
+//       return "text-green-500";
+//     case "magic":
+//       return "text-blue-500";
+//     case "special":
+//       return "";
+//   }
+// }
 
 function getServantChunked(servantCards: servantCardType[]) {
   let chunk_size = getServantSplitCount(servantCards);
@@ -72,58 +73,33 @@ function AbilityText({ text }: { text: string }) {
   );
 }
 
-export const Card = ({
-  pic,
-  name,
-  ability,
-  isPreview,
-  nameFontSize,
-  objectiveValue,
-  eventMana,
-  cardAttack,
-  cardMana,
-  attackTypes,
-  grayscaleFilter,
-  servantClass,
-  servantCards,
-  servantCardsSpecialFontSize
-}: {
-  pic: string | null;
-  name: string;
-  ability: string | null;
+type CardProps = {
+  form: formInput;
   isPreview: boolean;
-  nameFontSize: number;
-  objectiveValue: number | null;
-  eventMana: number | null;
-  cardAttack: string | null;
-  cardMana: string | null;
-  attackTypes: boolean[];
-  grayscaleFilter: boolean;
-  servantClass: string | null;
-  servantCards: servantCardType[] | null;
-  servantCardsSpecialFontSize: number;
-}) => {
+};
+
+export const Card = ({form, isPreview}: CardProps) => {
   return (
     <div
       style={isPreview ? { zoom: 0.5 } : {}}
       className={`
         ${!isPreview ? "absolute left-[-9999px]" : "flex flex-col items-center"}
       `}
-      id={isPreview ? "card-preview" : "card-to-save"}
     >
-      <div className="mt-4 xl:fixed">
+      <div className="xl:fixed"> 
+        {/* mt-4 above messes up download */}
         <div
-          id="card"
-          className={`relative overflow-hidden ${grayscaleFilter && "grayscale "}`}
+          id={isPreview ? "card-preview" : "card-to-save"}
+          className={`relative overflow-hidden ${form.grayscaleFilter && "grayscale "}`}
           style={{
             width: 750,
             height: 1050,
           }}
         >
           {/* Character image */}
-          {pic && (
+          {form.pic && (
             <img
-              src={pic}
+              src={form.pic}
               alt=""
               className="absolute object-cover"
               style={{
@@ -143,6 +119,7 @@ export const Card = ({
             style={{
               width: 750,
               height: 1050,
+              filter: `hue-rotate(${form.enableCardColorHueInput ? form.cardColorHue : "0"}deg)`
             }}
           />
 
@@ -151,16 +128,16 @@ export const Card = ({
             className="absolute text-white whitespace-nowrap"
             style={{
               left: 33,
-              top: 770 + (50 - nameFontSize),
-              fontSize: nameFontSize,
+              top: 770 + (50 - form.masterNameFontSize),
+              fontSize: form.masterNameFontSize,
               fontFamily: '"Times New Roman"',
             }}
           >
-            {name}
+            {form.masterName}
           </div>
 
           {/* Objective Value */}
-          {objectiveValue !== null && (
+          {form.objectiveValue !== null && (
             <div
               className="absolute"
               style={{
@@ -169,27 +146,27 @@ export const Card = ({
                 width: "190px",
               }}
             >
-              <img src={"./objective-vp/" + objectiveValue + " VP.png"} />
+              <img src={"./objective-vp/" + form.objectiveValue + " VP.png"} />
             </div>
           )}
 
           {/* Event Mana */}
-          {eventMana !== null && (
+          {form.eventMana !== null && (
             <div
               className="absolute"
               style={{
-                right: objectiveValue == null ? 5 : 200,
+                right: form.objectiveValue == null ? 5 : 200,
                 top: 13,
                 width: "190px",
               }}
             >
-              <img src={"./event-mana/" + eventMana + " Mana.png"} />
+              <img src={"./event-mana/" + form.eventMana + " Mana.png"} />
             </div>
           )}
 
           {/* Mana & Attack */}
           {/* Attack */}
-          {cardAttack != null && (
+          {form.cardAttack != null && (
             <div
               className="absolute"
               style={{
@@ -209,14 +186,14 @@ export const Card = ({
                     transform: "translate(-65%, -50%)",
                   }}
                 >
-                  {cardAttack}
+                  {form.cardAttack}
                 </div>
               </div>
             </div>
           )}
 
           {/* Mana */}
-          {cardMana != null && (
+          {form.cardMana != null && (
             <div
               className="absolute"
               style={{
@@ -238,7 +215,7 @@ export const Card = ({
                     color: "#15e86f",
                   }}
                 >
-                  {cardMana}
+                  {form.cardMana}
                 </div>
               </div>
             </div>
@@ -247,18 +224,18 @@ export const Card = ({
           {/* Attack Type */}
           <div className="absolute" style={{ top: 10, left: 10 }}>
             <div className="flex flex-col gap-1">
-              {attackTypes[0] && <img src="attack-types-card/strength.png" />}
-              {attackTypes[1] && <img src="attack-types-card/agility.png" />}
-              {attackTypes[2] && <img src="attack-types-card/magic.png" />}
-              {attackTypes[3] && <img src="attack-types-card/special.png" />}
-              {attackTypes[4] && (
+              {form.attackTypes[0] && <img src="attack-types-card/strength.png" />}
+              {form.attackTypes[1] && <img src="attack-types-card/agility.png" />}
+              {form.attackTypes[2] && <img src="attack-types-card/magic.png" />}
+              {form.attackTypes[3] && <img src="attack-types-card/special.png" />}
+              {form.attackTypes[4] && (
                 <img src="attack-types-card/noblephantasm.png" />
               )}
             </div>
           </div>
 
           {/* Servant Class */}
-          {servantClass !== null && (
+          {form.servantClass !== null && (
             <div
               className="absolute"
               style={{
@@ -266,15 +243,15 @@ export const Card = ({
                 top: 20,
               }}
             >
-              <img src={"./servant-classes/" + servantClass + ".png"} />
+              <img src={"./servant-classes/" + form.servantClass + ".png"} className="block"/>
             </div>
           )}
 
           {/* Ability */}
-          {ability && <AbilityText text={ability} />}
+          {form.masterAbility && <AbilityText text={form.masterAbility} />}
 
           {/* Servant Info */}
-          {servantCards && (
+          {form.servantCards && (
             <div
               className="absolute text-4xl"
               style={{
@@ -290,46 +267,47 @@ export const Card = ({
               >
                 {/* Strength/Agility/Magic basic attacks */}
                 <div className="flex flex-col gap-2 flex-shrink-0">
-                  {servantCards
+                  {form.servantCards
                     .slice(0, 3)
                     .filter((card) => card.showIcon == true)
                     .map((cardItem, i) => (
                       <div
                         key={i}
-                        className={`relative flex gap-1 ${getCardColor(cardItem.cardType)}`}
+                        className={`flex items-center gap-2 ${cardItem.cardType.toLowerCase()}`}
                       >
                         <img
-                          style={{ width: "50px", height: "44px" }}
+                          style={{ width: "35px", height: "28px" }}
                           src={getCardIcon(cardItem.cardType)}
                         />
+                        <span>
                         {cardItem.values}
+                        </span>
                       </div>
                     ))}
                 </div>
                 <div
-                  className={`flex gap-2 w-full justify-center ${servantCards.slice(3).length > 6 ? "-mt-4" : ""} ${servantCards.slice(3).length > 3 ? "text-3xl" : "text-4xl"}`}
-                  style={{fontSize: servantCardsSpecialFontSize + "px"}}
+                  className={`flex gap-2 w-full justify-center ${form.servantCards.slice(3).length > 6 ? "-mt-4" : ""} ${form.servantCards.slice(3).length > 3 ? "text-3xl" : "text-4xl"}`}
+                  style={{ fontSize: form.servantCardsSpecialFontSize + "px" }}
                 >
-                  {getServantChunked(servantCards.slice(3)).map(
+                  {getServantChunked(form.servantCards.slice(3)).map(
                     (group, colIndex) => (
                       <div
                         key={colIndex}
                         className={`grid grid-flow-col gap-1`}
                         style={{
-                          gridTemplateRows: `repeat(${getServantSplitCount(servantCards.slice(3))}, minmax(0, 1fr))`,
+                          gridTemplateRows: `repeat(${form.servantCards ? getServantSplitCount(form.servantCards.slice(3)) : "3"}, minmax(0, 1fr))`,
                         }}
                       >
                         {group.map((cardItem, i) => (
                           <div
                             key={i}
-                            className={
-                              getCardColor(cardItem.cardType) +
-                              " flex flex-row gap-1 items-center"
+                            className={`flex flex-row gap-2 items-center ${cardItem.cardType.toLowerCase()}`
                             }
                           >
                             <img
-                              style={{ width: "50px", height: "44px" }}
+                              style={{ width: "35px", height: "28px" }}
                               src={getCardIcon(cardItem.cardType)}
+                              className="block"
                             />
                             {cardItem.values}
                           </div>

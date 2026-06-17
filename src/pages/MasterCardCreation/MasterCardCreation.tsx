@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Card } from "./Canvas";
 import ImageCropper from "./ImageCropper";
-import html2canvas from "html2canvas";
+import html2canvas from "html2canvas-pro";
 import RichTextEditor from "./RichTextEditor/RichTextEditor";
 import { ExportImportFeature } from "./export/export";
 import { MdTextDecrease, MdTextIncrease } from "react-icons/md";
@@ -13,6 +13,7 @@ import { formInput } from "@/src/types/formTypes";
 import { updateForm } from "@/src/utils/formUtils";
 import { ServantAttackTypesInput } from "./FormComponents/ServantAttackTypesInput";
 import "./master-card-creation.scss";
+import { snapdom } from "@zumer/snapdom";
 
 const emptyState = {
   pic: null as string | null,
@@ -26,8 +27,15 @@ const emptyState = {
   masterAbility: "",
   grayscaleFilter: false,
   servantClass: null as string | null,
-  servantCards: [] as servantCardType[] | null,
+  servantCards: [
+    { index: 0, cardType: "Strength", values: "", showIcon: false },
+    { index: 1, cardType: "Agility", values: "", showIcon: false },
+    { index: 2, cardType: "Magic", values: "", showIcon: false },
+  ] as servantCardType[] | null,
   servantCardsSpecialFontSize: 36,
+  hasCardAbility: true,
+  enableCardColorHueInput: false,
+  cardColorHue: "0",
 };
 
 const initialState = {
@@ -48,7 +56,6 @@ const initialState = {
 
 export const MasterCardCreation = () => {
   const [form, setForm] = useState<formInput>(initialState);
-  const [masterAbilityInput, setMasterAbilityInput] = useState<boolean>(true);
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -68,43 +75,51 @@ export const MasterCardCreation = () => {
     );
   };
 
-  const toggleMasterAbilityInput = (checkbox: boolean) => {
-    setMasterAbilityInput(checkbox);
-  };
+async function downloadCard() {
+  const card = document.getElementById("card-to-save");
 
-  async function downloadCard() {
-    const card = document.getElementById("card-to-save");
-    if (!card) return;
-    const canvas = await html2canvas(card, {
-      width: 750,
-      height: 1050,
-      scale: 1,
-      windowWidth: 750,
-      windowHeight: 1050,
-    }).then((canvas) => {
-      const link = document.createElement("a");
-      link.download = `${form.masterName || "master-card"}.png`;
-      link.href = canvas.toDataURL();
-      link.click();
-    });
-  }
+  if (!card) return;
+
+  const result = await snapdom(card);
+
+  await result.download({
+    format: "png",
+    filename: `${form.masterName || "master-card"}.png`,
+  });
+}
   return (
     <div className="flex-col w-full">
       <div className="flex flex-col xl:flex-row">
         <div className="xl:w-1/2 flex flex-col justify-between">
-          {/* <ExportImportFeature /> */}
+          <div className="flex flex-col md:flex-row justify-between items-center gap-2">
+            <h1 className="text-xl font-semibold">
+              Fate/Domination Card Maker
+            </h1>
+            <span className="flex gap-2">
+              <button
+                onClick={() => setForm(emptyState)}
+                className="bg-gray-700 import-export-button hover:bg-red-800 transition"
+              >
+                CLEAR ALL
+              </button>
+              <ExportImportFeature form={form} setForm={setForm} />
+            </span>
+          </div>
+          <hr className="my-3" />
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col items-start">
               <h2 className="category-header">MAIN</h2>
               {/* Name */}
               <div className="input-block">
-                <label htmlFor="masterName" className="field-header">Card Name</label>
+                <label htmlFor="masterName" className="field-header">
+                  Card Name
+                </label>
                 <div className="flex flex-row align-center gap-3">
                   <input
                     type="text"
                     id="masterName"
                     name="masterName"
-                    defaultValue={form.masterName}
+                    value={form.masterName ?? ""}
                     onChange={(e) =>
                       mainUpdateForm("masterName", e.target.value)
                     }
@@ -119,7 +134,7 @@ export const MasterCardCreation = () => {
                           form.masterNameFontSize - 2,
                         )
                       }
-                      className="w-9 h-9 flex items-center justify-center border border-black cursor-pointer text-xl bg-blue-900 rounded-l"
+                      className="w-9 h-9 flex items-center justify-center border border-black cursor-pointer text-xl bg-blue-900 hover:bg-blue-700 rounded-l"
                       title="Decrease font"
                     >
                       <MdTextDecrease />
@@ -140,7 +155,7 @@ export const MasterCardCreation = () => {
                           form.masterNameFontSize + 2,
                         )
                       }
-                      className="w-9 h-9 flex items-center justify-center border border-black cursor-pointer text-xl bg-blue-900 rounded-r"
+                      className="w-9 h-9 flex items-center justify-center border border-black cursor-pointer text-xl bg-blue-900 hover:bg-blue-700 rounded-r"
                       title="Increase font"
                       style={{ marginLeft: -1 }}
                     >
@@ -153,14 +168,17 @@ export const MasterCardCreation = () => {
                 <h2 className="field-header">Card Ability</h2>
                 <label className="flex gap-1 items-center">
                   <input
+                    id="hasCardAbility"
                     type="checkbox"
-                    checked={masterAbilityInput}
-                    onChange={(e) => toggleMasterAbilityInput(e.target.checked)}
+                    checked={form.hasCardAbility}
+                    onChange={(e) =>
+                      mainUpdateForm("hasCardAbility", e.target.checked)
+                    }
                   />
                   <span>Enable card ability</span>
                 </label>
 
-                {masterAbilityInput && (
+                {form.hasCardAbility && (
                   <RichTextEditor
                     masterAbility={form.masterAbility}
                     setMasterAbility={(abilityText) =>
@@ -169,6 +187,7 @@ export const MasterCardCreation = () => {
                   />
                 )}
               </div>
+
               <div className="input-block w-full">
                 <h2 className="field-header">Card Picture</h2>
                 <ImageCropper
@@ -194,6 +213,7 @@ export const MasterCardCreation = () => {
                     name="manaInput"
                     type="text"
                     maxLength={2}
+                    value={form.cardMana ?? ""}
                     placeholder={"Blank, X, or 1-2 digits"}
                     onChange={(e) =>
                       mainUpdateForm(
@@ -213,6 +233,7 @@ export const MasterCardCreation = () => {
                     name="attackInput"
                     type="text"
                     maxLength={2}
+                    value={form.cardAttack ?? ""}
                     placeholder={"Blank, X, or 1-2 digits"}
                     onChange={(e) =>
                       mainUpdateForm(
@@ -228,6 +249,7 @@ export const MasterCardCreation = () => {
                   {form.attackTypes.map((isChecked, i) => (
                     <label key={i} className="flex gap-1">
                       <input
+                        id={"attackType" + i}
                         type="checkbox"
                         checked={isChecked}
                         onChange={() => handleAttackTypeChange(i)}
@@ -241,10 +263,13 @@ export const MasterCardCreation = () => {
               <div className="flex flex-col">
                 <span className="category-header">EVENTS & OBJECTIVES</span>
                 <div className="input-block flex flex-col items-start">
-                  <label className="field-header" htmlFor="eventMana">Event Mana</label>
+                  <label className="field-header" htmlFor="eventMana">
+                    Event Mana
+                  </label>
                   <select
                     id="eventMana"
                     name="eventMana"
+                    value={form.eventMana ?? ""}
                     onChange={(e) =>
                       mainUpdateForm(
                         "eventMana",
@@ -262,10 +287,13 @@ export const MasterCardCreation = () => {
                 </div>
 
                 <div className="input-block flex flex-col items-start">
-                  <label className="field-header" htmlFor="objective">Objective points</label>
+                  <label className="field-header" htmlFor="objective">
+                    Objective points
+                  </label>
                   <select
                     id="objective"
                     name="objective"
+                    value={form.objectiveValue ?? ""}
                     onChange={(e) =>
                       mainUpdateForm(
                         "objectiveValue",
@@ -285,9 +313,12 @@ export const MasterCardCreation = () => {
                 <div>
                   <span className="category-header">MISC OPTIONS</span>
                   <div className="input-block">
-                    <label className="field-header" htmlFor="grayscaleFilter">Filters</label>
+                    <label className="field-header" htmlFor="grayscaleFilter">
+                      Filters
+                    </label>
                     <div className="flex gap-1">
                       <input
+                        checked={form.grayscaleFilter ?? ""}
                         type="checkbox"
                         onChange={(e) =>
                           mainUpdateForm("grayscaleFilter", e.target.checked)
@@ -295,41 +326,71 @@ export const MasterCardCreation = () => {
                       />
                       Grayscale filter
                     </div>
+
+                    <label className="field-header" htmlFor="hueSlider">
+                      Card Color
+                    </label>
+                    <div className="flex gap-1">
+                      <input
+                        checked={form.enableCardColorHueInput ?? ""}
+                        type="checkbox"
+                        onChange={(e) =>
+                          mainUpdateForm(
+                            "enableCardColorHueInput",
+                            e.target.checked,
+                          )
+                        }
+                      />
+                      <label htmlFor="enableHueSlider">Enable hue slider</label>
+                    </div>
+                    {form.enableCardColorHueInput && (
+                      <div className="color-picker-container flex items-center gap-1">
+                        <input
+                          type="range"
+                          id="hueSlider"
+                          min="0"
+                          max="360"
+                          value={form.cardColorHue ?? "0"}
+                          onChange={(e) =>
+                            mainUpdateForm("cardColorHue", e.target.value)
+                          }
+                        />
+                        <input
+                          type="text"
+                          style={{ width: "100%" }}
+                          maxLength={3}
+                          placeholder={form.cardColorHue}
+                          value={form.cardColorHue ?? "0"}
+                          onChange={(e) =>
+                            mainUpdateForm("cardColorHue", e.target.value)
+                          }
+                        />
+                        <span>&#176;</span>
+                        {/* <span>{form.cardColorHue}&#176;</span> */}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
-
             </div>
-              {/* Servant Options */}
-              <div className="input-block">
-                <ServantAttackTypesInput form={form} setForm={setForm} />
-              </div>
+            {/* Servant Options */}
+            <div className="input-block">
+              <ServantAttackTypesInput form={form} setForm={setForm} />
+            </div>
           </form>
 
           <button
             onClick={() => downloadCard()}
-            className="px-4 py-2 bg-blue-500 text-white rounded cursor-pointer mt-3 w-full"
+            className="px-4 py-2 bg-blue-500 hover:bg-blue-400 text-white rounded cursor-pointer mt-3 w-full"
           >
             Download Card
           </button>
         </div>
 
         <div className="xl:w-1/2">
-          <Card
-            {...form}
-            name={form.masterName}
-            nameFontSize={form.masterNameFontSize}
-            ability={masterAbilityInput ? form.masterAbility : ""}
-            isPreview={true}
-          />
+          <Card form={form} isPreview={true} />
         </div>
-        <Card
-          {...form}
-          name={form.masterName}
-          nameFontSize={form.masterNameFontSize}
-          ability={masterAbilityInput ? form.masterAbility : ""}
-          isPreview={false}
-        />
+        <Card form={form} isPreview={false} />
       </div>
     </div>
   );

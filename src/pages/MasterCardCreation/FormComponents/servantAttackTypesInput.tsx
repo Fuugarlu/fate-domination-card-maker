@@ -186,7 +186,7 @@ export const ServantAttackTypesInput = (prop: Props) => {
               </div>
               <button
                 onClick={() => toggleHideServantAttack(card.index)}
-                className="bg-blue-500 rounded px-2 cursor-pointer"
+                className="bg-blue-500 hover:bg-blue-400 rounded px-2 cursor-pointer"
               >
                 {card.showIcon ? "HIDE ICON" : "SHOW ICON"}
               </button>
@@ -195,7 +195,7 @@ export const ServantAttackTypesInput = (prop: Props) => {
         </div>
         <div className="flex flex-row gap-4 my-2">
           <button
-            className="bg-blue-500 p-1 rounded cursor-pointer"
+            className="bg-blue-500 hover:bg-blue-400 p-1 rounded cursor-pointer"
             onClick={() =>
               addOrChangeServantAttack(
                 Math.max(
@@ -220,7 +220,7 @@ export const ServantAttackTypesInput = (prop: Props) => {
                       prev.servantCardsSpecialFontSize - 2,
                   }))
                 }
-                className="w-9 h-9 flex items-center justify-center border border-black cursor-pointer text-xl bg-blue-900 rounded-l"
+                className="w-9 h-9 flex items-center justify-center border border-black cursor-pointer text-xl bg-blue-900 hover:bg-blue-700 rounded-l"
                 title="Decrease font"
               >
                 <MdTextDecrease />
@@ -244,7 +244,7 @@ export const ServantAttackTypesInput = (prop: Props) => {
                       prev.servantCardsSpecialFontSize + 2,
                   }))
                 }
-                className="w-9 h-9 flex items-center justify-center border border-black cursor-pointer text-xl bg-blue-900 rounded-r"
+                className="w-9 h-9 flex items-center justify-center border border-black cursor-pointer text-xl bg-blue-900 hover:bg-blue-700 rounded-r"
                 title="Increase font"
                 style={{ marginLeft: -1 }}
               >

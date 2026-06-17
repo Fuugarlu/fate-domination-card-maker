@@ -14,4 +14,7 @@ export type formInput = {
   servantClass: string | null;
   servantCards: servantCardType[] | null;
   servantCardsSpecialFontSize: number;
+  hasCardAbility: boolean;
+  cardColorHue: string;
+  enableCardColorHueInput: boolean;
 };

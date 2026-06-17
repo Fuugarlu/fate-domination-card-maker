@@ -17,8 +17,8 @@ import {
   special,
   noblephantasm,
 } from "@/public/attack-types-text";
-import { capitalizeString } from "@/src/app/utils/TextUtils";
 import { IoColorPalette } from "react-icons/io5";
+import { capitalizeString } from "@/src/utils/TextUtils";
 
 const emojiList = [
   { name: "strength", image: strength },
@@ -98,7 +98,7 @@ export const MenuBar = ({
               type="button"
               onClick={() => editor.chain().focus().toggleBold().run()}
               disabled={!editorState.canBold}
-              className={`menu-bar-button ${editorState.isBold ? "is-active bg-blue-500" : ""}`}
+              className={`menu-bar-button ${editorState.isBold ? "is-active bg-blue-500 hover:bg-blue-400" : ""}`}
               title="Bold"
             >
               <FaBold />
@@ -108,7 +108,7 @@ export const MenuBar = ({
               type="button"
               onClick={() => editor.chain().focus().toggleItalic().run()}
               disabled={!editorState.canItalic}
-              className={`menu-bar-button ${editorState.isItalic ? "is-active bg-blue-500" : ""}`}
+              className={`menu-bar-button ${editorState.isItalic ? "is-active bg-blue-500 hover:bg-blue-400" : ""}`}
               title="Italic"
               style={{ marginLeft: -1 }}
             >
@@ -128,7 +128,7 @@ export const MenuBar = ({
             </button>
 
             <div
-              className="w-10 h-10 flex items-center justify-center border border-black bg-blue-500 text-center"
+              className="w-10 h-10 flex items-center justify-center border border-black bg-blue-500 hover:bg-blue-400 text-center"
               style={{ marginLeft: -1 }}
             >
               <div className="text-sm">

@@ -101,7 +101,7 @@ const ImageCropper = ({
               </button>{" "}
               <button
                 onClick={showCroppedImage}
-                className="cropper-button bg-blue-500"
+                className="cropper-button bg-blue-500 hover:bg-blue-400"
               >
                 Confirm
               </button>{" "}
@@ -112,7 +112,7 @@ const ImageCropper = ({
         <div>
           <label
             htmlFor="image-upload"
-            className="cropper-button cropper-button-upload bg-blue-500 block flex justify-center items-center"
+            className="cropper-button cropper-button-upload bg-blue-500 hover:bg-blue-400 block flex justify-center items-center"
           >
             <input
               type="file"
