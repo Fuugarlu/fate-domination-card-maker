@@ -24,7 +24,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Fate/Domination Card Maker",
-  description: "Make your own Master or Servant cards",
+  description: "Make your own cards for Fate/Domination!",
 };
 
 export default function RootLayout({

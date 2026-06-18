@@ -21,7 +21,6 @@
     "@tiptap/pm": "^3.26.0",
     "@tiptap/react": "^3.26.0",
     "@zumer/snapdom": "^2.12.9",
-    "html2canvas": "^1.4.1",
     "html2canvas-pro": "^2.0.4",
     "next": "16.2.7",
     "node": "^26.3.0",

@@ -3,17 +3,24 @@
 import React, { useState } from "react";
 import { Card } from "./Canvas";
 import ImageCropper from "./ImageCropper";
-import html2canvas from "html2canvas-pro";
 import RichTextEditor from "./RichTextEditor/RichTextEditor";
 import { ExportImportFeature } from "./export/export";
 import { MdTextDecrease, MdTextIncrease } from "react-icons/md";
 import { ATTACK_TYPES, SERVANT_TYPES } from "@/src/constants/servantConstants";
 import { servantCardType } from "@/src/types/servantTypes";
-import { formInput } from "@/src/types/formTypes";
-import { updateForm } from "@/src/utils/formUtils";
+import {
+  formInput,
+  AttackTypes,
+  MASTER_NAME_FIELD_SIZES,
+  PicsToSave,
+} from "@/src/types/formTypes";
+import { IMAGE_CROP_SETTINGS, updateForm } from "@/src/utils/formUtils";
 import { ServantAttackTypesInput } from "./FormComponents/ServantAttackTypesInput";
 import "./master-card-creation.scss";
 import { snapdom } from "@zumer/snapdom";
+import { ClearFormButton } from "./FormComponents/header/ClearFormButton";
+import { PageName } from "./FormComponents/header/PageName";
+import { DownloadButton } from "./FormComponents/download/DownloadButton";
 
 const emptyState = {
   pic: null as string | null,
@@ -23,7 +30,13 @@ const emptyState = {
   eventMana: null as number | null,
   cardAttack: null as string | null,
   cardMana: null as string | null,
-  attackTypes: [false, false, false, false, false],
+  attackTypes: {
+    strength: false,
+    agility: false,
+    magic: false,
+    special: false,
+    "noble phantasm": false,
+  } as AttackTypes,
   masterAbility: "",
   grayscaleFilter: false,
   servantClass: null as string | null,
@@ -36,6 +49,7 @@ const emptyState = {
   hasCardAbility: true,
   enableCardColorHueInput: false,
   cardColorHue: "0",
+  masterNameFieldSize: MASTER_NAME_FIELD_SIZES.short,
 };
 
 const initialState = {
@@ -45,11 +59,7 @@ const initialState = {
     { index: 1, cardType: "Agility", values: "", showIcon: false },
     { index: 2, cardType: "Magic", values: "", showIcon: false },
   ] as servantCardType[],
-  // servantCards: [["0", ""], ["1", ""], ["2", "2,2,3,3"], ["0", "Saber Install"], ["0", "Berserker Install"], ["1", "Archer Install"], ["1", "Assassin Install"], ["1", "Lancer Install"], ["2", "Caster Install"], ["3", "Rider Install"], ["3", "Luck"]],
-  // servantCards: [["0", ""], ["1", ""], ["2", "2,2,3,3"], ["3", "Avenger Class"],["3", "Avenger Class"],["3", "Avenger Class"],["3", "Avenger Class"],["3", "Avenger Class"],["3", "Avenger Class"],],
-  // servantCards: [["0", "0"], ["1", "0"], ["2", "0,2,3,3"], ["3", "Surveil"],["3", "Surveil"],["3", "Surveil"],],
   masterName: "Fuugarlu",
-  // masterAbility: emptyState.masterAbility,
   masterAbility: `<p><span style="font-size: 30px; line-height: 1.1;"><em>Example</em> - Add some abilities!</span></p>
   <p><span style="font-size: 30px; line-height: 1.1;"><em>Other example</em> - <strong>Passive/Combat:</strong> Pay 1 Mana to [cry on command].</span></p>`,
 };
@@ -68,40 +78,22 @@ export const MasterCardCreation = () => {
     updateForm(key, value, setForm);
   };
 
-  const handleAttackTypeChange = (index: number) => {
-    mainUpdateForm(
-      "attackTypes",
-      form.attackTypes.map((val, i) => (i === index ? !val : val)),
-    );
+  const handleAttackTypeChange = (index: string) => {
+    console.log(form.attackTypes);
+    mainUpdateForm("attackTypes", {
+      ...form.attackTypes,
+      [index]: !form.attackTypes[index],
+    });
   };
 
-async function downloadCard() {
-  const card = document.getElementById("card-to-save");
-
-  if (!card) return;
-
-  const result = await snapdom(card);
-
-  await result.download({
-    format: "png",
-    filename: `${form.masterName || "master-card"}.png`,
-  });
-}
   return (
-    <div className="flex-col w-full">
+    <div className="flex-col w-full flex mt-12">
       <div className="flex flex-col xl:flex-row">
         <div className="xl:w-1/2 flex flex-col justify-between">
           <div className="flex flex-col md:flex-row justify-between items-center gap-2">
-            <h1 className="text-xl font-semibold">
-              Fate/Domination Card Maker
-            </h1>
+            <PageName />
             <span className="flex gap-2">
-              <button
-                onClick={() => setForm(emptyState)}
-                className="bg-gray-700 import-export-button hover:bg-red-800 transition"
-              >
-                CLEAR ALL
-              </button>
+              <ClearFormButton setForm={setForm} emptyState={emptyState} />
               <ExportImportFeature form={form} setForm={setForm} />
             </span>
           </div>
@@ -163,6 +155,87 @@ async function downloadCard() {
                     </button>
                   </div>
                 </div>
+                <div className="input-block">
+                  <h2 className="field-header">Name Length</h2>
+                  <div className="flex gap-2">
+                    <div className="flex gap-1">
+                      <input
+                        type="radio"
+                        id="short-name"
+                        name="masterName"
+                        value="short-name"
+                        checked={
+                          form.masterNameFieldSize ==
+                            MASTER_NAME_FIELD_SIZES.short || false
+                        }
+                        onChange={(e) =>
+                          e.target.checked &&
+                          mainUpdateForm(
+                            "masterNameFieldSize",
+                            MASTER_NAME_FIELD_SIZES.short,
+                          )
+                        }
+                      />
+                      <label htmlFor="short-name">Short</label>
+                    </div>
+
+                    <div className="flex gap-1">
+                      <input
+                        type="radio"
+                        id="medium-name"
+                        name="masterName"
+                        value="medium-name"
+                        checked={
+                          form.masterNameFieldSize ==
+                            MASTER_NAME_FIELD_SIZES.medium || false
+                        }
+                        onChange={(e) =>
+                          e.target.checked &&
+                          mainUpdateForm(
+                            "masterNameFieldSize",
+                            MASTER_NAME_FIELD_SIZES.medium,
+                          )
+                        }
+                      />
+                      <label htmlFor="medium-name">Medium</label>
+                    </div>
+
+                    <div className="flex gap-1">
+                      <input
+                        type="radio"
+                        id="long-name"
+                        name="masterName"
+                        value="long-name"
+                        checked={
+                          form.masterNameFieldSize ==
+                            MASTER_NAME_FIELD_SIZES.long || false
+                        }
+                        onChange={(e) =>
+                          e.target.checked &&
+                          mainUpdateForm(
+                            "masterNameFieldSize",
+                            MASTER_NAME_FIELD_SIZES.long,
+                          )
+                        }
+                      />
+                      <label htmlFor="long-name">Long</label>
+                    </div>
+                  </div>
+                </div>
+                {/* <label htmlFor="masterName" className="flex gap-1 items-center">
+                  <input
+                    id="useLongerCardNameTemplate"
+                    type="checkbox"
+                    checked={form.useLongerCardNameTemplate}
+                    onChange={(e) =>
+                      mainUpdateForm(
+                        "useLongerCardNameTemplate",
+                        e.target.checked,
+                      )
+                    }
+                  />
+                  <span>Enable longer name (doesn't work well with mana/atk; mainly for master & servant cards)</span>
+                </label> */}
               </div>
               <div className="input-block w-full">
                 <h2 className="field-header">Card Ability</h2>
@@ -192,9 +265,9 @@ async function downloadCard() {
                 <h2 className="field-header">Card Picture</h2>
                 <ImageCropper
                   croppedImage={form.pic}
-                  setCroppedImage={(croppedPic) =>
-                    mainUpdateForm("pic", croppedPic)
-                  }
+                  setCroppedImage={(croppedPic) => setForm((prev) => ({...prev, pic: croppedPic}))
+                }
+                cropSettings={IMAGE_CROP_SETTINGS.CARD}
                 />
               </div>
             </div>
@@ -246,13 +319,15 @@ async function downloadCard() {
                 {/* Attack Types (top left) */}
                 <div className="flex flex-col input-block">
                   <h2 className="category-header">Attack Types</h2>
-                  {form.attackTypes.map((isChecked, i) => (
+                  {ATTACK_TYPES.map((type, i) => (
                     <label key={i} className="flex gap-1">
                       <input
                         id={"attackType" + i}
                         type="checkbox"
-                        checked={isChecked}
-                        onChange={() => handleAttackTypeChange(i)}
+                        checked={form.attackTypes[type.toLowerCase()] ?? false}
+                        onChange={() =>
+                          handleAttackTypeChange(type.toLowerCase())
+                        }
                       />
                       {ATTACK_TYPES[i]}
                     </label>
@@ -379,12 +454,7 @@ async function downloadCard() {
             </div>
           </form>
 
-          <button
-            onClick={() => downloadCard()}
-            className="px-4 py-2 bg-blue-500 hover:bg-blue-400 text-white rounded cursor-pointer mt-3 w-full"
-          >
-            Download Card
-          </button>
+          <DownloadButton idToSave={PicsToSave.CARD} name={form.masterName}/>
         </div>
 
         <div className="xl:w-1/2">

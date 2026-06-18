@@ -59,7 +59,7 @@ const RichTextEditor = ({
     content: masterAbility,
     editorProps: {
       attributes: {
-        class: "h-40 rounded p-2 border border-gray-300 bg-blue-900 hover:bg-blue-700 w-full",
+        class: "h-40 rounded p-2 border border-gray-300 bg-blue-900 w-full",
       },
       handlePaste(view, event) {
         const text = event.clipboardData?.getData("text/plain");

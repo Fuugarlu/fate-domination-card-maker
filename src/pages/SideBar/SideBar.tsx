@@ -8,12 +8,15 @@ import { FaInfoCircle } from "react-icons/fa";
 import { SideBarItem } from "./SideBarItem";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
+import { IoIosStar } from "react-icons/io";
 
 const menuItems = [
   { label: "Main", icon: PiDiamondsFourFill, link: "" },
-  { label: "Master Box", icon: IoShapes, link: "master-box" },
+  { label: "Servant Summon [WIP]", icon: GiSwordInStone, link: "servant-summon" },
+  { label: "Command Seal", icon: IoIosStar, link: "command-seal" },
   { label: "Master Token", icon: FaRegUserCircle, link: "master-token" },
   { label: "Master Standee", icon: FaRegUser, link: "master-standee" },
+  { label: "Master Box", icon: IoShapes, link: "master-box" },
   { label: "NPC [WIP]", icon: GiSwordInStone, link: "npc" },
 ];
 

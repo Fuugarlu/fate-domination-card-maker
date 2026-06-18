@@ -1,8 +1,12 @@
 "use client";
 
 import { servantCardType } from "@/src/types/servantTypes";
-import masterTemplate from "./master-template.png";
-import { formInput } from "@/src/types/formTypes";
+import shortNameMasterTemplate from "./master-template-short.png";
+import mediumNameMasterTemplate from "./master-template-medium.png";
+import longNameMasterTemplate from "./master-template-long.png";
+import { AttackTypes, formInput, MASTER_NAME_FIELD_SIZES, PicsToSave } from "@/src/types/formTypes";
+import { ATTACK_TYPES } from "@/src/constants/servantConstants";
+import { StaticImageData } from "next/image";
 
 function getCardIcon(key: string) {
   switch (key.toLowerCase()) {
@@ -78,7 +82,22 @@ type CardProps = {
   isPreview: boolean;
 };
 
-export const Card = ({form, isPreview}: CardProps) => {
+export const Card = ({ form, isPreview }: CardProps) => {
+  function handleTemplate(masterNameFieldSize: MASTER_NAME_FIELD_SIZES): StaticImageData {
+    switch (masterNameFieldSize) {
+      case MASTER_NAME_FIELD_SIZES.short:
+        return shortNameMasterTemplate;
+            case MASTER_NAME_FIELD_SIZES.medium:
+        return mediumNameMasterTemplate;
+            case MASTER_NAME_FIELD_SIZES.long:
+        return longNameMasterTemplate;
+    
+      default:
+        return shortNameMasterTemplate;
+        break;
+    }
+  }
+
   return (
     <div
       style={isPreview ? { zoom: 0.5 } : {}}
@@ -86,10 +105,10 @@ export const Card = ({form, isPreview}: CardProps) => {
         ${!isPreview ? "absolute left-[-9999px]" : "flex flex-col items-center"}
       `}
     >
-      <div className="xl:fixed"> 
+      <div className="xl:fixed">
         {/* mt-4 above messes up download */}
         <div
-          id={isPreview ? "card-preview" : "card-to-save"}
+          id={isPreview ? "card-preview" : PicsToSave.CARD}
           className={`relative overflow-hidden ${form.grayscaleFilter && "grayscale "}`}
           style={{
             width: 750,
@@ -113,27 +132,31 @@ export const Card = ({form, isPreview}: CardProps) => {
 
           {/* Template frame */}
           <img
-            src={masterTemplate.src}
+            src={
+              handleTemplate(form.masterNameFieldSize).src
+            }
             alt=""
             className="absolute inset-0 pointer-events-none"
             style={{
               width: 750,
               height: 1050,
-              filter: `hue-rotate(${form.enableCardColorHueInput ? form.cardColorHue : "0"}deg)`
+              filter: `hue-rotate(${form.enableCardColorHueInput ? form.cardColorHue : "0"}deg)`,
             }}
           />
 
           {/* Name */}
           <div
-            className="absolute text-white whitespace-nowrap"
+            className="absolute flex items-center"
             style={{
-              left: 33,
-              top: 770 + (50 - form.masterNameFontSize),
+              left: 30,
+              top: 778,
               fontSize: form.masterNameFontSize,
               fontFamily: '"Times New Roman"',
+              height: "60px",
+              width: "700px",
             }}
           >
-            {form.masterName}
+            <div className="text-white">{form.masterName}</div>
           </div>
 
           {/* Objective Value */}
@@ -224,13 +247,32 @@ export const Card = ({form, isPreview}: CardProps) => {
           {/* Attack Type */}
           <div className="absolute" style={{ top: 10, left: 10 }}>
             <div className="flex flex-col gap-1">
-              {form.attackTypes[0] && <img src="attack-types-card/strength.png" />}
-              {form.attackTypes[1] && <img src="attack-types-card/agility.png" />}
+              <div className="flex flex-col gap-1">
+                {ATTACK_TYPES.map(
+                  (attackType) =>
+                    form.attackTypes[attackType.toLowerCase()] && (
+                      <div key={attackType.toLowerCase()}>
+                        <img
+                          src={`attack-types-card/${attackType.toLowerCase()}.png`}
+                          alt={attackType}
+                        />
+                      </div>
+                    ),
+                )}
+              </div>
+              {/* {form.attackTypes[0] && (
+                <img src="attack-types-card/strength.png" />
+              )}
+              {form.attackTypes[1] && (
+                <img src="attack-types-card/agility.png" />
+              )}
               {form.attackTypes[2] && <img src="attack-types-card/magic.png" />}
-              {form.attackTypes[3] && <img src="attack-types-card/special.png" />}
+              {form.attackTypes[3] && (
+                <img src="attack-types-card/special.png" />
+              )}
               {form.attackTypes[4] && (
                 <img src="attack-types-card/noblephantasm.png" />
-              )}
+              )} */}
             </div>
           </div>
 
@@ -243,12 +285,17 @@ export const Card = ({form, isPreview}: CardProps) => {
                 top: 20,
               }}
             >
-              <img src={"./servant-classes/" + form.servantClass + ".png"} className="block"/>
+              <img
+                src={"./servant-classes/" + form.servantClass + ".png"}
+                className="block"
+              />
             </div>
           )}
 
           {/* Ability */}
-          {form.masterAbility && <AbilityText text={form.masterAbility} />}
+          {form.hasCardAbility && form.masterAbility && (
+            <AbilityText text={form.masterAbility} />
+          )}
 
           {/* Servant Info */}
           {form.servantCards && (
@@ -256,13 +303,13 @@ export const Card = ({form, isPreview}: CardProps) => {
               className="absolute text-4xl"
               style={{
                 top: 860,
-                left: 50,
-                width: "650px",
+                left: 33,
+                width: "684px",
                 fontFamily: '"Times New Roman"',
               }}
             >
               <div
-                className="flex w-full justify-between"
+                className={`flex w-full justify-between ${form.servantCards.length <= 6 ? "mx-4" : "mx-1"}`}
                 style={{ maxHeight: "170px" }}
               >
                 {/* Strength/Agility/Magic basic attacks */}
@@ -273,15 +320,13 @@ export const Card = ({form, isPreview}: CardProps) => {
                     .map((cardItem, i) => (
                       <div
                         key={i}
-                        className={`flex items-center gap-2 ${cardItem.cardType.toLowerCase()}`}
+                        className={`flex items-center gap-2 ${cardItem.cardType.toLowerCase()} h-10`}
                       >
                         <img
                           style={{ width: "35px", height: "28px" }}
                           src={getCardIcon(cardItem.cardType)}
                         />
-                        <span>
-                        {cardItem.values}
-                        </span>
+                        <span>{cardItem.values}</span>
                       </div>
                     ))}
                 </div>
@@ -301,8 +346,7 @@ export const Card = ({form, isPreview}: CardProps) => {
                         {group.map((cardItem, i) => (
                           <div
                             key={i}
-                            className={`flex flex-row gap-2 items-center ${cardItem.cardType.toLowerCase()}`
-                            }
+                            className={`flex flex-row gap-2 items-center ${cardItem.cardType.toLowerCase()}`}
                           >
                             <img
                               style={{ width: "35px", height: "28px" }}

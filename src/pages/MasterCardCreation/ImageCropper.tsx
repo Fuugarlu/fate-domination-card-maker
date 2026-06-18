@@ -3,13 +3,16 @@ import React, { useEffect, useState } from "react";
 
 import Cropper, { Area, Point } from "react-easy-crop";
 import { getCroppedImg } from "./CanvasUtils";
+import { IMAGE_CROP_SETTINGS } from "@/src/utils/formUtils";
 
 const ImageCropper = ({
   croppedImage,
   setCroppedImage,
+  cropSettings,
 }: {
   croppedImage: string | null;
-  setCroppedImage: React.Dispatch<React.SetStateAction<string | null>>;
+  setCroppedImage: (value: string | null) => void;
+  cropSettings: IMAGE_CROP_SETTINGS;
 }) => {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [cropperVisible, setCropperVisible] = useState<boolean>(true);
@@ -56,6 +59,31 @@ const ImageCropper = ({
     setZoom(1);
   }
 
+  function getCropShape(cropSettings: IMAGE_CROP_SETTINGS): "rect" | "round" {
+    console.log("crop shape", cropSettings, [IMAGE_CROP_SETTINGS.CARD]);
+    if ([IMAGE_CROP_SETTINGS.TOKEN].includes(cropSettings)) {
+      return "round";
+    } else {
+      return "rect";
+    }
+  }
+
+  function getCropAspectRatio(cropSettings: IMAGE_CROP_SETTINGS): number {
+    switch (cropSettings) {
+      case IMAGE_CROP_SETTINGS.CARD:
+        return 7 / 8;
+
+      case IMAGE_CROP_SETTINGS.STANDEE:
+        return 876 / 1433;
+
+      case IMAGE_CROP_SETTINGS.MASTER_BOX:
+        return 1.3;
+
+      default: // Token
+        return 1;
+    }
+  }
+
   return (
     <div className="ImageCropper">
       {imageSrc && cropperVisible ? (
@@ -66,7 +94,8 @@ const ImageCropper = ({
                 image={imageSrc}
                 crop={crop}
                 zoom={zoom}
-                aspect={7 / 8}
+                cropShape={getCropShape(cropSettings)}
+                aspect={getCropAspectRatio(cropSettings)}
                 onCropChange={setCrop}
                 onCropComplete={onCropComplete}
                 onZoomChange={setZoom}

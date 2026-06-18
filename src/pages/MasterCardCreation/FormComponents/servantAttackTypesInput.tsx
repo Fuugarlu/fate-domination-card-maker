@@ -173,6 +173,7 @@ export const ServantAttackTypesInput = (prop: Props) => {
                 <input
                   id="attackType"
                   type="text"
+                  value={card.values ?? ""}
                   placeholder={"1,2,3..."}
                   onChange={(e) =>
                     addOrChangeServantAttack(
@@ -263,6 +264,7 @@ export const ServantAttackTypesInput = (prop: Props) => {
               <input
                 id="specialType"
                 type="text"
+                value={card.values ?? ""}
                 placeholder={"Surveil"}
                 onChange={(e) =>
                   addOrChangeServantAttack(
