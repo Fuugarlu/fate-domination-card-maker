@@ -43,8 +43,8 @@ const emptyState: formInput = {
   ],
   servantCardsSpecialFontSize: 36,
   hasCardAbility: true,
-  enableCardColorHueInput: false,
-  cardColorHue: "0",
+  // enableCardColorHueInput: false,
+  // cardColorHue: "0",
   masterNameFieldSize: MASTER_NAME_FIELD_SIZES.short,
 };
 
@@ -75,7 +75,6 @@ export const MasterCardCreation = () => {
   };
 
   const handleAttackTypeChange = (index: string) => {
-    console.log(form.attackTypes);
     mainUpdateForm("attackTypes", {
       ...form.attackTypes,
       [index]: !form.attackTypes[index],
@@ -385,7 +384,7 @@ export const MasterCardCreation = () => {
                       Grayscale filter
                     </div>
 
-                    <label className="field-header" htmlFor="hueSlider">
+                    {/* <label className="field-header" htmlFor="hueSlider">
                       Card Color
                     </label>
                     <div className="flex gap-1">
@@ -425,7 +424,7 @@ export const MasterCardCreation = () => {
                         />
                         <span>&#176;</span>
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>

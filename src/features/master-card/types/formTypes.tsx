@@ -23,7 +23,7 @@ export type formInput = {
   servantCards: servantCardType[] | null;
   servantCardsSpecialFontSize: number;
   hasCardAbility: boolean;
-  cardColorHue: string;
-  enableCardColorHueInput: boolean;
+  // cardColorHue: string;
+  // enableCardColorHueInput: boolean;
   masterNameFieldSize: MASTER_NAME_FIELD_SIZES;
 };
