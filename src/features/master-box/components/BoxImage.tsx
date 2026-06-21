@@ -13,7 +13,7 @@ const BoxImage = ({pic, width, height, rotate}: props) => {
       <img
         src={pic}
         alt=""
-        className={`absolute object-fit ${rotate ? "bottom-0 right-0 rotate-90" : "top-0 left-0"}`}
+        className={`absolute object-fit ${rotate ? "top-0 left-0 rotate-90" : "bottom-0 right-0"}`}
         style={{
           width: width,
           height: height,
