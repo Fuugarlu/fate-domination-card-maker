@@ -13,10 +13,10 @@ const CommandSeal = ({ form, isPreview }: props) => {
       <div
         style={isPreview ? { zoom: 0.5 } : {}}
         className={`
-        ${!isPreview ? "absolute left-[-9999px]" : "flex flex-col items-center"}
+        ${!isPreview ? "absolute left-[-9999px] top-[-9999px]" : "flex flex-col items-center"}
       `}
       >
-        <div className="xl:fixed">
+        <div>
           <div
             id={
               isPreview

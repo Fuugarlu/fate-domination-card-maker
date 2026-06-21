@@ -1,11 +1,11 @@
 export const createImage = (url: string): Promise<HTMLImageElement> =>
   new Promise<HTMLImageElement>((resolve, reject) => {
-    const image = new Image()
-    image.addEventListener('load', () => resolve(image))
-    image.addEventListener('error', (error) => reject(error))
-    image.setAttribute('crossOrigin', 'anonymous') // needed to avoid cross-origin issues on CodeSandbox
-    image.src = url
-  })
+    const image = new Image();
+    image.addEventListener("load", () => resolve(image));
+    image.addEventListener("error", (error) => reject(error));
+    image.setAttribute("crossOrigin", "anonymous"); // needed to avoid cross-origin issues on CodeSandbox
+    image.src = url;
+  });
 
 export function getRadianAngle(degreeValue: number) {
   return (degreeValue * Math.PI) / 180;
@@ -96,21 +96,21 @@ export async function getCroppedImg(
   // return croppedCanvas.toDataURL('image/jpeg');
 
   // As a blob
-return new Promise<string>((resolve, reject) => {
+  return new Promise<string>((resolve, reject) => {
     croppedCanvas.toBlob((file: Blob | null) => {
-        if (!file) {
-            reject(new Error("Failed to create blob from canvas"));
-            return;
-        }
-        resolve(URL.createObjectURL(file));
+      if (!file) {
+        reject(new Error("Failed to create blob from canvas"));
+        return;
+      }
+      resolve(URL.createObjectURL(file));
     }, "image/png");
-});
+  });
 }
 
 export async function getRotatedImage(imageSrc: string, rotation: number = 0) {
-  const image = await createImage(imageSrc)
-  const canvas = document.createElement('canvas')
-  const ctx = canvas.getContext('2d')
+  const image = await createImage(imageSrc);
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
 
   const orientationChanged =
     rotation === 90 ||
@@ -132,7 +132,7 @@ export async function getRotatedImage(imageSrc: string, rotation: number = 0) {
 
   return new Promise((resolve) => {
     canvas.toBlob((file) => {
-        if (!file) return;
+      if (!file) return;
       resolve(URL.createObjectURL(file));
     }, "image/png");
   });

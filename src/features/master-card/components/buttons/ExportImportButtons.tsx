@@ -66,7 +66,6 @@ export const ExportImportFeature = (prop: Props) => {
           event.target?.result as string,
         ) as formInput;
 
-        // Basic validation to ensure keys match
         if (importedData && typeof importedData === "object") {
           prop.setForm(importedData);
         }
@@ -77,7 +76,6 @@ export const ExportImportFeature = (prop: Props) => {
     };
     reader.readAsText(file);
 
-    // Reset input so the same file can be re-uploaded if changed externally
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }

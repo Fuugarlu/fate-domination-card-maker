@@ -1,5 +1,4 @@
 import { EmojiItem } from "@tiptap/extension-emoji";
-// attack-types/index.ts
 import { strength, agility, magic, special, noblephantasm } from "@/public/attack-types-text";
 
 const emojiList = [

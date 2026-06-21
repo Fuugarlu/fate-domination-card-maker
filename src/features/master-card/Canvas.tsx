@@ -4,7 +4,10 @@ import { servantCardType } from "@/src/types/servantTypes";
 import shortNameMasterTemplate from "./images/master-template-short.png";
 import mediumNameMasterTemplate from "./images/master-template-medium.png";
 import longNameMasterTemplate from "./images/master-template-long.png";
-import { formInput, MASTER_NAME_FIELD_SIZES } from "@/src/features/master-card/types/formTypes";
+import {
+  formInput,
+  MASTER_NAME_FIELD_SIZES,
+} from "@/src/features/master-card/types/formTypes";
 import { ATTACK_TYPES } from "@/src/constants/servantConstants";
 import { StaticImageData } from "next/image";
 import { IMAGE_CROP_SETTINGS } from "@/src/utils/formUtils";
@@ -36,19 +39,6 @@ function getServantSplitCount(servantCards: servantCardType[]) {
 }
 
 function AbilityText({ text }: { text: string }) {
-  let fontSize = 30;
-  let lineHeight = 35;
-
-  if (text.length > 250) {
-    fontSize = 25;
-    lineHeight = 30;
-  }
-
-  if (text.length > 400) {
-    fontSize = 20;
-    lineHeight = 25;
-  }
-
   return (
     <div
       className="absolute text-white break-words"
@@ -56,8 +46,6 @@ function AbilityText({ text }: { text: string }) {
         left: 33,
         top: 845,
         width: 680,
-        // fontSize,
-        // lineHeight: `${lineHeight}px`,
         fontFamily: '"Times New Roman"',
       }}
       dangerouslySetInnerHTML={{ __html: text }}
@@ -71,18 +59,19 @@ type CardProps = {
 };
 
 export const Card = ({ form, isPreview }: CardProps) => {
-  function handleTemplate(masterNameFieldSize: MASTER_NAME_FIELD_SIZES): StaticImageData {
+  function handleTemplate(
+    masterNameFieldSize: MASTER_NAME_FIELD_SIZES,
+  ): StaticImageData {
     switch (masterNameFieldSize) {
       case MASTER_NAME_FIELD_SIZES.short:
         return shortNameMasterTemplate;
-            case MASTER_NAME_FIELD_SIZES.medium:
+      case MASTER_NAME_FIELD_SIZES.medium:
         return mediumNameMasterTemplate;
-            case MASTER_NAME_FIELD_SIZES.long:
+      case MASTER_NAME_FIELD_SIZES.long:
         return longNameMasterTemplate;
-    
+
       default:
         return shortNameMasterTemplate;
-        break;
     }
   }
 
@@ -90,12 +79,14 @@ export const Card = ({ form, isPreview }: CardProps) => {
     <div
       style={isPreview ? { zoom: 0.5 } : {}}
       className={`
-        ${!isPreview ? "absolute left-[-9999px]" : "flex flex-col items-center"}
+        ${!isPreview ? "absolute left-[-9999px] top-[-9999px]" : "flex flex-col items-center"}
       `}
     >
-      <div className="xl:fixed">
+      <div>
         <div
-          id={isPreview ? "card-preview" : IMAGE_CROP_SETTINGS.CARD + "-to-save"}
+          id={
+            isPreview ? "card-preview" : IMAGE_CROP_SETTINGS.CARD + "-to-save"
+          }
           className={`relative overflow-hidden ${form.grayscaleFilter && "grayscale "}`}
           style={{
             width: 750,
@@ -119,9 +110,7 @@ export const Card = ({ form, isPreview }: CardProps) => {
 
           {/* Template frame */}
           <img
-            src={
-              handleTemplate(form.masterNameFieldSize).src
-            }
+            src={handleTemplate(form.masterNameFieldSize).src}
             alt=""
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -148,9 +137,7 @@ export const Card = ({ form, isPreview }: CardProps) => {
 
           {/* Objective Value */}
           {form.objectiveValue !== null && (
-            <div
-              className="absolute right-[10px] top-0 w-[190px]"
-            >
+            <div className="absolute right-[10px] top-0 w-[190px]">
               <img src={"./objective-vp/" + form.objectiveValue + " VP.png"} />
             </div>
           )}
@@ -244,9 +231,7 @@ export const Card = ({ form, isPreview }: CardProps) => {
 
           {/* Servant Class */}
           {form.servantClass !== null && (
-            <div
-              className="absolute right-[20px] top-[20px]"
-            >
+            <div className="absolute right-[20px] top-[20px]">
               <img
                 src={"./servant-classes/" + form.servantClass + ".png"}
                 className="block"

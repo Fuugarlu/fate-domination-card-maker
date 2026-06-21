@@ -49,7 +49,7 @@ export const MenuBar = ({
     const currentSize =
       editor.getAttributes("textStyle").fontSize || DEFAULT_TEXT_SIZE;
     const numericSize = parseInt(currentSize, 10);
-    const newSize = increment ? numericSize + 2 : numericSize - 2; // Increments or decrements by 2px
+    const newSize = increment ? numericSize + 2 : numericSize - 2;
     const newSizeString = newSize + "px";
     const end = editor.state.doc.content.size;
     editor
@@ -77,7 +77,6 @@ export const MenuBar = ({
       })
       .run();
 
-    // TODO: put this in a util function? or edit all of them
     const end = editor.state.doc.content.size;
     editor
       .chain()
@@ -87,6 +86,8 @@ export const MenuBar = ({
       .setTextSelection(end)
       .run();
   }
+
+  const colorInputRef = React.useRef<HTMLInputElement>(null);
 
   return (
     <div className="w-full flex overflow-x-auto">
@@ -221,8 +222,8 @@ export const MenuBar = ({
             ></div>
           </button>
           <div className="flex justify-center items-center w-10 h-10 relative menu-bar-button no-left-border">
-            {/* <div className="rounded-full color-circle relative"> */}
               <input
+                ref={colorInputRef}
                 type="color"
                 onInput={(event) =>
                   editor
@@ -233,15 +234,15 @@ export const MenuBar = ({
                 }
                 value={editorState.color ?? "#000000"}
                 data-testid="setColor"
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-0 rounded-full"
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-0 rounded-full cursor-pointer"
                 style={{ width: 32, height: 32 }}
               />
-              {/* <BiColorFill
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+              <BiColorFill
+                onClick={() => colorInputRef.current?.click()}
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
                 fontSize={20}
-              /> */}
+              />
             </div>
-          {/* </div> */}
         </div>
       </nav>
     </div>

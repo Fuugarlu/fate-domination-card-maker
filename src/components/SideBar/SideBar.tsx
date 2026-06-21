@@ -17,7 +17,6 @@ const menuItems = [
   { label: "Master Standee", icon: FaRegUser, link: "master-standee" },
   { label: "Master Box", icon: IoShapes, link: "master-box" },
   { label: "Command Seal", icon: IoIosStar, link: "command-seal" },
-  // { label: "NPC [WIP]", icon: GiSwordInStone, link: "npc" }, // scrapped
 ];
 
 export const SideBar = () => {
@@ -46,7 +45,12 @@ export const SideBar = () => {
             <div>
               <hr className="mt-2 mb-2" />
               <div className="font-semibold flex gap-2 p-1 items-center cursor-pointer hover:bg-blue-400 rounded select-none">
-                <SideBarItem icon={FaInfoCircle} label="Info & Contact" link="info-contact" key={"Info & Contact"}/>
+                <SideBarItem
+                  icon={FaInfoCircle}
+                  label="Info & Contact"
+                  link="info-contact"
+                  key={"Info & Contact"}
+                />
               </div>
             </div>
           </div>

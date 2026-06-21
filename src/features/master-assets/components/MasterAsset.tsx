@@ -1,5 +1,5 @@
-import { MasterPicAndColorForm } from '@/src/features/master-card/types/formTypes';
 import { IMAGE_CROP_SETTINGS } from '@/src/utils/formUtils';
+import { MasterPicAndColorForm } from '../types/formTypes';
 
 type props = {
     form: MasterPicAndColorForm
@@ -28,10 +28,10 @@ export const MasterAsset = ({form, isPreview, assetType}: props) => {
     <div
       style={isPreview ? { zoom: 0.5 } : {}}
       className={`
-        ${!isPreview ? "absolute left-[-9999px]" : "flex flex-col items-center"}
+        ${!isPreview ? "absolute left-[-9999px] top-[-9999px]" : "flex flex-col items-center"}
       `}
     >
-      <div className="xl:fixed">
+      <div>
         <div
           id={isPreview ? "card-preview" : assetType + "-to-save"}
           className={`relative overflow-hidden`}

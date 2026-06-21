@@ -96,7 +96,6 @@ export const ServantAttackTypesInput = (prop: Props) => {
     });
   }
 
-  // TODO: attack types type, not just constant
   function changeSpecialCardType(attackIndex: number, newType: string) {
     prop.setForm((prev) => {
       const servantCards = prev.servantCards ? [...prev.servantCards] : [];

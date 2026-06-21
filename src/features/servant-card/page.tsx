@@ -17,7 +17,7 @@ import { BasicCardTypes } from "@/src/types/cardTypes";
 
 const defaultState: ServantCardForm = {
   class: SERVANT_TYPES.STANDARD[0],
-  name: "Fuugarlu",
+  name: "Cool Servant Name",
   primaryTrait: BASIC_CARDS[1],
   traits: ["VP Gain", "Control"],
   drawbacks: ["Setup Reliant", "NP Reliant"],
@@ -39,9 +39,7 @@ const ServantCard = () => {
     <div>
       <div className="flex flex-row items-center gap-2">
         <PageName />
-        {/* <span className="flex gap-2"> */}
         <ClearFormButton setForm={setForm} emptyState={emptyState} />
-        {/* </span> */}
       </div>
       <div className="lg:flex flex-row">
         <div className="w-1/2">

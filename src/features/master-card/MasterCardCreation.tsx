@@ -55,7 +55,7 @@ const initialState = {
     { index: 1, cardType: "Agility", values: "", showIcon: false },
     { index: 2, cardType: "Magic", values: "", showIcon: false },
   ],
-  masterName: "Fuugarlu",
+  masterName: "Cool Card Name",
   masterAbility: `<p><span style="font-size: 30px; line-height: 1.1;"><em>Example</em> - Add some abilities!</span></p>
   <p><span style="font-size: 30px; line-height: 1.1;"><em>Other example</em> - <strong>Passive/Combat:</strong> Pay 1 Mana to [cry on command].</span></p>`,
 };

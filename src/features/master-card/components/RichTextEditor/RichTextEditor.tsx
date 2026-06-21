@@ -43,7 +43,6 @@ const RichTextEditor = ({
       Text,
       Bold,
       Italic,
-      // Underline, // TODO: maybe? check if needed feature
       Color,
       TextStyle,
       FontSize,
@@ -59,7 +58,7 @@ const RichTextEditor = ({
     content: masterAbility,
     editorProps: {
       attributes: {
-        class: "h-40 rounded p-2 border border-gray-300 bg-blue-900 w-full",
+        class: "min-h-40 rounded p-2 border border-gray-300 bg-blue-900 w-full",
       },
       handlePaste(view, event) {
         const text = event.clipboardData?.getData("text/plain");
