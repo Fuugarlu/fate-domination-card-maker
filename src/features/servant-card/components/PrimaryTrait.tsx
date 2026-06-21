@@ -4,7 +4,7 @@ import agilitySeparator from "../images/primary-trait-separators/Agility.png";
 import magicSeparator from "../images/primary-trait-separators/Magic.png";
 import specialSeparator from "../images/primary-trait-separators/Special.png";
 import { StaticImageData } from 'next/image';
-import { BasicCardTypes } from '../types/formTypes';
+import { BasicCardTypes } from '@/src/types/cardTypes';
 
 const separatorMap: Record<BasicCardTypes, StaticImageData> = {
   strength: strengthSeparator,
