@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { SideBar } from "../pages/SideBar/SideBar";
+import { SideBar } from "../components/SideBar/SideBar";
 import Head from "next/head";
 
 import type { Viewport } from "next";
@@ -41,7 +41,7 @@ export default function RootLayout({
       <body>
         <div className="flex min-h-screen">
           <SideBar />
-          <main className="flex-1 mx-2 md:mx-0">{children}</main>
+          <main className="flex-1 mx-2 md:mx-0 mt-10">{children}</main>
         </div>
       </body>
     </html>

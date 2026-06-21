@@ -1,4 +1,4 @@
-import { MasterCardCreation } from "../pages/MasterCardCreation/MasterCardCreation";
+import { MasterCardCreation } from "../features/master-card/MasterCardCreation";
 
 export default function Home() {
   return (

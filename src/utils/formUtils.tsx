@@ -1,4 +1,4 @@
-import { formInput } from "../types/formTypes";
+import { formInput } from "../features/master-card/types/formTypes";
 
 export const updateForm = <K extends keyof formInput>(
     key: K,
@@ -22,4 +22,6 @@ export const enum IMAGE_CROP_SETTINGS {
   TOKEN = "token",
   STANDEE = "standee",
   MASTER_BOX = "master-box",
+  SERVANT_SUMMON = "servant-summon",
+  COMMAND_SEAL = "command-seal"
 }
