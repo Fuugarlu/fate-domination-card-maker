@@ -6,8 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d out"
+
   },
+  "homepage": "https://fuugarlu.github.io/fate-domination-card-maker",
   "dependencies": {
     "@tiptap/extension-bold": "^3.26.0",
     "@tiptap/extension-document": "^3.26.0",
