@@ -107,7 +107,6 @@ const RichTextEditor = ({
 
     const handleUpdate = () => {
       if (editor.isEmpty) {
-
         editor
           .chain()
           .focus()
@@ -126,13 +125,21 @@ const RichTextEditor = ({
   }, [editor, lastFontUsed]);
 
   useEffect(() => {
-    if (editor && masterAbility == "") {
-      editor.commands.clearContent();
-    }
+    if (!editor) return;
 
-  }, [editor, masterAbility])
-  
-  
+    const current = editor.getHTML();
+
+    if (masterAbility !== current) {
+      const { from, to } = editor.state.selection;
+
+      editor.commands.setContent(masterAbility || "");
+
+      requestAnimationFrame(() => {
+        editor.commands.setTextSelection({ from, to });
+      });
+    }
+  }, [editor, masterAbility]);
+
   return (
     <div className="flex flex-col w-full overflow-scroll">
       {editor && (
