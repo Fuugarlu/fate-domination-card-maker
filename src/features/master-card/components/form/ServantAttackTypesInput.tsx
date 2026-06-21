@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { formInput } from "@/src/features/master-card/types/formTypes";
 import { updateForm } from "@/src/utils/formUtils";
 import { SERVANT_TYPES } from "@/src/constants/servantConstants";
@@ -15,7 +15,6 @@ type Props = {
 };
 
 export const ServantAttackTypesInput = (prop: Props) => {
-  const [specialFontSize, setSpecialFontSize] = useState<number>(30);
 
   function addOrChangeServantAttack(
     attackIndex: number,
@@ -166,7 +165,7 @@ export const ServantAttackTypesInput = (prop: Props) => {
             >
               <div className="flex flex-row items-center gap-1">
                 <img
-                  src={"./attack-types-text/" + card.cardType + ".png"}
+                  src={"./attack-types-text/" + card.cardType.toLowerCase() + ".png"}
                   style={{ width: 33, height: 28 }}
                 />
                 <input
@@ -257,7 +256,7 @@ export const ServantAttackTypesInput = (prop: Props) => {
           {prop.form.servantCards?.slice(3).map((card) => (
             <div className="flex flex-row items-center gap-1" key={card.index}>
               <img
-                src={"./attack-types-text/" + card.cardType + ".png"}
+                src={"./attack-types-text/" + card.cardType.toLowerCase() + ".png"}
                 style={{ width: 33, height: 28 }}
               />
               <input

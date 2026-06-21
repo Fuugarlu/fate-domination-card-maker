@@ -47,6 +47,7 @@ function AbilityText({ text }: { text: string }) {
         top: 845,
         width: 680,
         fontFamily: '"Times New Roman"',
+        lineHeight: 1.1
       }}
       dangerouslySetInnerHTML={{ __html: text }}
     ></div>
