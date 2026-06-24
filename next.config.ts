@@ -1,9 +1,11 @@
 import type { NextConfig } from "next";
 
+const isProd = process.env.DEPLOY_ENV === "production";
+
 const nextConfig: NextConfig = {
   output: 'export',
-  assetPrefix: '/fate-domination-card-maker/',
-  basePath: '/fate-domination-card-maker' ,
+  assetPrefix: isProd ? '/fate-domination-card-maker/' : "",
+  basePath: isProd ? '/fate-domination-card-maker/' : "",
 };
 
 export default nextConfig;

@@ -8,7 +8,7 @@ import { SERVANT_TYPES } from "@/src/constants/servantConstants";
 import SimpleMasterForm from "../master-assets/components/SimpleMasterForm";
 import { PageName } from "@/src/components/header/PageName";
 import { ClearFormButton } from "@/src/components/header/ClearFormButton";
-import ImageCropper from "../master-card/ImageCropper";
+import ImageCropper from "../../components/image-cropper/ImageCropper";
 import { ServantSummon } from "./components/ServantSummonCard";
 import TraitsAndDrawbacks from "./components/TraitsAndDrawbacks";
 import { BASIC_CARDS } from "@/src/constants/cardConstants";
@@ -94,21 +94,22 @@ const ServantCard = () => {
             </select>
           </div>
           <div className="input-block">
-            <h2 className="field-header">Traits & Drawbacks</h2>
-            <div className="flex flex-col gap-3">
-              <TraitsAndDrawbacks
-                traits={form.traits}
-                drawbacks={form.drawbacks}
-                isTraits={true}
-                setForm={setForm}
-              />
-              <TraitsAndDrawbacks
-                traits={form.traits}
-                drawbacks={form.drawbacks}
-                isTraits={false}
-                setForm={setForm}
-              />
-            </div>
+            <h2 className="field-header">Traits</h2>
+            <TraitsAndDrawbacks
+              traits={form.traits}
+              drawbacks={form.drawbacks}
+              isTraits={true}
+              setForm={setForm}
+            />
+          </div>
+          <div className="input-block">
+            <h2 className="field-header">Drawbacks</h2>
+            <TraitsAndDrawbacks
+              traits={form.traits}
+              drawbacks={form.drawbacks}
+              isTraits={false}
+              setForm={setForm}
+            />
           </div>
 
           <div>

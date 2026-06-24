@@ -2,8 +2,9 @@
 import React, { useEffect, useState } from "react";
 
 import Cropper, { Area, Point } from "react-easy-crop";
-import { getCroppedImg } from "./CanvasUtils";
+import { getCroppedImg } from "../../features/master-card/CanvasUtils";
 import { IMAGE_CROP_SETTINGS } from "@/src/utils/formUtils";
+import UploadImageButton from "./components/UploadImageButton";
 
 const ImageCropper = ({
   croppedImage,
@@ -73,14 +74,11 @@ const ImageCropper = ({
     });
   }
 
-  const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0];
-      let imageDataUrl = await readFile(file);
-      setCropperVisible(true);
-      setImageSrc(imageDataUrl as string);
-    }
-  };
+  async function handleUploadedImage(file: File) {
+    let imageDataUrl = await readFile(file);
+    setCropperVisible(true);
+    setImageSrc(imageDataUrl as string);
+  }
 
   function cancelCropper() {
     setCropperVisible(false);
@@ -144,19 +142,7 @@ const ImageCropper = ({
         </div>
       ) : (
         <div>
-          <label
-            htmlFor="image-upload"
-            className="cropper-button cropper-button-upload bg-blue-500 hover:bg-blue-400 block flex justify-center items-center"
-          >
-            <input
-              type="file"
-              id="image-upload"
-              onChange={onFileChange}
-              accept="image/*"
-              className="hidden"
-            />
-            <span>Upload Image</span>
-          </label>
+          <UploadImageButton setUploadedImage={handleUploadedImage} />
         </div>
       )}
     </div>

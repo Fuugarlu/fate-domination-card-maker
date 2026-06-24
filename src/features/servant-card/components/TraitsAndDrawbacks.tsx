@@ -20,17 +20,6 @@ const TraitsAndDrawbacks = ({
 
   return (
     <div className="flex flex-col gap-2">
-      <button
-        className="bg-blue-500 rounded p-1 cursor-pointer w-[229px]"
-        onClick={() =>
-          setForm((prev) => ({
-            ...prev,
-            [key]: [...list, ""],
-          }))
-        }
-      >
-        ADD {key.toUpperCase()}
-      </button>
       <div className="flex flex-col gap-1">
         {list.map((item, i) => (
           <div className="flex flex-row items-center gap-1" key={i}>
@@ -66,6 +55,17 @@ const TraitsAndDrawbacks = ({
           </div>
         ))}
       </div>
+      <button
+        className="bg-blue-500 rounded p-1 cursor-pointer w-[229px]"
+        onClick={() =>
+          setForm((prev) => ({
+            ...prev,
+            [key]: [...list, ""],
+          }))
+        }
+      >
+        ADD {key.toUpperCase()}
+      </button>
     </div>
   );
 };

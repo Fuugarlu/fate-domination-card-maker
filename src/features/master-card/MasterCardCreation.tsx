@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Card } from "./Canvas";
-import ImageCropper from "./ImageCropper";
+import ImageCropper from "../../components/image-cropper/ImageCropper";
 import RichTextEditor from "./components/RichTextEditor/RichTextEditor";
 import { ExportImportFeature } from "./components/buttons/ExportImportButtons";
 import { MdTextDecrease, MdTextIncrease } from "react-icons/md";
@@ -56,8 +56,8 @@ const initialState = {
     { index: 2, cardType: "Magic", values: "", showIcon: false },
   ],
   masterName: "Cool Card Name",
-  masterAbility: `<p><span style="font-size: 30px; line-height: 1.1;"><em>Example</em> - Add some abilities!</span></p>
-  <p><span style="font-size: 30px; line-height: 1.1;"><em>Other example</em> - <strong>Passive/Combat:</strong> Pay 1 Mana to [cry on command].</span></p>`,
+  masterAbility: `<p><span style="color: #ffffff; font-size: 30px; line-height: 1.1;"><em>Example</em> - Add some abilities!</span></p>
+  <p><span style="color: #ffffff; font-size: 30px; line-height: 1.1;"><em>Other example</em> - <strong>Passive/Combat:</strong> Pay 1 Mana to [cry on command].</span></p>`,
 };
 
 export const MasterCardCreation = () => {

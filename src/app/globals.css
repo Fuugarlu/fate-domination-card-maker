@@ -3,11 +3,16 @@
 :root {
   --background: #1E2939;
   --foreground: #ffffff;
+  --primary-dark-blue: #192145;
+  /* --primary-light-blue: #68afd8; */
+  --primary-light-blue: #434e81;
 }
 
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-primary-dark-blue: var(--primary-dark-blue);
+  --color-primary-light-blue: var(--primary-light-blue);
 }
 
 body {
@@ -21,9 +26,8 @@ select {
   width: 229px;
   height: 36px;
   padding: 0.25rem;
-  color: white;
-  background: #192145;
-  border: 1px solid lightblue;
+  background: var(--primary-dark-blue);
+  border: 1px solid var(--primary-light-blue);
   border-radius: 8px;
 }
 

@@ -19,12 +19,20 @@
   cursor: pointer;
 }
 
+.last-menu-bar-button {
+  width: 15rem;
+}
+
 .no-left-border {
-  border-left: 0;
+  border-left: 0 !important;
 }
 
 .color-circle {
   width: 28px;
   height: 28px;
   border: 1px solid lightgray;
+}
+
+.color-picker-hex-input {
+  width: 80px !important;
 }

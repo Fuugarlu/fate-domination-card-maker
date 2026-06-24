@@ -113,6 +113,7 @@ const RichTextEditor = ({
           .selectAll()
           .setTextSelection(editor.state.doc.content.size)
           .setFontSize(lastFontUsed)
+          .setColor("#ffffff")
           .run();
       }
     };

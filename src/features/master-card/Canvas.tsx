@@ -171,7 +171,7 @@ export const Card = ({ form, isPreview }: CardProps) => {
                   className="absolute"
                   style={{
                     left: "35%",
-                    fontSize: "64px",
+                    fontSize: "74px",
                     fontFamily: '"Times New Roman"',
                     top: "50%",
                     transform: "translate(-65%, -50%)",
@@ -198,7 +198,7 @@ export const Card = ({ form, isPreview }: CardProps) => {
                   className="absolute"
                   style={{
                     left: "33%",
-                    fontSize: "64px",
+                    fontSize: "74px",
                     fontFamily: '"Times New Roman"',
                     top: "50%",
                     transform: "translate(-67%, -50%)",

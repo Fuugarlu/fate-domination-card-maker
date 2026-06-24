@@ -2,13 +2,10 @@ import type { Editor } from "@tiptap/core";
 import { useEditorState } from "@tiptap/react";
 import React from "react";
 
-import { FaBold } from "react-icons/fa";
-import { FaItalic } from "react-icons/fa";
+import { FaBold, FaItalic } from "react-icons/fa";
 import { MenuBarState, menuBarStateSelector } from "./MenuBarState";
 
-import { MdOutlineFormatColorText, MdTextIncrease } from "react-icons/md";
-import { MdTextDecrease } from "react-icons/md";
-import { BiColorFill } from "react-icons/bi";
+import { MdTextIncrease, MdTextDecrease } from "react-icons/md";
 
 import {
   strength,
@@ -17,8 +14,8 @@ import {
   special,
   noblephantasm,
 } from "@/public/attack-types-text";
-import { IoColorPalette } from "react-icons/io5";
 import { capitalizeString } from "@/src/utils/TextUtils";
+import ColorPicker from "./components/ColorPicker";
 
 const emojiList = [
   { name: "strength", image: strength },
@@ -86,8 +83,6 @@ export const MenuBar = ({
       .setTextSelection(end)
       .run();
   }
-
-  const colorInputRef = React.useRef<HTMLInputElement>(null);
 
   return (
     <div className="w-full flex overflow-x-auto">
@@ -212,37 +207,16 @@ export const MenuBar = ({
             ></div>
           </button>
           <button
-            onClick={() => editor.chain().focus().unsetColor().run()}
+            onClick={() => editor.chain().focus().setColor("#ffffff").run()}
             className={`menu-bar-button no-left-border`}
-            data-testid="unsetColor"
+            data-testid="setWhite"
           >
             <div
               className="rounded-full color-circle"
               style={{ backgroundColor: "#ffffff" }}
             ></div>
           </button>
-          <div className="flex justify-center items-center w-10 h-10 relative menu-bar-button no-left-border">
-              <input
-                ref={colorInputRef}
-                type="color"
-                onInput={(event) =>
-                  editor
-                    .chain()
-                    .focus()
-                    .setColor(event.currentTarget.value)
-                    .run()
-                }
-                value={editorState.color ?? "#000000"}
-                data-testid="setColor"
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-0 rounded-full cursor-pointer"
-                style={{ width: 32, height: 32 }}
-              />
-              <BiColorFill
-                onClick={() => colorInputRef.current?.click()}
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
-                fontSize={20}
-              />
-            </div>
+          <ColorPicker editor={editor} editorState={editorState} />
         </div>
       </nav>
     </div>

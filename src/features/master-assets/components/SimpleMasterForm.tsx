@@ -1,7 +1,7 @@
 import React from "react";
 import { PageName } from "../../../components/header/PageName";
 import { ClearFormButton } from "../../../components/header/ClearFormButton";
-import ImageCropper from "../../master-card/ImageCropper";
+import ImageCropper from "../../../components/image-cropper/ImageCropper";
 import { IMAGE_CROP_SETTINGS } from "../../../utils/formUtils";
 import { Color, MasterPicAndColorForm } from "../types/formTypes";
 
