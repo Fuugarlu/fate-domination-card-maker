@@ -82,6 +82,7 @@ const RichTextEditor = ({
               {
                 type: "textStyle",
                 attrs: {
+                  color: "#ffffff",
                   fontSize: currentFontSize,
                   lineHeight: `1.1`,
                 },

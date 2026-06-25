@@ -74,13 +74,14 @@ export const MenuBar = ({
       })
       .run();
 
-    const end = editor.state.doc.content.size;
+    const currentSelection = editor.state.selection.to;
     editor
       .chain()
       .focus()
       .selectAll()
       .setFontSize(currentSize)
-      .setTextSelection(end)
+      .setColor("#ffffff")
+      .setTextSelection(currentSelection)
       .run();
   }
 

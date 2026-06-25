@@ -1,7 +1,10 @@
 /* Basic editor styles */
+
 .tiptap-emoji img {
   width: 1.4em;
+  max-width: 50px;
   display: inline;
+  vertical-align: center;
 }
 .tiptap {
   span {

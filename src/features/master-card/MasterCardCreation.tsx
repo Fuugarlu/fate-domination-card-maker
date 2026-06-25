@@ -229,7 +229,7 @@ export const MasterCardCreation = () => {
                       mainUpdateForm("hasCardAbility", e.target.checked)
                     }
                   />
-                  <span>Enable card ability</span>
+                  <span className="select-none">Enable card ability</span>
                 </label>
 
                 {form.hasCardAbility && (
