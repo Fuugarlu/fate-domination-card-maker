@@ -2,10 +2,10 @@ import boxTopRightBlack from "../images/box-top-right.png";
 import boxBottomLeftShadows from "../images/box-bottom-left.png";
 import { IMAGE_CROP_SETTINGS } from "@/src/utils/formUtils";
 import BoxImage from "./BoxImage";
-import { MasterPicAndColorForm } from "../../master-assets/types/formTypes";
+import { BoxPicAndColorForm } from "../../master-assets/types/formTypes";
 
 type props = {
-  form: MasterPicAndColorForm;
+  form: BoxPicAndColorForm;
   isPreview: boolean;
 };
 

@@ -7,11 +7,13 @@ import shirouStandee from "./images/shirou-standee.png";
 import SimpleMasterForm from "@/src/features/master-assets/components/SimpleMasterForm";
 import { MasterAsset } from "../components/MasterAsset";
 import { MasterPicAndColorForm } from "../types/formTypes";
-import ColorInput from "../components/ColorInput";
+import ColorInputWithGradient from "../components/ColorInputWithGradient";
 
 const emptyState: MasterPicAndColorForm = {
   pic: shirouStandee.src,
   borderColor: "#000000",
+  colorMode: "solid",
+  gradientColors: ["#ffffff", "#000000"],
 };
 
 const assetType = IMAGE_CROP_SETTINGS.STANDEE;
@@ -26,9 +28,9 @@ const MasterStandeeCreation = () => {
         form={form}
         imageCropSettings={assetType}
       />
-      <ColorInput form={form} setForm={setForm}/>
-      <MasterAsset form={form} isPreview={true} assetType={assetType}/>
-      <MasterAsset form={form} isPreview={false} assetType={assetType}/>
+      <ColorInputWithGradient form={form} setForm={setForm} />
+      <MasterAsset form={form} isPreview={true} assetType={assetType} />
+      <MasterAsset form={form} isPreview={false} assetType={assetType} />
       <DownloadButton idToSave={assetType} name={"master-standee"} />
     </div>
   );

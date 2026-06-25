@@ -1,28 +1,34 @@
-import { IMAGE_CROP_SETTINGS } from '@/src/utils/formUtils';
-import { MasterPicAndColorForm } from '../types/formTypes';
+import { IMAGE_CROP_SETTINGS } from "@/src/utils/formUtils";
+import { MasterPicAndColorForm } from "../types/formTypes";
 
 type props = {
-    form: MasterPicAndColorForm
-    isPreview: boolean
-    assetType: IMAGE_CROP_SETTINGS
-}
+  form: MasterPicAndColorForm;
+  isPreview: boolean;
+  assetType: IMAGE_CROP_SETTINGS;
+};
 
-const standeeAssetSettings = {
-  width: 876,
-  height: 1433,
-  border: "50px",
-  borderRadius: ""
-}
+export const MasterAsset = ({ form, isPreview, assetType }: props) => {
+  const tokenAssetSettings = {
+    width: 876,
+    height: 876,
+    borderRadius: "9999px",
+    padding: "40px",
+    //   background: `
+    //   linear-gradient(to bottom, ${form.colorMode == "solid" ? form.borderColor : form.gradientColors.join(",")}}) border-box
+    // `,
+    background: `linear-gradient(to bottom, ${form.colorMode == "solid" ? form.borderColor : form.gradientColors.join(",")})`,
+  };
+  const standeeAssetSettings = {
+    width: 876,
+    height: 1433,
+    padding: "40px",
+    background: `linear-gradient(to bottom, ${form.colorMode == "solid" ? form.borderColor : form.gradientColors.join(",")})`,
+  };
 
-const tokenAssetSettings = {
-  width: 876,
-  height: 876,
-  border: "40px",
-  borderRadius: "9999px"
-}
-
-export const MasterAsset = ({form, isPreview, assetType}: props) => {
-  const assetSettings = assetType == IMAGE_CROP_SETTINGS.STANDEE ? standeeAssetSettings : tokenAssetSettings;
+  const assetSettings =
+    assetType == IMAGE_CROP_SETTINGS.STANDEE
+      ? standeeAssetSettings
+      : tokenAssetSettings;
 
   return (
     <div
@@ -46,20 +52,12 @@ export const MasterAsset = ({form, isPreview, assetType}: props) => {
               src={form.pic}
               alt=""
               className={`absolute object-cover`}
-              style={{
-                width: assetSettings.width,
-                height: assetSettings.height,
-                border: `${assetSettings.border} solid ${form.borderColor}`,
-                borderRadius: `${assetSettings.borderRadius}`
-              }}
+              style={assetSettings}
             />
           )}
-
         </div>
         <div className="flex justify-center">
-          <div className="text-2xl italic mt-3">
-            Previewed at 50% zoom.
-          </div>
+          <div className="text-2xl italic mt-3">Previewed at 50% zoom.</div>
         </div>
       </div>
     </div>

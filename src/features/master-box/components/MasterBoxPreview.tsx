@@ -1,9 +1,9 @@
 import React from "react";
 import shadowPieceForPreview from "../images/shadow-piece-for-preview.png";
-import { MasterPicAndColorForm } from "../../master-assets/types/formTypes";
+import { BoxPicAndColorForm } from "../../master-assets/types/formTypes";
 
 type props = {
-  form: MasterPicAndColorForm;
+  form: BoxPicAndColorForm;
 };
 
 const boxPreviewSettings = {
