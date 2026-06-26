@@ -1,6 +1,6 @@
 import type { Editor } from "@tiptap/core";
 import { useEditorState } from "@tiptap/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { FaBold, FaItalic } from "react-icons/fa";
 import { MenuBarState, menuBarStateSelector } from "./MenuBarState";
@@ -25,7 +25,7 @@ const emojiList = [
   { name: "noblephantasm", image: noblephantasm },
 ];
 
-const DEFAULT_TEXT_SIZE = "30px";
+const DEFAULT_TEXT_SIZE = 30;
 
 export const MenuBar = ({
   editor,
@@ -42,10 +42,30 @@ export const MenuBar = ({
     selector: menuBarStateSelector,
   });
 
-  function changeFontSize(editor: Editor, increment: boolean): void {
+  const [fontSizeInput, setFontSizeInput] = useState<number>(DEFAULT_TEXT_SIZE);
+
+  function handleFontSizeInput(editor: Editor, newFontSize: any): void {
+    const newSizeString = newFontSize + "px";
+    editor
+      .chain()
+      .selectAll()
+      .setFontSize(`${newSizeString}`)
+      .setLineHeight("1.1")
+      .setTextSelection(editor.state.doc.content.size)
+      .run();
+    setLastFontUsed(newSizeString);
+  }
+
+  useEffect(() => {
+    const currentFontSizeString = editor.getAttributes("textStyle").fontSize;
+    const currentFontSize = currentFontSizeString.slice(0, -2) as number;
+    setFontSizeInput(currentFontSize);
+  }, [editor.getAttributes("textStyle").fontSize]);
+
+  function incrementFontSize(editor: Editor, increment: boolean): void {
     const currentSize =
       editor.getAttributes("textStyle").fontSize || DEFAULT_TEXT_SIZE;
-    const numericSize = parseInt(currentSize, 10);
+    const numericSize = parseFloat(currentSize);
     const newSize = increment ? numericSize + 2 : numericSize - 2;
     const newSizeString = newSize + "px";
     const end = editor.state.doc.content.size;
@@ -117,26 +137,26 @@ export const MenuBar = ({
           <div className="flex items-center gap-0">
             <button
               type="button"
-              onClick={() => changeFontSize(editor, false)}
+              onClick={() => incrementFontSize(editor, false)}
               className="menu-bar-button text-xl"
               title="Decrease font"
             >
               <MdTextDecrease />
             </button>
 
-            <div
-              className="w-10 h-10 flex items-center justify-center border border-black bg-blue-500 hover:bg-blue-400 text-center"
-              style={{ marginLeft: -1 }}
-            >
-              <div className="text-sm">
-                {editor.getAttributes("textStyle").fontSize ||
-                  DEFAULT_TEXT_SIZE}
-              </div>
+            <div className="border border-black w-12 h-10 ">
+              <input
+                type="number"
+                className="w-12 h-full flex items-center justify-center bg-primary-dark-blue border-0 text-center"
+                style={{ marginLeft: -1 }}
+                value={fontSizeInput}
+                onChange={(e) => handleFontSizeInput(editor, e.target.value)}
+              />
             </div>
 
             <button
               type="button"
-              onClick={() => changeFontSize(editor, true)}
+              onClick={() => incrementFontSize(editor, true)}
               className="menu-bar-button text-xl"
               title="Increase font"
               style={{ marginLeft: -1 }}

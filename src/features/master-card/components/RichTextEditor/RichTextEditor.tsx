@@ -143,7 +143,7 @@ const RichTextEditor = ({
   }, [editor, masterAbility]);
 
   return (
-    <div className="flex flex-col w-full overflow-scroll">
+    <div className="flex flex-col w-full">
       {editor && (
         <>
           <MenuBar editor={editor} setLastFontUsed={setLastFontUsed} />
