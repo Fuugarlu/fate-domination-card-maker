@@ -161,8 +161,8 @@ export const Card = ({ form, isPreview }: CardProps) => {
             <div
               className="absolute"
               style={{
-                right: 16,
-                top: 768,
+                right: 10,
+                top: 770,
               }}
             >
               <div className="relative">
@@ -175,6 +175,7 @@ export const Card = ({ form, isPreview }: CardProps) => {
                     fontFamily: '"Times New Roman"',
                     top: "50%",
                     transform: "translate(-65%, -50%)",
+                    letterSpacing: form.cardAttack.toString().includes("1") ? "-5px" : "-2px"
                   }}
                 >
                   {form.cardAttack}
@@ -188,8 +189,8 @@ export const Card = ({ form, isPreview }: CardProps) => {
             <div
               className="absolute"
               style={{
-                right: 176,
-                top: 768,
+                right: 169,
+                top: 770,
               }}
             >
               <div className="relative">
@@ -203,6 +204,7 @@ export const Card = ({ form, isPreview }: CardProps) => {
                     top: "50%",
                     transform: "translate(-67%, -50%)",
                     color: "#15e86f",
+                    letterSpacing: form.cardMana.toString().includes("1") ? "-5px" : "-2px"
                   }}
                 >
                   {form.cardMana}
