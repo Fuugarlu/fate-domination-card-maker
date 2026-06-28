@@ -216,7 +216,7 @@ export const Card = ({ form, isPreview }: CardProps) => {
           {/* Attack Type */}
           <div className="absolute" style={{ top: 10, left: 10 }}>
             <div className="flex flex-col gap-1">
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-[2px]">
                 {ATTACK_TYPES.map(
                   (attackType) =>
                     form.attackTypes[attackType.toLowerCase()] && (
