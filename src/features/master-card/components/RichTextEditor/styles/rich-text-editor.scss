@@ -1,11 +1,13 @@
 /* Basic editor styles */
 
 .tiptap-emoji img {
-  width: 1.4em;
-  max-width: 50px;
+  width: 1.1em;
+  max-width: 45px;
   display: inline;
   vertical-align: center;
+  // margin: 0px 0.2em;
 }
+
 .tiptap {
   span {
     font-size: 1rem !important;
