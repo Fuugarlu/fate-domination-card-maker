@@ -33,7 +33,7 @@ const CommandSeal = ({ form, isPreview }: props) => {
             <img
               src={form.pic}
               alt=""
-              className="absolute object-cover"
+              className="absolute object-cover bg-black"
               style={{
                 left: 25,
                 top: 25,

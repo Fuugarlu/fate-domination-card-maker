@@ -22,7 +22,9 @@ export const ServantSummon = ({ form, isPreview }: ServantSummonProps) => {
       <div>
         <div
           id={
-            isPreview ? "card-preview" : IMAGE_CROP_SETTINGS.SERVANT_SUMMON + "-to-save"
+            isPreview
+              ? "card-preview"
+              : IMAGE_CROP_SETTINGS.SERVANT_SUMMON + "-to-save"
           }
           className={`relative overflow-hidden`}
           style={{
@@ -35,7 +37,7 @@ export const ServantSummon = ({ form, isPreview }: ServantSummonProps) => {
             <img
               src={form.pic}
               alt=""
-              className="absolute object-cover"
+              className="absolute object-cover bg-black"
               style={{
                 left: 25,
                 top: 25,
@@ -58,7 +60,12 @@ export const ServantSummon = ({ form, isPreview }: ServantSummonProps) => {
 
           <div
             className="absolute w-full flex flex-col"
-            style={{ top: 860, left: "50%", transform: "translateX(-50%)", lineHeight: 1 }}
+            style={{
+              top: 860,
+              left: "50%",
+              transform: "translateX(-50%)",
+              lineHeight: 1,
+            }}
           >
             {/* Name & Servant class */}
             <div

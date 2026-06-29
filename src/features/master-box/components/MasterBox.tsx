@@ -35,7 +35,7 @@ export const MasterBox = ({ form, isPreview }: props) => {
               ? "card-preview"
               : IMAGE_CROP_SETTINGS.MASTER_BOX + "-to-save"
           }
-          className={`relative overflow-hidden`}
+          className={`relative overflow-hidden bg-black`}
           style={{
             width: boxSettings.outputWidth,
             height: boxSettings.outputHeight,
@@ -71,9 +71,22 @@ export const MasterBox = ({ form, isPreview }: props) => {
           />
 
           {/* Character images */}
-          {form.pic && <BoxImage pic={form.pic} rotate={false} width={boxSettings.imageWidth} height={boxSettings.imageHeight}/>}
-          {form.pic && <BoxImage pic={form.pic} rotate={true} width={boxSettings.imageWidth} height={boxSettings.imageHeight}/>}
-
+          {form.pic && (
+            <BoxImage
+              pic={form.pic}
+              rotate={false}
+              width={boxSettings.imageWidth}
+              height={boxSettings.imageHeight}
+            />
+          )}
+          {form.pic && (
+            <BoxImage
+              pic={form.pic}
+              rotate={true}
+              width={boxSettings.imageWidth}
+              height={boxSettings.imageHeight}
+            />
+          )}
         </div>
         <div className="flex justify-center">
           <div className="text-2xl italic mt-2">

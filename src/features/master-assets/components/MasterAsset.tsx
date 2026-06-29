@@ -7,12 +7,14 @@ type props = {
   assetType: IMAGE_CROP_SETTINGS;
 };
 
+const BORDER_THICKNESS = 40;
+
 export const MasterAsset = ({ form, isPreview, assetType }: props) => {
   const tokenAssetSettings = {
     width: 876,
     height: 876,
     borderRadius: "9999px",
-    padding: "40px",
+    padding: BORDER_THICKNESS + "px",
     //   background: `
     //   linear-gradient(to bottom, ${form.colorMode == "solid" ? form.borderColor : form.gradientColors.join(",")}}) border-box
     // `,
@@ -21,7 +23,8 @@ export const MasterAsset = ({ form, isPreview, assetType }: props) => {
   const standeeAssetSettings = {
     width: 876,
     height: 1433,
-    padding: "40px",
+    borderRadius: "0px",
+    padding: BORDER_THICKNESS + "px",
     background: `linear-gradient(to bottom, ${form.colorMode == "solid" ? form.borderColor : form.gradientColors.join(",")})`,
   };
 
@@ -55,7 +58,38 @@ export const MasterAsset = ({ form, isPreview, assetType }: props) => {
               style={assetSettings}
             />
           )}
+
+          {/* Black background */}
+          {form.pic && (
+            <div
+              className="bg-black absolute"
+              style={{
+                width: assetSettings.width - BORDER_THICKNESS * 2,
+                height: assetSettings.height - BORDER_THICKNESS * 2,
+                top: BORDER_THICKNESS,
+                left: BORDER_THICKNESS,
+                borderRadius: assetSettings.borderRadius
+              }}
+            ></div>
+          )}
+
+          {/* Character image */}
+          {form.pic && (
+            <img
+              src={form.pic}
+              alt=""
+              className={`absolute object-cover`}
+              style={{
+                width: assetSettings.width - BORDER_THICKNESS * 2,
+                height: assetSettings.height - BORDER_THICKNESS * 2,
+                top: BORDER_THICKNESS,
+                left: BORDER_THICKNESS,
+                borderRadius: assetSettings.borderRadius
+              }}
+            />
+          )}
         </div>
+
         <div className="flex justify-center">
           <div className="text-2xl italic mt-3">Previewed at 50% zoom.</div>
         </div>

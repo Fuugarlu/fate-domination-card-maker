@@ -19,7 +19,7 @@ export const MasterBoxPreview = ({ form }: props) => {
       {form.pic && (
         <div className="flex flex-col gap-4">
           <div className="flex flex-row gap-4">
-            <img src={form.pic} style={{ width: boxPreviewSettings.imageWidth, height: boxPreviewSettings.imageHeight }} />
+            <img src={form.pic} style={{ width: boxPreviewSettings.imageWidth, height: boxPreviewSettings.imageHeight}} className="bg-black"/>
             <div className="relative" style={{ width: boxPreviewSettings.shadowShortSide, height: boxPreviewSettings.shadowLongSide }}>
               <div
                 className="absolute"

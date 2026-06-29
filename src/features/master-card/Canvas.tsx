@@ -47,7 +47,7 @@ function AbilityText({ text }: { text: string }) {
         top: 845,
         width: 680,
         fontFamily: '"Times New Roman"',
-        lineHeight: 1.1
+        lineHeight: 1.1,
       }}
       dangerouslySetInnerHTML={{ __html: text }}
     ></div>
@@ -99,7 +99,7 @@ export const Card = ({ form, isPreview }: CardProps) => {
             <img
               src={form.pic}
               alt=""
-              className="absolute object-cover"
+              className="absolute object-cover bg-black"
               style={{
                 left: 25,
                 top: 25,
@@ -175,7 +175,9 @@ export const Card = ({ form, isPreview }: CardProps) => {
                     fontFamily: '"Times New Roman"',
                     top: "50%",
                     transform: "translate(-65%, -50%)",
-                    letterSpacing: form.cardAttack.toString().includes("1") ? "-5px" : "-2px"
+                    letterSpacing: form.cardAttack.toString().includes("1")
+                      ? "-5px"
+                      : "-2px",
                   }}
                 >
                   {form.cardAttack}
@@ -204,7 +206,9 @@ export const Card = ({ form, isPreview }: CardProps) => {
                     top: "50%",
                     transform: "translate(-67%, -50%)",
                     color: "#15e86f",
-                    letterSpacing: form.cardMana.toString().includes("1") ? "-5px" : "-2px"
+                    letterSpacing: form.cardMana.toString().includes("1")
+                      ? "-5px"
+                      : "-2px",
                   }}
                 >
                   {form.cardMana}

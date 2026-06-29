@@ -97,6 +97,7 @@ const ImageCropper = ({
                 image={imageSrc}
                 crop={crop}
                 zoom={zoom}
+                zoomWithScroll={false}
                 cropShape={cropShape}
                 aspect={cropAspectRatio}
                 onCropChange={setCrop}
