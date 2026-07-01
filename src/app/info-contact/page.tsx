@@ -4,7 +4,7 @@ import { FaGithub } from "react-icons/fa";
 const InfoContact = () => {
   return (
     <div>
-        <div className='flex flex-col gap-4 m-4 border-1 border-black p-4 text-xl'>
+        <div className='flex flex-col gap-4 m-4 border border-black p-4 text-xl'>
           <span className='flex flex-col'>
             <span>Thanks to the creators and contributors of Fate/Domination!</span>
             <span>I really don't have much to say...</span>

@@ -1,8 +1,9 @@
 import React, { SetStateAction } from "react";
 import { MdSwapHoriz } from "react-icons/md";
 import ColorInput from "./ColorInput";
-import { Color, MasterPicAndColorForm } from "../types/formTypes";
+import { MasterPicAndColorForm } from "../types/formTypes";
 import GradientColor from "./GradientColor";
+import { Color } from "@/src/types/colorTypes";
 
 type props = {
   form: MasterPicAndColorForm,
@@ -12,7 +13,6 @@ type props = {
 const ColorInputWithGradient = ({form, setForm}: props) => {
   return (
     <div>
-      {" "}
       {form.colorMode == "solid" && (
         <div className="mb-2">
           <ColorInput

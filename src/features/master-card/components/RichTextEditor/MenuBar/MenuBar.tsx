@@ -15,7 +15,7 @@ import {
   noblephantasm,
 } from "@/public/attack-types-text";
 import { capitalizeString } from "@/src/utils/TextUtils";
-import ColorPicker from "./components/ColorPicker";
+import ColorInput from "@/src/features/master-assets/components/ColorInput";
 
 const emojiList = [
   { name: "strength", image: strength },
@@ -105,8 +105,26 @@ export const MenuBar = ({
       .run();
   }
 
+ /**
+  * Sets the I-Beam to the position it was before opening the color picker.
+  */
+  const setIBeamPosition = (color: string) => {
+    const isTextSelected = editor.state.selection.$to.pos != editor.state.selection.$from.pos;
+    const selectedText = editor.state.selection;
+    const cursorPosition = editor.state.selection.$to.pos;
+    editor
+      .chain()
+      .focus()
+      .setTextSelection(
+        isTextSelected? selectedText : cursorPosition
+      )
+      .setColor(color)
+      .run();
+  };
+
   return (
-    <div className="w-full flex overflow-x-auto">
+    // <div className="w-full flex overflow-x-auto">
+    <div className="w-full flex overflow-visible">
       <nav className="flex flex-col w-full p-2 bg-gray-700 rounded-t">
         {/* Text style buttons */}
         <div className="flex items-center gap-3 py-2 bg-gray-700 rounded-t">
@@ -193,18 +211,19 @@ export const MenuBar = ({
             data-testid="setRed"
           >
             <div
-              className="rounded-full color-circle"
+              className="color-circle"
               style={{ backgroundColor: "#ff3f24" }}
             ></div>
           </button>
+
           <button
-            onClick={() => editor.chain().focus().setColor("#ebcb3d").run()}
-            className={`menu-bar-button no-left-border ${editorState.isYellow ? "is-active" : ""}`}
-            data-testid="setYellow"
+            onClick={() => editor.chain().focus().setColor("#58ff6c").run()}
+            className={`menu-bar-button no-left-border ${editorState.isGreen ? "is-active" : ""}`}
+            data-testid="setGreen"
           >
             <div
-              className="rounded-full color-circle"
-              style={{ backgroundColor: "#ebcb3d" }}
+              className="color-circle"
+              style={{ backgroundColor: "#58ff6c" }}
             ></div>
           </button>
           <button
@@ -213,18 +232,18 @@ export const MenuBar = ({
             data-testid="setBlue"
           >
             <div
-              className="rounded-full color-circle"
+              className="color-circle"
               style={{ backgroundColor: "#58c2ff" }}
             ></div>
           </button>
           <button
-            onClick={() => editor.chain().focus().setColor("#58ff6c").run()}
-            className={`menu-bar-button no-left-border ${editorState.isGreen ? "is-active" : ""}`}
-            data-testid="setGreen"
+            onClick={() => editor.chain().focus().setColor("#ebcb3d").run()}
+            className={`menu-bar-button no-left-border ${editorState.isYellow ? "is-active" : ""}`}
+            data-testid="setYellow"
           >
             <div
-              className="rounded-full color-circle"
-              style={{ backgroundColor: "#58ff6c" }}
+              className="color-circle"
+              style={{ backgroundColor: "#ebcb3d" }}
             ></div>
           </button>
           <button
@@ -233,11 +252,23 @@ export const MenuBar = ({
             data-testid="setWhite"
           >
             <div
-              className="rounded-full color-circle"
+              className="color-circle"
               style={{ backgroundColor: "#ffffff" }}
             ></div>
           </button>
-          <ColorPicker editor={editor} editorState={editorState} />
+          <span className="flex items-center border border-black no-left-border h-10">
+            <div className="mx-2">
+              <ColorInput
+                label=""
+                value={editorState.color}
+                handleValue={(color: string) =>
+                  editor.chain().setColor(color).run()
+                }
+                shape={"circle"}
+                additionalOnCloseFunction={(color: string) => setIBeamPosition(color)}
+              />
+            </div>
+          </span>
         </div>
       </nav>
     </div>

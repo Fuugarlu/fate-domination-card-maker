@@ -1,5 +1,5 @@
+import { Color } from "@/src/types/colorTypes";
 import ColorInput from "./ColorInput";
-import { Color } from "../types/formTypes";
 
 type SimpleMasterFormInput = {
   setColors: (colors: Color[]) => void;
