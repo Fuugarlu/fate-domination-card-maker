@@ -29,6 +29,7 @@ const ImageCropper = ({
   function getCropAspectRatio(cropSettings: IMAGE_CROP_SETTINGS): number {
     switch (cropSettings) {
       case IMAGE_CROP_SETTINGS.CARD:
+      case IMAGE_CROP_SETTINGS.COMMAND_SEAL:
         return 7 / 8;
 
       case IMAGE_CROP_SETTINGS.STANDEE:
@@ -40,7 +41,7 @@ const ImageCropper = ({
       case IMAGE_CROP_SETTINGS.SERVANT_SUMMON:
         return 700 / 830;
 
-      default: // Token, Command Seal
+      default: // Token
         return 1;
     }
   }
@@ -104,6 +105,7 @@ const ImageCropper = ({
                 onCropComplete={onCropComplete}
                 onZoomChange={setZoom}
                 showGrid={true}
+                restrictPosition={false}
               />
             </div>
           </div>
@@ -114,7 +116,7 @@ const ImageCropper = ({
                 type="range"
                 id="cowbell"
                 name="cowbell"
-                min={1}
+                min={0.5}
                 max={3}
                 step={0.1}
                 defaultValue={1}
