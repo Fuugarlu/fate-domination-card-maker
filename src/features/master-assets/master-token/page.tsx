@@ -6,7 +6,7 @@ import { DownloadButton } from "@/src/components/buttons/DownloadButton";
 import shirouToken from "./images/shirou-token.png";
 import SimpleMasterForm from "@/src/features/master-assets/components/SimpleMasterForm";
 import { MasterAsset } from "../components/MasterAsset";
-import { Color, MasterPicAndColorForm } from "../types/formTypes";
+import { MasterPicAndColorForm } from "../types/formTypes";
 import ColorInput from "../components/ColorInput";
 import GradientColor from "../components/GradientColor";
 import { IoSwapHorizontal } from "react-icons/io5";
