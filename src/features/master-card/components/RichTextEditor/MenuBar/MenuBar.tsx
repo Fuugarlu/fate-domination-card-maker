@@ -57,7 +57,7 @@ export const MenuBar = ({
   }
 
   useEffect(() => {
-    const currentFontSizeString = editor.getAttributes("textStyle").fontSize;
+    const currentFontSizeString = editor.getAttributes("textStyle").fontSize || DEFAULT_TEXT_SIZE + "px";
     const currentFontSize = currentFontSizeString.slice(0, -2) as number;
     setFontSizeInput(currentFontSize);
   }, [editor.getAttributes("textStyle").fontSize]);
