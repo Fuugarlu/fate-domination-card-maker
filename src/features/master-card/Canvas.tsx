@@ -22,6 +22,8 @@ function getCardIcon(key: string) {
       return "./attack-types-text/magic.png";
     case "special":
       return "./attack-types-text/special.png";
+    case "noblephantasm":
+      return "./attack-types-text/noblephantasm.png"
   }
 }
 
@@ -284,6 +286,7 @@ export const Card = ({ form, isPreview }: CardProps) => {
                       </div>
                     ))}
                 </div>
+                {/* Special basics/other attacks */}
                 <div
                   className={`flex gap-2 w-full justify-center ${form.servantCards.slice(3).length > 6 ? "-mt-4" : ""} ${form.servantCards.slice(3).length > 3 ? "text-3xl" : "text-4xl"}`}
                   style={{ fontSize: form.servantCardsSpecialFontSize + "px" }}
