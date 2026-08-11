@@ -73,6 +73,7 @@ export const ServantSummon = ({ form, isPreview }: ServantSummonProps) => {
               style={{
                 fontSize: 56,
                 fontFamily: '"Times New Roman"',
+                color: "white"
               }}
             >
               {form.class && (
@@ -81,7 +82,7 @@ export const ServantSummon = ({ form, isPreview }: ServantSummonProps) => {
                   className="block w-[60px] h-[60px]"
                 />
               )}
-              <div className="text-white">{form.name}</div>
+              {form.name}
             </div>
 
             {/* Primary Trait */}

@@ -131,9 +131,10 @@ export const Card = ({ form, isPreview }: CardProps) => {
               fontFamily: '"Times New Roman"',
               height: "60px",
               width: "700px",
+              color: "white",
             }}
           >
-            <div className="text-white">{form.masterName}</div>
+            {form.masterName}
           </div>
 
           {/* Objective Value */}
