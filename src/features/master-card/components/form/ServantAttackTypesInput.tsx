@@ -293,6 +293,7 @@ export const ServantAttackTypesInput = (prop: Props) => {
                   <option value="agility">Agility</option>
                   <option value="magic">Magic</option>
                   <option value="special">Special</option>
+                  <option value="noblephantasm">Noble Phantasm</option>
                 </select>
               </div>
             </div>

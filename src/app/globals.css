@@ -103,6 +103,10 @@ label.field-header {
   color: #0061ff;
 }
 
+.noblephantasm {
+  color: #fff280;
+}
+
 input[type='number'] {
     -moz-appearance:textfield;
 }
