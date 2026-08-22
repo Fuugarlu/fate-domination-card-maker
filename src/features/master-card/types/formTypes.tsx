@@ -1,3 +1,4 @@
+import { Color } from "@/src/types/colorTypes";
 import { attackTypesType, servantCardType } from "../../../types/servantTypes";
 
 export type AttackTypes = Record<attackTypesType, boolean>;
@@ -11,6 +12,7 @@ export const enum MASTER_NAME_FIELD_SIZES {
 export type formInput = {
   pic: string | null;
   masterName: string;
+  masterNameColor: Color;
   masterNameFontSize: number;
   objectiveValue: number | null;
   eventMana: number | null;

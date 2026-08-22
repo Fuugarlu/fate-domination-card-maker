@@ -5,7 +5,6 @@ import { IMAGE_CROP_SETTINGS } from "@/src/utils/formUtils";
 import { DownloadButton } from "@/src/components/buttons/DownloadButton";
 import { ServantCardForm } from "./types/formTypes";
 import { SERVANT_TYPES } from "@/src/constants/servantConstants";
-import SimpleMasterForm from "../master-assets/components/SimpleMasterForm";
 import { PageName } from "@/src/components/header/PageName";
 import { ClearFormButton } from "@/src/components/header/ClearFormButton";
 import ImageCropper from "../../components/image-cropper/ImageCropper";
@@ -14,10 +13,13 @@ import TraitsAndDrawbacks from "./components/TraitsAndDrawbacks";
 import { BASIC_CARDS } from "@/src/constants/cardConstants";
 import { capitalizeString } from "@/src/utils/TextUtils";
 import { BasicCardTypes } from "@/src/types/cardTypes";
+import ColorInput from "../master-assets/components/ColorInput";
+import { Color } from "@/src/types/colorTypes";
 
 const defaultState: ServantCardForm = {
   class: SERVANT_TYPES.STANDARD[0],
   name: "Cool Servant Name",
+  servantNameColor: "#ffffff" as Color,
   primaryTrait: BASIC_CARDS[1],
   traits: ["VP Gain", "Control"],
   drawbacks: ["Setup Reliant", "NP Reliant"],
@@ -27,6 +29,7 @@ const defaultState: ServantCardForm = {
 const emptyState: ServantCardForm = {
   class: SERVANT_TYPES.STANDARD[0],
   name: "",
+  servantNameColor: "#ffffff" as Color,
   primaryTrait: BASIC_CARDS[0],
   traits: ["", ""],
   drawbacks: ["", ""],
@@ -55,6 +58,20 @@ const ServantCard = () => {
                 value={form.name ?? ""}
                 onChange={(e) =>
                   setForm((prev) => ({ ...prev, name: e.target.value }))
+                }
+              />
+            </div>
+          </div>
+          <div className="input-block">
+            <div>
+              <ColorInput
+                label={"Name Color"}
+                value={form.servantNameColor}
+                handleValue={(color: string) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    servantNameColor: color as Color,
+                  }))
                 }
               />
             </div>

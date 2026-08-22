@@ -17,10 +17,13 @@ import "./styles/master-card-creation.scss";
 import { ClearFormButton } from "../../components/header/ClearFormButton";
 import { PageName } from "../../components/header/PageName";
 import { DownloadButton } from "../../components/buttons/DownloadButton";
+import ColorInput from "../master-assets/components/ColorInput";
+import { Color } from "@/src/types/colorTypes";
 
 const emptyState: formInput = {
   pic: null,
   masterName: "",
+  masterNameColor: "#ffffff" as Color,
   masterNameFontSize: 50,
   objectiveValue: null,
   eventMana: null,
@@ -97,60 +100,64 @@ export const MasterCardCreation = () => {
             <div className="flex flex-col items-start">
               <h2 className="category-header">MAIN</h2>
               {/* Name */}
-              <div className="input-block">
-                <label htmlFor="masterName" className="field-header">
-                  Card Name
-                </label>
-                <div className="flex flex-row align-center gap-3">
-                  <input
-                    type="text"
-                    id="masterName"
-                    name="masterName"
-                    value={form.masterName ?? ""}
-                    onChange={(e) =>
-                      mainUpdateForm("masterName", e.target.value)
-                    }
-                  />
-                  {/* Name Font Size */}
-                  <div className="flex items-center">
-                    <button
-                      type="button"
-                      onClick={() =>
-                        mainUpdateForm(
-                          "masterNameFontSize",
-                          form.masterNameFontSize - 2,
-                        )
+              <div className="input-block flex gap-2 flex-col">
+                <span>
+                  <label htmlFor="masterName" className="field-header">
+                    Card Name
+                  </label>
+                  <div className="flex flex-row align-center gap-3">
+                    <input
+                      type="text"
+                      id="masterName"
+                      name="masterName"
+                      value={form.masterName ?? ""}
+                      onChange={(e) =>
+                        mainUpdateForm("masterName", e.target.value)
                       }
-                      className="w-9 h-9 flex items-center justify-center border border-black cursor-pointer text-xl bg-blue-900 hover:bg-blue-700 rounded-l"
-                      title="Decrease font"
-                    >
-                      <MdTextDecrease />
-                    </button>
+                    />
+                    {/* Name Font Size */}
+                    <div className="flex items-center">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          mainUpdateForm(
+                            "masterNameFontSize",
+                            form.masterNameFontSize - 2,
+                          )
+                        }
+                        className="w-9 h-9 flex items-center justify-center border border-black cursor-pointer text-xl bg-blue-900 hover:bg-blue-700 rounded-l"
+                        title="Decrease font"
+                      >
+                        <MdTextDecrease />
+                      </button>
 
-                    <div
-                      className="w-11 h-9 flex items-center justify-center border border-black bg-blue-500 text-center"
-                      style={{ marginLeft: -1 }}
-                    >
-                      <div className="text-sm">{form.masterNameFontSize}px</div>
+                      <div
+                        className="w-11 h-9 flex items-center justify-center border border-black bg-blue-500 text-center"
+                        style={{ marginLeft: -1 }}
+                      >
+                        <div className="text-sm">
+                          {form.masterNameFontSize}px
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          mainUpdateForm(
+                            "masterNameFontSize",
+                            form.masterNameFontSize + 2,
+                          )
+                        }
+                        className="w-9 h-9 flex items-center justify-center border border-black cursor-pointer text-xl bg-blue-900 hover:bg-blue-700 rounded-r"
+                        title="Increase font"
+                        style={{ marginLeft: -1 }}
+                      >
+                        <MdTextIncrease />
+                      </button>
                     </div>
-
-                    <button
-                      type="button"
-                      onClick={() =>
-                        mainUpdateForm(
-                          "masterNameFontSize",
-                          form.masterNameFontSize + 2,
-                        )
-                      }
-                      className="w-9 h-9 flex items-center justify-center border border-black cursor-pointer text-xl bg-blue-900 hover:bg-blue-700 rounded-r"
-                      title="Increase font"
-                      style={{ marginLeft: -1 }}
-                    >
-                      <MdTextIncrease />
-                    </button>
                   </div>
-                </div>
-                <div className="input-block">
+                </span>
+                <span>
                   <h2 className="field-header">Name Length</h2>
                   <div className="flex gap-2">
                     <div className="flex gap-1">
@@ -216,6 +223,20 @@ export const MasterCardCreation = () => {
                       <label htmlFor="long-name">Long</label>
                     </div>
                   </div>
+                </span>
+                <div>
+                  <div>
+                    <ColorInput
+                      label={"Name Color"}
+                      value={form.masterNameColor}
+                      handleValue={(color: string) =>
+                        setForm((prev) => ({
+                          ...prev,
+                          masterNameColor: color as Color,
+                        }))
+                      }
+                    />
+                  </div>
                 </div>
               </div>
               <div className="input-block w-full">
@@ -241,7 +262,6 @@ export const MasterCardCreation = () => {
                   />
                 )}
               </div>
-
               <div className="input-block w-full">
                 <h2 className="field-header">Card Picture</h2>
                 <ImageCropper

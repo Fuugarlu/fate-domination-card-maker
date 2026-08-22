@@ -73,7 +73,7 @@ export const ServantSummon = ({ form, isPreview }: ServantSummonProps) => {
               style={{
                 fontSize: 56,
                 fontFamily: '"Times New Roman"',
-                color: "white"
+                color: form.servantNameColor ?? "white",
               }}
             >
               {form.class && (

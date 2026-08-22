@@ -54,8 +54,9 @@ const CommandSeal = ({ form, isPreview }: props) => {
             />
           </div>
           <div className="flex justify-center">
-            <div className="text-2xl italic mt-2">
-              Token is previewed at 50% zoom.
+            <div className="text-2xl italic mt-2 flex flex-col items-center">
+              <span>Command Seal is previewed at 50% zoom.</span>
+              <span>For more customization, please make your own in the main page.</span>
             </div>
           </div>
         </div>
