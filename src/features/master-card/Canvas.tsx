@@ -55,20 +55,22 @@ function AbilityText({
     extraTop = 33;
   }
   let timesPerGameText = "";
-  switch (timesPerGame) {
-    case 1:
-      timesPerGameText = "<Once per Game>";
-      break;
-    case 2:
-      timesPerGameText = "<Twice per Game>";
-      break;
-    case 3:
-      timesPerGameText = "<Thrice per Game>";
-      break;
-    default:
-      if (timesPerGame) {
-        timesPerGameText = `<${timesPerGame} Times per Game>`;
-      }
+  if (timesPerGame) {
+    switch (timesPerGame) {
+      case 1:
+        timesPerGameText = "<Once per Game>";
+        break;
+      case 2:
+        timesPerGameText = "<Twice per Game>";
+        break;
+      case 3:
+        timesPerGameText = "<Thrice per Game>";
+        break;
+      default:
+        if (timesPerGame) {
+          timesPerGameText = `<${timesPerGame} Times per Game>`;
+        }
+    }
   }
 
   return (
@@ -85,10 +87,14 @@ function AbilityText({
             fontSize: 30,
           }}
         >
-          {revealServantName && <span className="reveal-servant-name-color">
-            [Reveal Servant Name]
-          </span>}
-          {timesPerGame && <span className="text-white font-bold">{timesPerGameText}</span>}
+          {revealServantName && (
+            <span className="reveal-servant-name-color">
+              [Reveal Servant Name]
+            </span>
+          )}
+          {timesPerGame && (
+            <span className="text-white font-bold">{timesPerGameText}</span>
+          )}
         </div>
       )}
       <div
