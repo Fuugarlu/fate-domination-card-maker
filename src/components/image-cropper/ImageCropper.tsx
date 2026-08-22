@@ -17,6 +17,17 @@ const ImageCropper = ({
 }) => {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [cropperVisible, setCropperVisible] = useState<boolean>(true);
+  const [allowZoomingOut, setAllowZoomingOut] = useState<boolean>(false);
+
+  function handleAllowZoomingOut(allow: boolean) {
+    setAllowZoomingOut(allow);
+    if (!allow) {
+      setZoom(1);
+      if (zoom < 1) {
+        setCrop({ x: 0, y: 0 });
+      }
+    }
+  }
 
   function getCropShape(cropSettings: IMAGE_CROP_SETTINGS): "rect" | "round" {
     if ([IMAGE_CROP_SETTINGS.TOKEN].includes(cropSettings)) {
@@ -86,6 +97,7 @@ const ImageCropper = ({
     setImageSrc(null);
     setCrop({ x: 0, y: 0 });
     setZoom(1);
+    setAllowZoomingOut(false);
   }
 
   return (
@@ -105,26 +117,44 @@ const ImageCropper = ({
                 onCropComplete={onCropComplete}
                 onZoomChange={setZoom}
                 showGrid={true}
-                restrictPosition={false}
+                restrictPosition={!allowZoomingOut}
               />
             </div>
           </div>
           <div className="flex justify-between">
-            <div className="flex items-center gap-2">
-              Zoom
-              <input
-                type="range"
-                id="cowbell"
-                name="cowbell"
-                min={0.5}
-                max={3}
-                step={0.1}
-                defaultValue={1}
-                aria-labelledby="Zoom"
-                onChange={(e) => setZoom(Number(e.target.value))}
-                className=""
-              />
-              {Math.round((zoom - 1) * (100 - 0)) / (3 - 1)}%
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                Zoom
+                <input
+                  type="range"
+                  id="cowbell"
+                  name="cowbell"
+                  min={allowZoomingOut ? 0.5 : 1}
+                  max={3}
+                  step={0.02}
+                  value={zoom}
+                  aria-labelledby="Zoom"
+                  onChange={(e) => setZoom(Number(e.target.value))}
+                />
+                {Math.round((zoom - 1) * (100 - 0)) / (3 - 1)}%
+                <button
+                  onClick={() => setZoom(1)}
+                  className="cropper-button bg-gray-500"
+                  style={{ height: "2rem" }}
+                >
+                  Reset Zoom
+                </button>
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="allow-zooming-out"
+                  name="allow-zooming-out"
+                  checked={allowZoomingOut}
+                  onChange={(e) => handleAllowZoomingOut(e.target.checked)}
+                />
+                <label htmlFor="allow-zooming-out">Allow zooming out & disable image fit</label>
+              </div>
             </div>
 
             <div className="flex gap-2">
