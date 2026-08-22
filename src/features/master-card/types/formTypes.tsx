@@ -25,6 +25,8 @@ export type formInput = {
   servantCards: servantCardType[] | null;
   servantCardsSpecialFontSize: number;
   hasCardAbility: boolean;
+  revealServantName: boolean;
+  timesPerGame: number | null;
   // cardColorHue: string;
   // enableCardColorHueInput: boolean;
   masterNameFieldSize: MASTER_NAME_FIELD_SIZES;

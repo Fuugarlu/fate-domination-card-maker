@@ -23,7 +23,7 @@ function getCardIcon(key: string) {
     case "special":
       return "./attack-types-text/special.png";
     case "noblephantasm":
-      return "./attack-types-text/noblephantasm.png"
+      return "./attack-types-text/noblephantasm.png";
   }
 }
 
@@ -40,19 +40,69 @@ function getServantSplitCount(servantCards: servantCardType[]) {
   return servantCards.length >= 7 ? 4 : 3;
 }
 
-function AbilityText({ text }: { text: string }) {
+function AbilityText({
+  text,
+  revealServantName,
+  timesPerGame,
+}: {
+  text: string;
+  revealServantName: boolean;
+  timesPerGame: number | null;
+}) {
+  let extraTop = 0;
+  const needExtraLine = revealServantName || timesPerGame;
+  if (needExtraLine) {
+    extraTop = 33;
+  }
+  let timesPerGameText = "";
+  switch (timesPerGame) {
+    case 1:
+      timesPerGameText = "<Once per Game>";
+      break;
+    case 2:
+      timesPerGameText = "<Twice per Game>";
+      break;
+    case 3:
+      timesPerGameText = "<Thrice per Game>";
+      break;
+    default:
+      if (timesPerGame) {
+        timesPerGameText = `<${timesPerGame} Times per Game>`;
+      }
+  }
+
   return (
-    <div
-      className="absolute text-white break-words"
-      style={{
-        left: 33,
-        top: 845,
-        width: 680,
-        fontFamily: '"Times New Roman"',
-        lineHeight: 1.1,
-      }}
-      dangerouslySetInnerHTML={{ __html: text }}
-    ></div>
+    <>
+      {needExtraLine && (
+        <div
+          className="absolute break-words flex justify-between"
+          style={{
+            left: 33,
+            top: 845,
+            width: 680,
+            fontFamily: '"Times New Roman"',
+            lineHeight: 1.1,
+            fontSize: 30,
+          }}
+        >
+          {revealServantName && <span className="reveal-servant-name-color">
+            [Reveal Servant Name]
+          </span>}
+          {timesPerGame && <span className="text-white font-bold">{timesPerGameText}</span>}
+        </div>
+      )}
+      <div
+        className="absolute text-white break-words"
+        style={{
+          left: 33,
+          top: 845 + extraTop,
+          width: 680,
+          fontFamily: '"Times New Roman"',
+          lineHeight: 1.1,
+        }}
+        dangerouslySetInnerHTML={{ __html: text }}
+      ></div>
+    </>
   );
 }
 
@@ -251,7 +301,11 @@ export const Card = ({ form, isPreview }: CardProps) => {
 
           {/* Ability */}
           {form.hasCardAbility && form.masterAbility && (
-            <AbilityText text={form.masterAbility} />
+            <AbilityText
+              text={form.masterAbility}
+              revealServantName={form.revealServantName}
+              timesPerGame={form.timesPerGame}
+            />
           )}
 
           {/* Servant Info */}

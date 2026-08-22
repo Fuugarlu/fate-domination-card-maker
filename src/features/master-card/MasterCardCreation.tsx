@@ -48,6 +48,8 @@ const emptyState: formInput = {
   hasCardAbility: true,
   // enableCardColorHueInput: false,
   // cardColorHue: "0",
+  revealServantName: false,
+  timesPerGame: null,
   masterNameFieldSize: MASTER_NAME_FIELD_SIZES.short,
 };
 
@@ -60,7 +62,7 @@ const initialState = {
   ],
   masterName: "Cool Card Name",
   masterAbility: `<p><span style="color: #ffffff; font-size: 30px; line-height: 1.1;"><em>Example</em> - Add some abilities!</span></p>
-  <p><span style="color: #ffffff; font-size: 30px; line-height: 1.1;"><em>Other example</em> - <strong>Passive/Combat:</strong> Pay 1 Mana to [cry on command].</span></p>`,
+  <p><span style="color: #ffffff; font-size: 30px; line-height: 1.1;"><em>Other example</em> - <strong>Passive/Action:</strong> Pay 1 Mana to [do something].</span></p>`,
 };
 
 export const MasterCardCreation = () => {
@@ -250,7 +252,12 @@ export const MasterCardCreation = () => {
                       mainUpdateForm("hasCardAbility", e.target.checked)
                     }
                   />
-                  <span className="select-none">Enable card ability</span>
+                  <span className="select-none">
+                    Enable card ability 
+                    <span className="text-gray-400 italic">
+                      {` (disable & scroll down to make a servant card instead)`}
+                    </span>
+                  </span>
                 </label>
 
                 {form.hasCardAbility && (
@@ -262,6 +269,42 @@ export const MasterCardCreation = () => {
                   />
                 )}
               </div>
+
+              {form.hasCardAbility && (
+                <div className="input-block w-full">
+                  <h2 className="category-header">ADDITIONAL ABILITY OPTIONS</h2>
+                  <label className="flex gap-1 items-center input-block">
+                    <input
+                      id="hasCardAbility"
+                      type="checkbox"
+                      onChange={(e) =>
+                        mainUpdateForm("revealServantName", e.target.checked)
+                      }
+                    />
+                    <span className="select-none font-semibold">Reveal Servant Name</span>
+                  </label>
+                  <label className="block field-header">X Times Per Game</label>
+                  <select
+                    id="timesPerGame"
+                    name="timesPerGame"
+                    value={form.timesPerGame ?? ""}
+                    onChange={(e) =>
+                      mainUpdateForm(
+                        "timesPerGame",
+                        e.target.value ? Number(e.target.value) : null,
+                      )
+                    }
+                  >
+                    <option value="null">No limit</option>
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <option key={i} value={i+1}>
+                        {i+1}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
               <div className="input-block w-full">
                 <h2 className="field-header">Card Picture</h2>
                 <ImageCropper

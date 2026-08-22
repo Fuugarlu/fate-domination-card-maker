@@ -57,7 +57,8 @@ export const MenuBar = ({
   }
 
   useEffect(() => {
-    const currentFontSizeString = editor.getAttributes("textStyle").fontSize || DEFAULT_TEXT_SIZE + "px";
+    const currentFontSizeString =
+      editor.getAttributes("textStyle").fontSize || DEFAULT_TEXT_SIZE + "px";
     const currentFontSize = currentFontSizeString.slice(0, -2) as number;
     setFontSizeInput(currentFontSize);
   }, [editor.getAttributes("textStyle").fontSize]);
@@ -105,19 +106,18 @@ export const MenuBar = ({
       .run();
   }
 
- /**
-  * Sets the I-Beam to the position it was before opening the color picker.
-  */
+  /**
+   * Sets the I-Beam to the position it was before opening the color picker.
+   */
   const setIBeamPosition = (color: string) => {
-    const isTextSelected = editor.state.selection.$to.pos != editor.state.selection.$from.pos;
+    const isTextSelected =
+      editor.state.selection.$to.pos != editor.state.selection.$from.pos;
     const selectedText = editor.state.selection;
     const cursorPosition = editor.state.selection.$to.pos;
     editor
       .chain()
       .focus()
-      .setTextSelection(
-        isTextSelected? selectedText : cursorPosition
-      )
+      .setTextSelection(isTextSelected ? selectedText : cursorPosition)
       .setColor(color)
       .run();
   };
@@ -125,9 +125,9 @@ export const MenuBar = ({
   return (
     // <div className="w-full flex overflow-x-auto">
     <div className="w-full flex overflow-visible">
-      <nav className="flex flex-col w-full p-2 bg-gray-700 rounded-t">
+      <nav className="flex flex-col w-full gap-1 p-2 bg-gray-700 rounded-t">
         {/* Text style buttons */}
-        <div className="flex items-center gap-3 py-2 bg-gray-700 rounded-t">
+        <div className="flex items-center gap-3 bg-gray-700 rounded-t">
           <div className="flex items-center gap-0">
             <button
               type="button"
@@ -265,7 +265,9 @@ export const MenuBar = ({
                   editor.chain().setColor(color).run()
                 }
                 shape={"circle"}
-                additionalOnCloseFunction={(color: string) => setIBeamPosition(color)}
+                additionalOnCloseFunction={(color: string) =>
+                  setIBeamPosition(color)
+                }
               />
             </div>
           </span>
