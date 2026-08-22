@@ -125,6 +125,13 @@ const ColorInput = ({
     saveColorsToLocalStorage(BASE_PRESET_COLORS);
   }
 
+  const isCurrentColorListSameAsBase =
+    BASE_PRESET_COLORS.length === presetColors.length &&
+    BASE_PRESET_COLORS.every(
+      (item, i) =>
+        item.color === presetColors[i].color && item.title === presetColors[i].title,
+    );
+
   const isColorInPresetList = presetColors.some(
     (presetColor: PresetColorObject) => presetColor.color === background,
   );
@@ -180,8 +187,9 @@ const ColorInput = ({
                       {isColorInPresetList ? "Saved" : "Save color"}
                     </button>
                     <button
-                      className="p-1 w-1/2 bg-gray-300 rounded flex flex-grow justify-center cursor-pointer"
+                      className={`p-1 w-1/2 bg-gray-300 rounded flex flex-grow justify-center ${isCurrentColorListSameAsBase ? "opacity-50" : "cursor-pointer"}`}
                       onClick={() => resetPresetColors()}
+                      disabled={isCurrentColorListSameAsBase}
                     >
                       Reset colors
                     </button>

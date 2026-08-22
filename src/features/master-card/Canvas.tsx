@@ -307,9 +307,8 @@ export const Card = ({ form, isPreview }: CardProps) => {
                             className={`flex flex-row gap-2 items-center ${cardItem.cardType.toLowerCase()}`}
                           >
                             <img
-                              style={{ width: "35px", height: "28px" }}
+                              className={`block attack-type-icon ${cardItem.cardType == "noblephantasm" && "noblephantasm"}`}
                               src={getCardIcon(cardItem.cardType)}
-                              className="block"
                             />
                             {cardItem.values}
                           </div>

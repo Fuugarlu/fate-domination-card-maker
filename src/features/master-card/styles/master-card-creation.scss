@@ -69,14 +69,11 @@ label.field-header {
   );
 }
 
-.strength {
-  color: #ff1f1f;
-}
+.attack-type-icon {
+  width: 35px;
+  height: 28px;
 
-.agility {
-  color: #00c100;
-}
-
-.magic {
-  color: #0061ff;
+  &.noblephantasm {
+    height: 35px;
+  }
 }
