@@ -1,0 +1,49 @@
+.card-color-input {
+  height: 36px;
+  padding: 0.25rem;
+  background: var(--primary-dark-blue);
+  border: 1px solid var(--primary-light-blue);
+  border-radius: 8px;
+}
+
+.input-symbol {
+  width: 25px;
+}
+
+.card-color-slider {
+  width: 100%;
+}
+
+#hueSlider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 15px;
+  border-radius: 5px;
+  outline: none;
+  background: linear-gradient(
+    to right,
+    #0000ff 0%,
+    #ff00ff 17%,
+    #ff0000 33%,
+    #ffff00 50%,
+    #00ff00 67%,
+    #00ffff 83%,
+    #0000ff 100%
+  );
+}
+
+#saturationSlider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 15px;
+  border-radius: 5px;
+  outline: none;
+}
+
+#brightnessSlider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 15px;
+  border-radius: 5px;
+  outline: none;
+}

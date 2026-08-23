@@ -175,7 +175,10 @@ export const Card = ({ form, isPreview }: CardProps) => {
             style={{
               width: 750,
               height: 1050,
-              // filter: `hue-rotate(${form.enableCardColorHueInput ? form.cardColorHue : "0"}deg)`,
+              filter: 
+              `hue-rotate(${form.cardColorSettings?.hue ?? 0}deg) 
+              brightness(${form.cardColorSettings?.brightness ?? 1}) 
+              saturate(${form.cardColorSettings?.saturation ?? 1})`,
             }}
           />
 

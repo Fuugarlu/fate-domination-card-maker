@@ -19,6 +19,8 @@ import { PageName } from "../../components/header/PageName";
 import { DownloadButton } from "../../components/buttons/DownloadButton";
 import ColorInput from "../master-assets/components/ColorInput";
 import { Color } from "@/src/types/colorTypes";
+import CardColorInput from "./components/form/CardColorInput";
+import { CARD_COLORS } from "./constants/formConsts";
 
 const emptyState: formInput = {
   pic: null,
@@ -46,11 +48,10 @@ const emptyState: formInput = {
   ],
   servantCardsSpecialFontSize: 36,
   hasCardAbility: true,
-  // enableCardColorHueInput: false,
-  // cardColorHue: "0",
   revealServantName: false,
   timesPerGame: null,
   masterNameFieldSize: MASTER_NAME_FIELD_SIZES.short,
+  cardColorSettings: CARD_COLORS.default,
 };
 
 const initialState = {
@@ -254,7 +255,7 @@ export const MasterCardCreation = () => {
                   />
                   <span className="select-none">
                     Enable card ability 
-                    <span className="text-gray-400 italic">
+                    <span className="tooltip">
                       {` (disable & scroll down to make a servant card instead)`}
                     </span>
                   </span>
@@ -444,51 +445,11 @@ export const MasterCardCreation = () => {
                           mainUpdateForm("grayscaleFilter", e.target.checked)
                         }
                       />
-                      Grayscale filter
+                      Grayscale filter <span className="tooltip">(includes card art)</span>
                     </div>
 
-                    {/* <label className="field-header" htmlFor="hueSlider">
-                      Card Color
-                    </label>
-                    <div className="flex gap-1">
-                      <input
-                        checked={form.enableCardColorHueInput ?? ""}
-                        type="checkbox"
-                        onChange={(e) =>
-                          mainUpdateForm(
-                            "enableCardColorHueInput",
-                            e.target.checked,
-                          )
-                        }
-                      />
-                      <label htmlFor="enableHueSlider">Enable hue slider</label>
-                    </div>
-                    {form.enableCardColorHueInput && (
-                      <div className="color-picker-container flex items-center gap-1">
-                        <input
-                          type="range"
-                          id="hueSlider"
-                          min="0"
-                          max="360"
-                          value={form.cardColorHue ?? "0"}
-                          onChange={(e) =>
-                            mainUpdateForm("cardColorHue", e.target.value)
-                          }
-                        />
-                        <input
-                          type="text"
-                          style={{ width: "100%" }}
-                          maxLength={3}
-                          placeholder={form.cardColorHue}
-                          value={form.cardColorHue ?? "0"}
-                          onChange={(e) =>
-                            mainUpdateForm("cardColorHue", e.target.value)
-                          }
-                        />
-                        <span>&#176;</span>
-                      </div>
-                    )} */}
                   </div>
+                   <CardColorInput form={form} setForm={setForm} />
                 </div>
               </div>
             </div>

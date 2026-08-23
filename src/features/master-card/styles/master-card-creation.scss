@@ -39,24 +39,6 @@ label.field-header {
   justify-content: center;
 }
 
-#hueSlider {
-  -webkit-appearance: none;
-  appearance: none;
-  height: 15px;
-  border-radius: 5px;
-  outline: none;
-  background: linear-gradient(
-    to right,
-    #0000ff 0%,
-    #ff00ff 17%,
-    #ff0000 33%,
-    #ffff00 50%,
-    #00ff00 67%,
-    #00ffff 83%,
-    #0000ff 100%
-  );
-}
-
 .attack-type-icon {
   width: 35px;
   height: 28px;

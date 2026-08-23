@@ -9,6 +9,14 @@ export const enum MASTER_NAME_FIELD_SIZES {
   long = 'long',
 }
 
+export type CardColorSettings = {
+  settings: string;
+  colorType: "default" | "base" | "custom";
+  hue: number;
+  brightness: number;
+  saturation: number;
+};
+
 export type formInput = {
   pic: string | null;
   masterName: string;
@@ -27,7 +35,6 @@ export type formInput = {
   hasCardAbility: boolean;
   revealServantName: boolean;
   timesPerGame: number | null;
-  // cardColorHue: string;
-  // enableCardColorHueInput: boolean;
+  cardColorSettings: CardColorSettings;
   masterNameFieldSize: MASTER_NAME_FIELD_SIZES;
 };
