@@ -295,7 +295,7 @@ export const MasterCardCreation = () => {
                       )
                     }
                   >
-                    <option value={0}>No limit</option>
+                    <option value={""}>No limit</option>
                     {Array.from({ length: 5 }, (_, i) => (
                       <option key={i} value={i+1}>
                         {i+1}
