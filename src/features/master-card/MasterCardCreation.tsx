@@ -231,7 +231,7 @@ export const MasterCardCreation = () => {
                   <div>
                     <ColorInput
                       label={"Name Color"}
-                      value={form.masterNameColor}
+                      value={form.masterNameColor ?? emptyState.masterNameColor}
                       handleValue={(color: string) =>
                         setForm((prev) => ({
                           ...prev,
@@ -278,6 +278,7 @@ export const MasterCardCreation = () => {
                     <input
                       id="hasCardAbility"
                       type="checkbox"
+                      checked={form.revealServantName ?? false}
                       onChange={(e) =>
                         mainUpdateForm("revealServantName", e.target.checked)
                       }

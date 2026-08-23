@@ -1,5 +1,6 @@
 import React from "react";
 import shadowPieceForPreview from "../images/shadow-piece-for-preview.png";
+import shadowPieceForPreviewRotated from "../images/shadow-piece-for-preview-rotated-90.png";
 import { BoxPicAndColorForm } from "../../master-assets/types/formTypes";
 
 type props = {
@@ -31,7 +32,7 @@ export const MasterBoxPreview = ({ form }: props) => {
               ></div>
               <img
                 className="absolute"
-                src={shadowPieceForPreview.src}
+                src={shadowPieceForPreviewRotated.src}
                 style={{ width: boxPreviewSettings.shadowShortSide, height: boxPreviewSettings.shadowLongSide }}
               />
             </div>
