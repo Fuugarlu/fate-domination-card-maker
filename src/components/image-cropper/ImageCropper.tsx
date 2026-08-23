@@ -121,7 +121,7 @@ const ImageCropper = ({
               />
             </div>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between xl:flex-col 2xl:flex-row">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2">
                 Zoom
@@ -157,7 +157,7 @@ const ImageCropper = ({
               </div>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex gap-2 self-end">
               <button
                 onClick={() => cancelCropper()}
                 className="cropper-button bg-gray-500"
