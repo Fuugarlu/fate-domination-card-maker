@@ -141,7 +141,7 @@ export const Card = ({ form, isPreview }: CardProps) => {
         ${!isPreview ? "absolute left-[-9999px] top-[-9999px]" : "flex flex-col items-center"}
       `}
     >
-      <div>
+      <div className={isPreview ? "xl:fixed" : ""}>
         <div
           id={
             isPreview ? "card-preview" : IMAGE_CROP_SETTINGS.CARD + "-to-save"

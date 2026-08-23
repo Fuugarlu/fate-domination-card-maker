@@ -8,8 +8,8 @@ const InfoContact = () => {
           <span className='flex flex-col'>
             <span>Thanks to the creators and contributors of Fate/Domination!</span>
             <span>I really don't have much to say...</span>
-            <span>There's a lot of features and code cleanup I could work on, but I'll pass for now!</span>
-            </span>
+            <span>Feel free to suggest improvements on the game's Discord server or on GitHub!</span>
+          </span>
             <span className='flex items-center gap-1'>GitHub: <a href="https://github.com/Fuugarlu/fate-domination-card-maker"><FaGithub className='text-3xl'/></a></span>
         </div>
     </div>
