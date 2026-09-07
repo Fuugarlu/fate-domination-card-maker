@@ -88,12 +88,12 @@ export const ExportImportFeature = (prop: Props) => {
         className="import-export-button bg-blue-500 hover:bg-blue-400"
       >
         <FaFileDownload />
-        Export
+        Save card
       </button>
       <button onClick={() => fileInputRef.current?.click()}>
         <span className="import-export-button bg-blue-500 hover:bg-blue-400">
           <FaFileUpload />
-          Import
+          Load card
         </span>
       </button>
       <input
