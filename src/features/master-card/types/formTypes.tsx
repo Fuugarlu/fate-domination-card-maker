@@ -22,8 +22,8 @@ export type formInput = {
   masterName: string;
   masterNameColor: Color;
   masterNameFontSize: number;
-  objectiveValue: number | null;
-  eventMana: number | null;
+  objectiveValue: number | 'X' | null;
+  eventMana: number | 'X' | null;
   cardAttack: string | null;
   cardMana: string | null;
   attackTypes: AttackTypes;

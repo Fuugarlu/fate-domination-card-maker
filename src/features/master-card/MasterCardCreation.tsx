@@ -80,6 +80,15 @@ export const MasterCardCreation = () => {
     updateForm(key, value, setForm);
   };
 
+  const getEventOrObjectiveValue = (value: string): "X" | number | null => {
+    if (value === "X") return "X";
+    if (value === "") return null;
+
+    const numberValue = Number(value);
+
+    return numberValue >= 0 && numberValue <= 9 ? numberValue : null;
+  };
+
   const handleAttackTypeChange = (index: string) => {
     mainUpdateForm("attackTypes", {
       ...form.attackTypes,
@@ -254,7 +263,7 @@ export const MasterCardCreation = () => {
                     }
                   />
                   <span className="select-none">
-                    Enable card ability 
+                    Enable card ability
                     <span className="tooltip">
                       {` (disable & scroll down to make a servant card instead)`}
                     </span>
@@ -273,7 +282,9 @@ export const MasterCardCreation = () => {
 
               {form.hasCardAbility && (
                 <div className="input-block w-full">
-                  <h2 className="category-header">ADDITIONAL ABILITY OPTIONS</h2>
+                  <h2 className="category-header">
+                    ADDITIONAL ABILITY OPTIONS
+                  </h2>
                   <label className="flex gap-1 items-center input-block">
                     <input
                       id="hasCardAbility"
@@ -283,7 +294,9 @@ export const MasterCardCreation = () => {
                         mainUpdateForm("revealServantName", e.target.checked)
                       }
                     />
-                    <span className="select-none font-semibold">Reveal Servant Name</span>
+                    <span className="select-none font-semibold">
+                      Reveal Servant Name
+                    </span>
                   </label>
                   <label className="block field-header">X Times Per Game</label>
                   <select
@@ -299,8 +312,8 @@ export const MasterCardCreation = () => {
                   >
                     <option value={""}>No limit</option>
                     {Array.from({ length: 5 }, (_, i) => (
-                      <option key={i} value={i+1}>
-                        {i+1}
+                      <option key={i} value={i + 1}>
+                        {i + 1}
                       </option>
                     ))}
                   </select>
@@ -395,7 +408,7 @@ export const MasterCardCreation = () => {
                     onChange={(e) =>
                       mainUpdateForm(
                         "eventMana",
-                        e.target.value ? Number(e.target.value) : null,
+                        getEventOrObjectiveValue(e.target.value)
                       )
                     }
                   >
@@ -405,6 +418,9 @@ export const MasterCardCreation = () => {
                         {i}
                       </option>
                     ))}
+                    <option key="X" value={"X"}>
+                      X
+                    </option>
                   </select>
                 </div>
 
@@ -419,7 +435,7 @@ export const MasterCardCreation = () => {
                     onChange={(e) =>
                       mainUpdateForm(
                         "objectiveValue",
-                        e.target.value ? Number(e.target.value) : null,
+                        getEventOrObjectiveValue(e.target.value)
                       )
                     }
                   >
@@ -429,6 +445,9 @@ export const MasterCardCreation = () => {
                         {i}
                       </option>
                     ))}
+                    <option key="X" value={"X"}>
+                      X
+                    </option>
                   </select>
                 </div>
 
@@ -446,11 +465,11 @@ export const MasterCardCreation = () => {
                           mainUpdateForm("grayscaleFilter", e.target.checked)
                         }
                       />
-                      Grayscale filter <span className="tooltip">(includes card art)</span>
+                      Grayscale filter{" "}
+                      <span className="tooltip">(includes card art)</span>
                     </div>
-
                   </div>
-                   <CardColorInput form={form} setForm={setForm} />
+                  <CardColorInput form={form} setForm={setForm} />
                 </div>
               </div>
             </div>
