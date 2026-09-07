@@ -59,7 +59,7 @@ const CardColorInput = ({ form, setForm }: Props) => {
       <select
         id="cardColorSettings"
         name="cardColorSettings"
-        value={form.cardColorSettings?.settings ?? ""}
+        value={form.cardColorSettings?.settings ?? "default"}
         onChange={handleColorSettingsChange}
       >
         <option value="default">Default</option>
