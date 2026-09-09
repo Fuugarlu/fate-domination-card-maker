@@ -1,4 +1,4 @@
-import { IMAGE_CROP_SETTINGS } from "@/src/utils/formUtils";
+import { IMAGE_CROP_SETTINGS, IMAGE_CROP_VALUES } from "@/src/constants/cropConstants";
 import { MasterPicAndColorForm } from "../types/formTypes";
 
 type props = {
@@ -11,18 +11,15 @@ const BORDER_THICKNESS = 40;
 
 export const MasterAsset = ({ form, isPreview, assetType }: props) => {
   const tokenAssetSettings = {
-    width: 876,
-    height: 876,
+    width: IMAGE_CROP_VALUES[IMAGE_CROP_SETTINGS.TOKEN].dimensions.width + BORDER_THICKNESS * 2,
+    height: IMAGE_CROP_VALUES[IMAGE_CROP_SETTINGS.TOKEN].dimensions.height + BORDER_THICKNESS * 2,
     borderRadius: "9999px",
     padding: BORDER_THICKNESS + "px",
-    //   background: `
-    //   linear-gradient(to bottom, ${form.colorMode == "solid" ? form.borderColor : form.gradientColors.join(",")}}) border-box
-    // `,
     background: `linear-gradient(to bottom, ${form.colorMode == "solid" ? form.borderColor : form.gradientColors.join(",")})`,
   };
   const standeeAssetSettings = {
-    width: 876,
-    height: 1433,
+    width: IMAGE_CROP_VALUES[IMAGE_CROP_SETTINGS.STANDEE].dimensions.width + BORDER_THICKNESS * 2,
+    height: IMAGE_CROP_VALUES[IMAGE_CROP_SETTINGS.STANDEE].dimensions.height + BORDER_THICKNESS * 2,
     borderRadius: "0px",
     padding: BORDER_THICKNESS + "px",
     background: `linear-gradient(to bottom, ${form.colorMode == "solid" ? form.borderColor : form.gradientColors.join(",")})`,

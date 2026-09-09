@@ -33,7 +33,7 @@ const rejectStyle = {
   borderColor: "#ff1744",
 };
 
-const UploadImageButton = ({ setUploadedImage }: any) => {
+const UploadImageButton = ({ setUploadedImage, dimensions }: { setUploadedImage: (file: File) => void; dimensions: { width: number; height: number } }) => {
   const {
     acceptedFiles,
     getRootProps,
@@ -68,7 +68,10 @@ const UploadImageButton = ({ setUploadedImage }: any) => {
         <input {...getInputProps()} />
         <div className="flex flex-col gap-1 items-center justify-center">
           <RiImageAddLine className="text-3xl" />
-          <p>Drag & drop an image here, or click to browse</p>
+          <span>Drag & drop an image here, or click to browse</span>
+          <span className="text-sm italic text-gray-500">
+            (Crops to {dimensions.width} x {dimensions.height})
+          </span>
           {isDragReject && (
             <p className="underline">Please upload one image.</p>
           )}

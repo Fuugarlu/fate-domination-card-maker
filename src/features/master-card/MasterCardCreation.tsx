@@ -11,7 +11,7 @@ import {
   formInput,
   MASTER_NAME_FIELD_SIZES,
 } from "@/src/features/master-card/types/formTypes";
-import { IMAGE_CROP_SETTINGS, updateForm } from "@/src/utils/formUtils";
+import { updateForm } from "@/src/utils/formUtils";
 import { ServantAttackTypesInput } from "./components/form/ServantAttackTypesInput";
 import "./styles/master-card-creation.scss";
 import { ClearFormButton } from "../../components/header/ClearFormButton";
@@ -21,6 +21,7 @@ import ColorInput from "../master-assets/components/ColorInput";
 import { Color } from "@/src/types/colorTypes";
 import CardColorInput from "./components/form/CardColorInput";
 import { CARD_COLORS } from "./constants/formConsts";
+import { IMAGE_CROP_SETTINGS } from "@/src/constants/cropConstants";
 
 const emptyState: formInput = {
   pic: null,

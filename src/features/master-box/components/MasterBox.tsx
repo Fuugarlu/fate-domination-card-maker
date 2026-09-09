@@ -1,8 +1,8 @@
 import boxTopRightBlack from "../images/box-top-right.png";
 import boxBottomLeftShadows from "../images/box-bottom-left.png";
-import { IMAGE_CROP_SETTINGS } from "@/src/utils/formUtils";
 import BoxImage from "./BoxImage";
 import { BoxPicAndColorForm } from "../../master-assets/types/formTypes";
+import { IMAGE_CROP_SETTINGS } from "@/src/constants/cropConstants";
 
 type props = {
   form: BoxPicAndColorForm;

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { IMAGE_CROP_SETTINGS } from "@/src/utils/formUtils";
 import { DownloadButton } from "@/src/components/buttons/DownloadButton";
 import { ServantCardForm } from "./types/formTypes";
 import { SERVANT_TYPES } from "@/src/constants/servantConstants";
@@ -15,6 +14,7 @@ import { capitalizeString } from "@/src/utils/TextUtils";
 import { BasicCardTypes } from "@/src/types/cardTypes";
 import ColorInput from "../master-assets/components/ColorInput";
 import { Color } from "@/src/types/colorTypes";
+import { IMAGE_CROP_SETTINGS } from "@/src/constants/cropConstants";
 
 const defaultState: ServantCardForm = {
   class: SERVANT_TYPES.STANDARD[0],

@@ -1,6 +1,6 @@
-import { IMAGE_CROP_SETTINGS } from "@/src/utils/formUtils";
 import React from "react";
 import commandSealTemplate from "@/src/features/master-assets/command-seal/images/command-seal-template.png";
+import { IMAGE_CROP_SETTINGS, IMAGE_CROP_VALUES } from "@/src/constants/cropConstants";
 
 type props = {
   form: { pic: string };
@@ -35,10 +35,8 @@ const CommandSeal = ({ form, isPreview }: props) => {
               alt=""
               className="absolute object-cover bg-black"
               style={{
-                left: 25,
-                top: 25,
-                width: 700,
-                height: 800,
+                ...IMAGE_CROP_VALUES[IMAGE_CROP_SETTINGS.COMMAND_SEAL].position,
+                ...IMAGE_CROP_VALUES[IMAGE_CROP_SETTINGS.COMMAND_SEAL].dimensions
               }}
             />
 

@@ -1,4 +1,4 @@
-import { IMAGE_CROP_SETTINGS } from "@/src/utils/formUtils";
+import { IMAGE_CROP_SETTINGS } from "@/src/constants/cropConstants";
 import { snapdom } from "@zumer/snapdom";
 import React, { useState } from "react";
 

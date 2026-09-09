@@ -10,7 +10,7 @@ import {
 } from "@/src/features/master-card/types/formTypes";
 import { ATTACK_TYPES } from "@/src/constants/servantConstants";
 import { StaticImageData } from "next/image";
-import { IMAGE_CROP_SETTINGS } from "@/src/utils/formUtils";
+import { IMAGE_CROP_SETTINGS, IMAGE_CROP_VALUES } from "@/src/constants/cropConstants";
 
 function getCardIcon(key: string) {
   switch (key.toLowerCase()) {
@@ -159,10 +159,8 @@ export const Card = ({ form, isPreview }: CardProps) => {
               alt=""
               className="absolute object-cover bg-black"
               style={{
-                left: 25,
-                top: 25,
-                width: 700,
-                height: 800,
+                ...IMAGE_CROP_VALUES[IMAGE_CROP_SETTINGS.CARD].position,
+                ...IMAGE_CROP_VALUES[IMAGE_CROP_SETTINGS.CARD].dimensions
               }}
             />
           )}

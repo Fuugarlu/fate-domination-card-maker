@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { IMAGE_CROP_SETTINGS } from "@/src/utils/formUtils";
 import { DownloadButton } from "@/src/components/buttons/DownloadButton";
 import shirouStandee from "./images/shirou-standee.png";
 import SimpleMasterForm from "@/src/features/master-assets/components/SimpleMasterForm";
 import { MasterAsset } from "../components/MasterAsset";
 import { MasterPicAndColorForm } from "../types/formTypes";
 import ColorInputWithGradient from "../components/ColorInputWithGradient";
+import { IMAGE_CROP_SETTINGS } from "@/src/constants/cropConstants";
 
 const emptyState: MasterPicAndColorForm = {
   pic: shirouStandee.src,

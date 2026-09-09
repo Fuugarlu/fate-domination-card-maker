@@ -15,13 +15,3 @@ export const updateForm = <K extends keyof formInput>(
           : value,
     }));
   };
-
-  
-export const enum IMAGE_CROP_SETTINGS {
-  CARD = "card",
-  TOKEN = "token",
-  STANDEE = "standee",
-  MASTER_BOX = "master-box",
-  SERVANT_SUMMON = "servant-summon",
-  COMMAND_SEAL = "command-seal"
-}

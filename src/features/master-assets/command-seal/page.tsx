@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { IMAGE_CROP_SETTINGS } from "@/src/utils/formUtils";
 import { DownloadButton } from "@/src/components/buttons/DownloadButton";
 import defaultCommandSeal from "./images/default-command-seal.png";
 import SimpleMasterForm from "@/src/features/master-assets/components/SimpleMasterForm";
 import CommandSeal from "./components/CommandSeal";
+import { IMAGE_CROP_SETTINGS } from "@/src/constants/cropConstants";
 
 const emptyState: { pic: string } = {
   pic: defaultCommandSeal.src
@@ -25,7 +25,7 @@ const CommandSealCreation = () => {
       <CommandSeal form={form} isPreview={true} />
       <CommandSeal form={form} isPreview={false} />
       
-      <DownloadButton idToSave={IMAGE_CROP_SETTINGS.COMMAND_SEAL} name={"command-seal"} />
+      <DownloadButton idToSave={IMAGE_CROP_SETTINGS.COMMAND_SEAL} name={IMAGE_CROP_SETTINGS.COMMAND_SEAL} />
     </div>
   );
 };

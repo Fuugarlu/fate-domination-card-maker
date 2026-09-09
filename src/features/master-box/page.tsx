@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { IMAGE_CROP_SETTINGS } from "@/src/utils/formUtils";
 import { DownloadButton } from "@/src/components/buttons/DownloadButton";
 import shirouBox from "./images/shirou-box.png";
 import SimpleMasterForm from "@/src/features/master-assets/components/SimpleMasterForm";
@@ -10,6 +9,7 @@ import { MasterBox } from "./components/MasterBox";
 import { MasterBoxPreview } from "./components/MasterBoxPreview";
 import ColorInput from "../master-assets/components/ColorInput";
 import { Color } from "@/src/types/colorTypes";
+import { IMAGE_CROP_SETTINGS } from "@/src/constants/cropConstants";
 
 const emptyState: BoxPicAndColorForm = {
   pic: shirouBox.src,
@@ -40,7 +40,7 @@ const MasterBoxCreation = () => {
       <MasterBoxPreview form={form} />
       <DownloadButton
         idToSave={IMAGE_CROP_SETTINGS.MASTER_BOX}
-        name={"master-box"}
+        name={IMAGE_CROP_SETTINGS.MASTER_BOX}
       />
     </div>
   );

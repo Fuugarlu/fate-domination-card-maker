@@ -1,10 +1,9 @@
 "use client";
 
 import servantCardTemplate from "../images/servant-card-template.png";
-import { ATTACK_TYPES } from "@/src/constants/servantConstants";
-import { IMAGE_CROP_SETTINGS } from "@/src/utils/formUtils";
 import { ServantCardForm } from "../types/formTypes";
 import PrimaryTrait from "./PrimaryTrait";
+import { IMAGE_CROP_SETTINGS, IMAGE_CROP_VALUES } from "@/src/constants/cropConstants";
 
 type ServantSummonProps = {
   form: ServantCardForm;
@@ -39,10 +38,8 @@ export const ServantSummon = ({ form, isPreview }: ServantSummonProps) => {
               alt=""
               className="absolute object-cover bg-black"
               style={{
-                left: 25,
-                top: 25,
-                width: 700,
-                height: 836,
+                ...IMAGE_CROP_VALUES[IMAGE_CROP_SETTINGS.SERVANT_SUMMON].position,
+                ...IMAGE_CROP_VALUES[IMAGE_CROP_SETTINGS.SERVANT_SUMMON].dimensions
               }}
             />
           )}

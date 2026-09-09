@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 
 import Cropper, { Area, Point } from "react-easy-crop";
 import { getCroppedImg } from "../../features/master-card/CanvasUtils";
-import { IMAGE_CROP_SETTINGS } from "@/src/utils/formUtils";
 import UploadImageButton from "./components/UploadImageButton";
+import { IMAGE_CROP_SETTINGS, IMAGE_CROP_VALUES } from "@/src/constants/cropConstants";
 
 const ImageCropper = ({
   croppedImage,
@@ -38,23 +38,8 @@ const ImageCropper = ({
   }
 
   function getCropAspectRatio(cropSettings: IMAGE_CROP_SETTINGS): number {
-    switch (cropSettings) {
-      case IMAGE_CROP_SETTINGS.CARD:
-      case IMAGE_CROP_SETTINGS.COMMAND_SEAL:
-        return 7 / 8;
-
-      case IMAGE_CROP_SETTINGS.STANDEE:
-        return 876 / 1433;
-
-      case IMAGE_CROP_SETTINGS.MASTER_BOX:
-        return 1.3;
-
-      case IMAGE_CROP_SETTINGS.SERVANT_SUMMON:
-        return 700 / 830;
-
-      default: // Token
-        return 1;
-    }
+    const {width, height} = IMAGE_CROP_VALUES[cropSettings].dimensions;
+    return width / height;
   }
 
   const cropShape = getCropShape(cropSettings);
@@ -175,7 +160,7 @@ const ImageCropper = ({
         </div>
       ) : (
         <div>
-          <UploadImageButton setUploadedImage={handleUploadedImage} />
+          <UploadImageButton setUploadedImage={handleUploadedImage} dimensions={IMAGE_CROP_VALUES[cropSettings].dimensions} />
         </div>
       )}
     </div>
