@@ -1,4 +1,3 @@
-import { formInput } from "@/src/features/master-card/types/formTypes";
 import React, { useState } from "react";
 
 type ClearFormButtonProps<T> = {

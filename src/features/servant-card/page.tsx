@@ -170,16 +170,18 @@ const ServantCard = () => {
               ))}
             </select>
           </div>
+          <span className="flex">
+          <DownloadButton
+            idToSave={IMAGE_CROP_SETTINGS.SERVANT_SUMMON}
+            name={form.name}
+          />
+          </span>
         </div>
         <div className="w-1/2">
           <ServantSummon form={form} isPreview={true} />
           <ServantSummon form={form} isPreview={false} />
         </div>
       </div>
-      <DownloadButton
-        idToSave={IMAGE_CROP_SETTINGS.SERVANT_SUMMON}
-        name={form.name}
-      />
     </div>
   );
 };

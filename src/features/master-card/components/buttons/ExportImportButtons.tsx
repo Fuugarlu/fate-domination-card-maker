@@ -8,12 +8,17 @@ import React, { ChangeEvent, useRef } from "react";
 type Props = {
   form: formInput;
   setForm: React.Dispatch<React.SetStateAction<formInput>>;
+  exportOnly?: boolean
 };
 
 import { FaFileDownload } from "react-icons/fa";
 import { FaFileUpload } from "react-icons/fa";
 
-export const ExportImportFeature = (prop: Props) => {
+export const ExportImportFeature = ({
+  form,
+  setForm,
+  exportOnly = false,
+}: Props) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   async function convertImageToBase64(pic: string) {
@@ -51,7 +56,7 @@ export const ExportImportFeature = (prop: Props) => {
     // Create a temporary link and trigger download
     const link = document.createElement("a");
     link.href = url;
-    const cardName = prop.form.masterName;
+    const cardName = form.masterName;
     link.download = cardName ? cardName + ".json" : "card.json";
     document.body.appendChild(link);
     link.click();
@@ -86,7 +91,7 @@ export const ExportImportFeature = (prop: Props) => {
 
         if (importedData && typeof importedData === "object") {
           handleMissingFormFields(importedData);
-          prop.setForm(importedData);
+          setForm(importedData);
         }
       } catch (error) {
         console.error("Invalid JSON file:", error);
@@ -103,18 +108,20 @@ export const ExportImportFeature = (prop: Props) => {
   return (
     <div className="flex gap-2">
       <button
-        onClick={() => handleExport(prop.form, prop.form.pic)}
+        onClick={() => handleExport(form, form.pic)}
         className="import-export-button bg-blue-500 hover:bg-blue-400"
       >
         <FaFileDownload />
         Save card
       </button>
-      <button onClick={() => fileInputRef.current?.click()}>
-        <span className="import-export-button bg-blue-500 hover:bg-blue-400">
-          <FaFileUpload />
-          Load card
-        </span>
-      </button>
+      {!exportOnly && (
+        <button onClick={() => fileInputRef.current?.click()}>
+          <span className="import-export-button bg-blue-500 hover:bg-blue-400">
+            <FaFileUpload />
+            Load card
+          </span>
+        </button>
+      )}
       <input
         type="file"
         ref={fileInputRef}

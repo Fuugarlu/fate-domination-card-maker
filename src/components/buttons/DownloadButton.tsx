@@ -28,7 +28,7 @@ export const DownloadButton = ({ idToSave, name }: downloadProps) => {
   return (
     <button
       onClick={() => downloadPic()}
-      className={`px-4 py-2 ${downloading ? "bg-gray-500" : "bg-blue-500 hover:bg-blue-400"} text-white rounded cursor-pointer mt-3 w-full"`}
+      className={`px-10 py-2 flex-1 text-white rounded cursor-pointer ${downloading ? "bg-gray-500" : "bg-blue-500 hover:bg-blue-400"}`}
       disabled={downloading}
     >
       {downloading ? "Downloading..." : "Download"}

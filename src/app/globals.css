@@ -94,3 +94,15 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
+
+.import-export-button {
+  width: 8rem;
+  height: 2.5rem;
+  color: white;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  justify-content: center;
+}

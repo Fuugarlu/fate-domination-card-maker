@@ -428,13 +428,15 @@ export const MasterCardCreation = () => {
                 </div>
               </div>
             </div>
-            {/* Servant Options */}
           </form>
 
-          <DownloadButton
-            idToSave={IMAGE_CROP_SETTINGS.CARD}
-            name={form.masterName}
-          />
+          <div className="flex flex-row w-full gap-2">
+              <DownloadButton
+                idToSave={IMAGE_CROP_SETTINGS.CARD}
+                name={form.masterName}
+              />
+            <ExportImportFeature form={form} setForm={setForm} exportOnly />
+          </div>
         </div>
 
         <div className="xl:w-1/2">
