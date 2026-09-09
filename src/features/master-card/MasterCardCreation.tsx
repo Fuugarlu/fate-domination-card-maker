@@ -9,6 +9,7 @@ import { MdTextDecrease, MdTextIncrease } from "react-icons/md";
 import { ATTACK_TYPES } from "@/src/constants/servantConstants";
 import {
   formInput,
+  MAIN_CARD,
   MASTER_NAME_FIELD_SIZES,
 } from "@/src/features/master-card/types/formTypes";
 import { updateForm } from "@/src/utils/formUtils";
@@ -22,6 +23,7 @@ import { Color } from "@/src/types/colorTypes";
 import CardColorInput from "./components/form/CardColorInput";
 import { CARD_COLORS } from "./constants/formConsts";
 import { IMAGE_CROP_SETTINGS } from "@/src/constants/cropConstants";
+import CardSettings from "./components/CardSettings";
 
 const emptyState: formInput = {
   pic: null,
@@ -43,9 +45,9 @@ const emptyState: formInput = {
   grayscaleFilter: false,
   servantClass: null,
   servantCards: [
-    { index: 0, cardType: "Strength", values: "", showIcon: false },
-    { index: 1, cardType: "Agility", values: "", showIcon: false },
-    { index: 2, cardType: "Magic", values: "", showIcon: false },
+    { index: 0, cardType: "Strength", values: "", showIcon: true },
+    { index: 1, cardType: "Agility", values: "", showIcon: true },
+    { index: 2, cardType: "Magic", values: "", showIcon: true },
   ],
   servantCardsSpecialFontSize: 36,
   hasCardAbility: true,
@@ -53,14 +55,15 @@ const emptyState: formInput = {
   timesPerGame: null,
   masterNameFieldSize: MASTER_NAME_FIELD_SIZES.short,
   cardColorSettings: CARD_COLORS.default,
+  cardToMake: MAIN_CARD.general,
 };
 
 const initialState = {
   ...emptyState,
   servantCards: [
-    { index: 0, cardType: "Strength", values: "", showIcon: false },
-    { index: 1, cardType: "Agility", values: "", showIcon: false },
-    { index: 2, cardType: "Magic", values: "", showIcon: false },
+    { index: 0, cardType: "Strength", values: "", showIcon: true },
+    { index: 1, cardType: "Agility", values: "", showIcon: true },
+    { index: 2, cardType: "Magic", values: "", showIcon: true },
   ],
   masterName: "Cool Card Name",
   masterAbility: `<p><span style="color: #ffffff; font-size: 30px; line-height: 1.1;"><em>Example</em> - Add some abilities!</span></p>
@@ -252,85 +255,36 @@ export const MasterCardCreation = () => {
                   </div>
                 </div>
               </div>
-              <div className="input-block w-full">
-                <h2 className="field-header">Card Ability</h2>
-                <label className="flex gap-1 items-center">
-                  <input
-                    id="hasCardAbility"
-                    type="checkbox"
-                    checked={form.hasCardAbility}
-                    onChange={(e) =>
-                      mainUpdateForm("hasCardAbility", e.target.checked)
-                    }
-                  />
-                  <span className="select-none">
-                    Enable card ability
-                    <span className="tooltip">
-                      {` (disable & scroll down to make a servant card instead)`}
-                    </span>
-                  </span>
+
+              <div className="flex flex-col input-block">
+                <label htmlFor="optionDropdown" className="field-header">
+                  Card Type [General - Servant - Textless]
                 </label>
-
-                {form.hasCardAbility && (
-                  <RichTextEditor
-                    masterAbility={form.masterAbility}
-                    setMasterAbility={(abilityText) =>
-                      mainUpdateForm("masterAbility", abilityText)
-                    }
-                  />
-                )}
+                <select
+                  id="optionDropdown"
+                  name="optionDropdown"
+                  value={form.cardToMake ?? MAIN_CARD.general}
+                  onChange={(e) => {
+                    setForm((prev) => ({
+                      ...prev,
+                      cardToMake: e.target.value as MAIN_CARD,
+                    }));
+                    console.log(form);
+                  }}
+                >
+                  <option value={MAIN_CARD.general}>
+                    General (attacks, masters...)
+                  </option>
+                  <option value={MAIN_CARD.servant}>Servant card</option>
+                  <option value={MAIN_CARD.textless}>Textless card</option>
+                </select>
               </div>
 
-              {form.hasCardAbility && (
-                <div className="input-block w-full">
-                  <h2 className="category-header">
-                    ADDITIONAL ABILITY OPTIONS
-                  </h2>
-                  <label className="flex gap-1 items-center input-block">
-                    <input
-                      id="hasCardAbility"
-                      type="checkbox"
-                      checked={form.revealServantName ?? false}
-                      onChange={(e) =>
-                        mainUpdateForm("revealServantName", e.target.checked)
-                      }
-                    />
-                    <span className="select-none font-semibold">
-                      Reveal Servant Name
-                    </span>
-                  </label>
-                  <label className="block field-header">X Times Per Game</label>
-                  <select
-                    id="timesPerGame"
-                    name="timesPerGame"
-                    value={form.timesPerGame ?? ""}
-                    onChange={(e) =>
-                      mainUpdateForm(
-                        "timesPerGame",
-                        e.target.value ? Number(e.target.value) : null,
-                      )
-                    }
-                  >
-                    <option value={""}>No limit</option>
-                    {Array.from({ length: 5 }, (_, i) => (
-                      <option key={i} value={i + 1}>
-                        {i + 1}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
-
-              <div className="input-block w-full">
-                <h2 className="field-header">Card Picture</h2>
-                <ImageCropper
-                  croppedImage={form.pic}
-                  setCroppedImage={(croppedPic) =>
-                    setForm((prev) => ({ ...prev, pic: croppedPic }))
-                  }
-                  cropSettings={IMAGE_CROP_SETTINGS.CARD}
-                />
-              </div>
+              <CardSettings
+                cardType={form.cardToMake}
+                form={form}
+                setForm={setForm}
+              />
             </div>
 
             {/* Everything Else */}
@@ -409,7 +363,7 @@ export const MasterCardCreation = () => {
                     onChange={(e) =>
                       mainUpdateForm(
                         "eventMana",
-                        getEventOrObjectiveValue(e.target.value)
+                        getEventOrObjectiveValue(e.target.value),
                       )
                     }
                   >
@@ -436,7 +390,7 @@ export const MasterCardCreation = () => {
                     onChange={(e) =>
                       mainUpdateForm(
                         "objectiveValue",
-                        getEventOrObjectiveValue(e.target.value)
+                        getEventOrObjectiveValue(e.target.value),
                       )
                     }
                   >
@@ -475,9 +429,6 @@ export const MasterCardCreation = () => {
               </div>
             </div>
             {/* Servant Options */}
-            <div className="input-block">
-              <ServantAttackTypesInput form={form} setForm={setForm} />
-            </div>
           </form>
 
           <DownloadButton
@@ -487,9 +438,9 @@ export const MasterCardCreation = () => {
         </div>
 
         <div className="xl:w-1/2">
-          <Card form={form} isPreview={true} />
+          <Card form={form} isPreview={true} cardType={form.cardToMake} />
         </div>
-        <Card form={form} isPreview={false} />
+        <Card form={form} isPreview={false} cardType={form.cardToMake} />
       </div>
     </div>
   );

@@ -119,8 +119,6 @@ export const ServantAttackTypesInput = (prop: Props) => {
 
   return (
     <div>
-      {" "}
-      <div className="category-header">SERVANT CARD</div>
       <div className="input-block flex flex-col">
         <label className="field-header" htmlFor="servantClass">
           Servant Class
@@ -128,6 +126,7 @@ export const ServantAttackTypesInput = (prop: Props) => {
         <select
           id="servantClass"
           name="servantClass"
+          value={prop.form.servantClass ?? ""}
           onChange={(e) =>
             updateForm(
               "servantClass",
@@ -194,7 +193,7 @@ export const ServantAttackTypesInput = (prop: Props) => {
         </div>
         <div className="flex flex-row gap-4 my-2">
           <button
-            className="bg-blue-500 hover:bg-blue-400 p-1 rounded cursor-pointer"
+            className="bg-blue-500 hover:bg-blue-400 px-1 py-1.5 rounded cursor-pointer"
             onClick={() =>
               addOrChangeServantAttack(
                 Math.max(

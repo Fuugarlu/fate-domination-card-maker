@@ -101,7 +101,6 @@ export const MenuBar = ({
       .focus()
       .selectAll()
       .setFontSize(currentSize)
-      .setColor("#ffffff")
       .setTextSelection(currentSelection)
       .run();
   }

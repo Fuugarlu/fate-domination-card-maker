@@ -4,13 +4,20 @@ import { servantCardType } from "@/src/types/servantTypes";
 import shortNameMasterTemplate from "./images/master-template-short.png";
 import mediumNameMasterTemplate from "./images/master-template-medium.png";
 import longNameMasterTemplate from "./images/master-template-long.png";
+import shortNameTextlessTemplate from "./images/textless-template-short.png";
+import mediumNameTextlessTemplate from "./images/textless-template-medium.png";
+import longNameTextlessTemplate from "./images/textless-template-long.png";
 import {
   formInput,
+  MAIN_CARD,
   MASTER_NAME_FIELD_SIZES,
 } from "@/src/features/master-card/types/formTypes";
 import { ATTACK_TYPES } from "@/src/constants/servantConstants";
 import { StaticImageData } from "next/image";
-import { IMAGE_CROP_SETTINGS, IMAGE_CROP_VALUES } from "@/src/constants/cropConstants";
+import {
+  IMAGE_CROP_SETTINGS,
+  IMAGE_CROP_VALUES,
+} from "@/src/constants/cropConstants";
 
 function getCardIcon(key: string) {
   switch (key.toLowerCase()) {
@@ -115,22 +122,33 @@ function AbilityText({
 type CardProps = {
   form: formInput;
   isPreview: boolean;
+  cardType: MAIN_CARD;
 };
 
-export const Card = ({ form, isPreview }: CardProps) => {
+export const Card = ({ form, isPreview, cardType }: CardProps) => {
+  const TEXTLESS_OFFSET = cardType == MAIN_CARD.textless ? 189 : 0;
+
   function handleTemplate(
     masterNameFieldSize: MASTER_NAME_FIELD_SIZES,
   ): StaticImageData {
-    switch (masterNameFieldSize) {
-      case MASTER_NAME_FIELD_SIZES.short:
-        return shortNameMasterTemplate;
-      case MASTER_NAME_FIELD_SIZES.medium:
-        return mediumNameMasterTemplate;
-      case MASTER_NAME_FIELD_SIZES.long:
-        return longNameMasterTemplate;
-
-      default:
-        return shortNameMasterTemplate;
+    if (cardType == MAIN_CARD.textless) {
+      switch (masterNameFieldSize) {
+        case MASTER_NAME_FIELD_SIZES.short:
+          return shortNameTextlessTemplate;
+        case MASTER_NAME_FIELD_SIZES.medium:
+          return mediumNameTextlessTemplate;
+        case MASTER_NAME_FIELD_SIZES.long:
+          return longNameTextlessTemplate;
+      }
+    } else {
+      switch (masterNameFieldSize) {
+        case MASTER_NAME_FIELD_SIZES.short:
+          return shortNameMasterTemplate;
+        case MASTER_NAME_FIELD_SIZES.medium:
+          return mediumNameMasterTemplate;
+        case MASTER_NAME_FIELD_SIZES.long:
+          return longNameMasterTemplate;
+      }
     }
   }
 
@@ -159,8 +177,16 @@ export const Card = ({ form, isPreview }: CardProps) => {
               alt=""
               className="absolute object-cover bg-black"
               style={{
-                ...IMAGE_CROP_VALUES[IMAGE_CROP_SETTINGS.CARD].position,
-                ...IMAGE_CROP_VALUES[IMAGE_CROP_SETTINGS.CARD].dimensions
+                ...IMAGE_CROP_VALUES[
+                  cardType == MAIN_CARD.textless
+                    ? IMAGE_CROP_SETTINGS.TEXTLESS
+                    : IMAGE_CROP_SETTINGS.CARD
+                ].position,
+                ...IMAGE_CROP_VALUES[
+                  cardType == MAIN_CARD.textless
+                    ? IMAGE_CROP_SETTINGS.TEXTLESS
+                    : IMAGE_CROP_SETTINGS.CARD
+                ].dimensions,
               }}
             />
           )}
@@ -173,8 +199,7 @@ export const Card = ({ form, isPreview }: CardProps) => {
             style={{
               width: 750,
               height: 1050,
-              filter: 
-              `hue-rotate(${form.cardColorSettings?.hue ?? 0}deg) 
+              filter: `hue-rotate(${form.cardColorSettings?.hue ?? 0}deg) 
               brightness(${form.cardColorSettings?.brightness ?? 1}) 
               saturate(${form.cardColorSettings?.saturation ?? 1})`,
             }}
@@ -185,7 +210,7 @@ export const Card = ({ form, isPreview }: CardProps) => {
             className="absolute flex items-center"
             style={{
               left: 30,
-              top: 778,
+              top: 778 + TEXTLESS_OFFSET,
               fontSize: form.masterNameFontSize,
               fontFamily: '"Times New Roman"',
               height: "60px",
@@ -222,7 +247,7 @@ export const Card = ({ form, isPreview }: CardProps) => {
               className="absolute"
               style={{
                 right: 10,
-                top: 770,
+                top: 770 + TEXTLESS_OFFSET,
               }}
             >
               <div className="relative">
@@ -252,7 +277,7 @@ export const Card = ({ form, isPreview }: CardProps) => {
               className="absolute"
               style={{
                 right: 169,
-                top: 770,
+                top: 770 + TEXTLESS_OFFSET,
               }}
             >
               <div className="relative">
@@ -296,8 +321,17 @@ export const Card = ({ form, isPreview }: CardProps) => {
             </div>
           </div>
 
+          {/* General Ability */}
+          {cardType == MAIN_CARD.general && form.masterAbility && (
+            <AbilityText
+              text={form.masterAbility}
+              revealServantName={form.revealServantName}
+              timesPerGame={form.timesPerGame}
+            />
+          )}
+
           {/* Servant Class */}
-          {form.servantClass !== null && (
+          {cardType == MAIN_CARD.servant && form.servantClass !== null && (
             <div className="absolute right-[20px] top-[20px]">
               <img
                 src={"./servant-classes/" + form.servantClass + ".png"}
@@ -306,17 +340,8 @@ export const Card = ({ form, isPreview }: CardProps) => {
             </div>
           )}
 
-          {/* Ability */}
-          {form.hasCardAbility && form.masterAbility && (
-            <AbilityText
-              text={form.masterAbility}
-              revealServantName={form.revealServantName}
-              timesPerGame={form.timesPerGame}
-            />
-          )}
-
           {/* Servant Info */}
-          {form.servantCards && (
+          {cardType == MAIN_CARD.servant && form.servantCards && (
             <div
               className="absolute text-4xl"
               style={{

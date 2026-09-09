@@ -3,7 +3,7 @@ import { attackTypesType, servantCardType } from "../../../types/servantTypes";
 
 export type AttackTypes = Record<attackTypesType, boolean>;
 
-export const enum MASTER_NAME_FIELD_SIZES {
+export enum MASTER_NAME_FIELD_SIZES {
   short = 'short',
   medium = 'medium',
   long = 'long',
@@ -37,4 +37,14 @@ export type formInput = {
   timesPerGame: number | null;
   cardColorSettings: CardColorSettings;
   masterNameFieldSize: MASTER_NAME_FIELD_SIZES;
+  cardToMake: mainCardType;
 };
+
+export const enum MAIN_CARD {
+  general = 'general',
+  servant = 'servant',
+  textless = 'textless',
+  all = 'all'
+}
+
+export type mainCardType = MAIN_CARD.general | MAIN_CARD.servant | MAIN_CARD.textless | MAIN_CARD.all;

@@ -5,6 +5,7 @@ export const enum IMAGE_CROP_SETTINGS {
   MASTER_BOX = "master-box",
   SERVANT_SUMMON = "servant-summon",
   COMMAND_SEAL = "command-seal",
+  TEXTLESS = "textless",
 }
 
 type Crop = {
@@ -27,6 +28,16 @@ export const IMAGE_CROP_VALUES: Record<IMAGE_CROP_SETTINGS, Crop> = {
     dimensions: {
       width: 690,
       height: 791,
+    },
+  },
+  [IMAGE_CROP_SETTINGS.TEXTLESS]: {
+    position: {
+      left: 30,
+      top: 30,
+    },
+    dimensions: {
+      width: 690,
+      height: 990,
     },
   },
   [IMAGE_CROP_SETTINGS.SERVANT_SUMMON]: {

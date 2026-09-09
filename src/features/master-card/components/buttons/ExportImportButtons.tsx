@@ -1,4 +1,8 @@
-import { formInput } from "@/src/features/master-card/types/formTypes";
+import {
+  formInput,
+  MAIN_CARD,
+  MASTER_NAME_FIELD_SIZES,
+} from "@/src/features/master-card/types/formTypes";
 import React, { ChangeEvent, useRef } from "react";
 
 type Props = {
@@ -25,7 +29,7 @@ export const ExportImportFeature = (prop: Props) => {
       reader.readAsDataURL(picBlob);
     });
     return dataUrl;
-  } 
+  }
 
   async function getExportData(form: formInput, pic: string | null) {
     if (pic) {
@@ -55,6 +59,20 @@ export const ExportImportFeature = (prop: Props) => {
     URL.revokeObjectURL(url);
   };
 
+  const handleMissingFormFields = (form: formInput) => {
+    if (!form.cardToMake) {
+      if (form.hasCardAbility) {
+        form.cardToMake = MAIN_CARD.general;
+      } else {
+        form.cardToMake = MAIN_CARD.servant;
+      }
+    }
+
+    if (!form.masterNameFieldSize) {
+      form.masterNameFieldSize = MASTER_NAME_FIELD_SIZES.short;
+    }
+  };
+
   const handleImport = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -67,6 +85,7 @@ export const ExportImportFeature = (prop: Props) => {
         ) as formInput;
 
         if (importedData && typeof importedData === "object") {
+          handleMissingFormFields(importedData);
           prop.setForm(importedData);
         }
       } catch (error) {
