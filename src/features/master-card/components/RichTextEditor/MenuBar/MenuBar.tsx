@@ -27,13 +27,19 @@ const emojiList = [
 
 const DEFAULT_TEXT_SIZE = 30;
 
-export const MenuBar = ({ editor, setLastFontUsed }: { editor: Editor | null; setLastFontUsed: React.Dispatch<React.SetStateAction<string>> }) => {
+export const MenuBar = ({
+  editor,
+  setLastFontUsed,
+}: {
+  editor: Editor | null;
+  setLastFontUsed: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   if (!editor) {
     return null;
   }
 
   return <MenuBarContent editor={editor} setLastFontUsed={setLastFontUsed} />;
-}
+};
 
 export const MenuBarContent = ({
   editor,
@@ -109,6 +115,8 @@ export const MenuBarContent = ({
       .setFontSize(currentSize)
       .setTextSelection(currentSelection)
       .run();
+
+    editor.chain().focus().setColor("#ffffff").run();
   }
 
   /**
