@@ -109,6 +109,8 @@ export const MenuBarContent = ({
       .setFontSize(currentSize)
       .setTextSelection(currentSelection)
       .run();
+
+    editor.chain().focus().setColor("#ffffff").run();
   }
 
   /**
