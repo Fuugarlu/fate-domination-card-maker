@@ -133,7 +133,6 @@ const ServantCard = () => {
             <div className="input-block w-full">
               <h2 className="field-header">Card Picture</h2>
               <ImageCropper
-                croppedImage={form.pic}
                 setCroppedImage={(croppedPic) =>
                   setForm((prev) => ({
                     ...prev,
