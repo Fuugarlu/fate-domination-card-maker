@@ -77,6 +77,7 @@ export const ServantSummon = ({ form, isPreview }: ServantSummonProps) => {
                 <img
                   src={"./servant-class-icons/" + form.class + ".png"}
                   className="block w-[60px] h-[60px]"
+                  alt=""
                 />
               )}
               {form.name}

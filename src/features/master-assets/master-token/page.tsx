@@ -6,10 +6,6 @@ import shirouToken from "./images/shirou-token.png";
 import SimpleMasterForm from "@/src/features/master-assets/components/SimpleMasterForm";
 import { MasterAsset } from "../components/MasterAsset";
 import { MasterPicAndColorForm } from "../types/formTypes";
-import ColorInput from "../components/ColorInput";
-import GradientColor from "../components/GradientColor";
-import { IoSwapHorizontal } from "react-icons/io5";
-import { MdSwapHoriz } from "react-icons/md";
 import ColorInputWithGradient from "../components/ColorInputWithGradient";
 import { IMAGE_CROP_SETTINGS } from "@/src/constants/cropConstants";
 

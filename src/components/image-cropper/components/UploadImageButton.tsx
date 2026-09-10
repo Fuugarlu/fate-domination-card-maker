@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useDropzone } from "react-dropzone";
 import { RiImageAddLine } from "react-icons/ri";
 
@@ -35,7 +35,6 @@ const rejectStyle = {
 
 const UploadImageButton = ({ setUploadedImage, dimensions }: { setUploadedImage: (file: File) => void; dimensions: { width: number; height: number } }) => {
   const {
-    acceptedFiles,
     getRootProps,
     getInputProps,
     isFocused,

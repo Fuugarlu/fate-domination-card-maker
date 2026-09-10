@@ -19,7 +19,7 @@ type Props = {
 
 const PrimaryTrait = ({separatorType}: Props) => {
   return (
-    <div><img src={separatorMap[separatorType].src}/></div>
+    <div><img src={separatorMap[separatorType].src} alt=""/></div>
   )
 }
 

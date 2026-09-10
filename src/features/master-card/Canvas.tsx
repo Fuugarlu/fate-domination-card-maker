@@ -35,7 +35,7 @@ function getCardIcon(key: string) {
 }
 
 function getServantChunked(servantCards: servantCardType[]) {
-  let chunk_size = getServantSplitCount(servantCards);
+  const chunk_size = getServantSplitCount(servantCards);
   const chunked = [];
   for (let i = 0; i < servantCards.length; i += chunk_size) {
     chunked.push(servantCards.slice(i, i + chunk_size));
@@ -224,7 +224,7 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
           {/* Objective Value */}
           {form.objectiveValue !== null && (
             <div className="absolute right-[10px] top-0 w-[190px]">
-              <img src={"./objective-vp/" + form.objectiveValue + " VP.png"} />
+              <img src={"./objective-vp/" + form.objectiveValue + " VP.png"} alt="" />
             </div>
           )}
 
@@ -236,7 +236,7 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
                 right: form.objectiveValue == null ? 5 : 200,
               }}
             >
-              <img src={"./event-mana/" + form.eventMana + " Mana.png"} />
+              <img src={"./event-mana/" + form.eventMana + " Mana.png"} alt="" />
             </div>
           )}
 
@@ -251,7 +251,7 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
               }}
             >
               <div className="relative">
-                <img src={"./attack-card/attack.png"} />
+                <img src={"./attack-card/attack.png"} alt="" />
                 <div
                   className="absolute"
                   style={{
@@ -281,7 +281,7 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
               }}
             >
               <div className="relative">
-                <img src={"./attack-card/mana.png"} />
+                <img src={"./attack-card/mana.png"} alt="" />
                 <div
                   className="absolute"
                   style={{
@@ -336,6 +336,7 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
               <img
                 src={"./servant-classes/" + form.servantClass + ".png"}
                 className="block"
+                alt=""
               />
             </div>
           )}
@@ -368,6 +369,7 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
                         <img
                           style={{ width: "35px", height: "28px" }}
                           src={getCardIcon(cardItem.cardType)}
+                          alt=""
                         />
                         <span>{cardItem.values}</span>
                       </div>
@@ -395,6 +397,7 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
                             <img
                               className={`block attack-type-icon ${cardItem.cardType == "noblephantasm" && "noblephantasm"}`}
                               src={getCardIcon(cardItem.cardType)}
+                              alt=""
                             />
                             {cardItem.values}
                           </div>

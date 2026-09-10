@@ -1,4 +1,4 @@
-import { SERVANT_TYPES, ATTACK_TYPES } from "@/src/constants/servantConstants"
+import { SERVANT_TYPES } from "@/src/constants/servantConstants"
 import { BasicCardTypes } from "@/src/types/cardTypes"
 import { Color } from "@/src/types/colorTypes"
 

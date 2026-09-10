@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import Cropper, { Area, Point } from "react-easy-crop";
 import { getCroppedImg } from "../../features/master-card/CanvasUtils";
@@ -7,11 +7,9 @@ import UploadImageButton from "./components/UploadImageButton";
 import { IMAGE_CROP_SETTINGS, IMAGE_CROP_VALUES } from "@/src/constants/cropConstants";
 
 const ImageCropper = ({
-  croppedImage,
   setCroppedImage,
   cropSettings,
 }: {
-  croppedImage: string | null;
   setCroppedImage: (value: string | null) => void;
   cropSettings: IMAGE_CROP_SETTINGS;
 }) => {
@@ -72,7 +70,7 @@ const ImageCropper = ({
   }
 
   async function handleUploadedImage(file: File) {
-    let imageDataUrl = await readFile(file);
+    const imageDataUrl = await readFile(file);
     setCropperVisible(true);
     setImageSrc(imageDataUrl as string);
   }

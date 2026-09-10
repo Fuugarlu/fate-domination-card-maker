@@ -157,7 +157,7 @@ export const ServantAttackTypesInput = (prop: Props) => {
       <div className="input-block">
         <h2 className="field-header">Servant Cards</h2>
         <div className="flex flex-col gap-1">
-          {prop.form.servantCards?.slice(0, 3).map((card, index) => (
+          {prop.form.servantCards?.slice(0, 3).map(card => (
             <div
               className="flex flex-row items-stretch justify-start gap-1"
               key={card.index}
@@ -166,6 +166,7 @@ export const ServantAttackTypesInput = (prop: Props) => {
                 <img
                   src={"./attack-types-text/" + card.cardType.toLowerCase() + ".png"}
                   style={{ width: 33, height: 28 }}
+                  alt=""
                 />
                 <input
                   id="attackType"
@@ -257,6 +258,7 @@ export const ServantAttackTypesInput = (prop: Props) => {
               <img
                 src={"./attack-types-text/" + card.cardType.toLowerCase() + ".png"}
                 style={{ width: 33, height: 28 }}
+                alt=""
               />
               <input
                 id="specialType"

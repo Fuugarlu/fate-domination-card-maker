@@ -20,7 +20,7 @@ export const MasterBoxPreview = ({ form }: props) => {
       {form.pic && (
         <div className="flex flex-col gap-4">
           <div className="flex flex-row gap-4">
-            <img src={form.pic} style={{ width: boxPreviewSettings.imageWidth, height: boxPreviewSettings.imageHeight}} className="bg-black"/>
+            <img src={form.pic} style={{ width: boxPreviewSettings.imageWidth, height: boxPreviewSettings.imageHeight}} className="bg-black" alt="" />
             <div className="relative" style={{ width: boxPreviewSettings.shadowShortSide, height: boxPreviewSettings.shadowLongSide }}>
               <div
                 className="absolute"
@@ -34,6 +34,7 @@ export const MasterBoxPreview = ({ form }: props) => {
                 className="absolute"
                 src={shadowPieceForPreviewRotated.src}
                 style={{ width: boxPreviewSettings.shadowShortSide, height: boxPreviewSettings.shadowLongSide }}
+                alt=""
               />
             </div>
           </div>
@@ -50,6 +51,7 @@ export const MasterBoxPreview = ({ form }: props) => {
               className="absolute"
               src={shadowPieceForPreview.src}
               style={{ width: boxPreviewSettings.imageWidth, height: boxPreviewSettings.shadowShortSide }}
+              alt=""
             />
           </div>
           <span className="italic self-center text-3xl">

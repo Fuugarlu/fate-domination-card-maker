@@ -1,6 +1,6 @@
 import type { Editor } from "@tiptap/core";
 import { useEditorState } from "@tiptap/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { FaBold, FaItalic } from "react-icons/fa";
 import { MenuBarState, menuBarStateSelector } from "./MenuBarState";
@@ -27,24 +27,29 @@ const emojiList = [
 
 const DEFAULT_TEXT_SIZE = 30;
 
-export const MenuBar = ({
-  editor,
-  setLastFontUsed,
-}: {
-  editor: Editor | null;
-  setLastFontUsed: React.Dispatch<React.SetStateAction<string>>;
-}) => {
+export const MenuBar = ({ editor, setLastFontUsed }: { editor: Editor | null; setLastFontUsed: React.Dispatch<React.SetStateAction<string>> }) => {
   if (!editor) {
     return null;
   }
+
+  return <MenuBarContent editor={editor} setLastFontUsed={setLastFontUsed} />;
+}
+
+export const MenuBarContent = ({
+  editor,
+  setLastFontUsed,
+}: {
+  editor: Editor;
+  setLastFontUsed: React.Dispatch<React.SetStateAction<string>>;
+}) => {
+  // const [fontSizeInput, setFontSizeInput] = useState<number>(DEFAULT_TEXT_SIZE);
+
   const editorState: MenuBarState = useEditorState({
     editor,
     selector: menuBarStateSelector,
   });
 
-  const [fontSizeInput, setFontSizeInput] = useState<number>(DEFAULT_TEXT_SIZE);
-
-  function handleFontSizeInput(editor: Editor, newFontSize: any): void {
+  function handleFontSizeInput(editor: Editor, newFontSize: string): void {
     const newSizeString = newFontSize + "px";
     editor
       .chain()
@@ -56,20 +61,21 @@ export const MenuBar = ({
     setLastFontUsed(newSizeString);
   }
 
-  useEffect(() => {
-    const currentFontSizeString =
-      editor.getAttributes("textStyle").fontSize || DEFAULT_TEXT_SIZE + "px";
-    const currentFontSize = currentFontSizeString.slice(0, -2) as number;
-    setFontSizeInput(currentFontSize);
-  }, [editor.getAttributes("textStyle").fontSize]);
+  // const editorFontSize = editor.getAttributes("textStyle").fontSize;
+
+  // useEffect(() => {
+  //   const currentFontSizeString =
+  //     editor.getAttributes("textStyle").fontSize ?? DEFAULT_TEXT_SIZE + "px";
+  //   const currentFontSize = currentFontSizeString.slice(0, -2);
+  //   setFontSizeInput(currentFontSize);
+  // }, [editor, editorFontSize]);
 
   function incrementFontSize(editor: Editor, increment: boolean): void {
     const currentSize =
-      editor.getAttributes("textStyle").fontSize || DEFAULT_TEXT_SIZE;
+      editor.getAttributes("textStyle").fontSize ?? DEFAULT_TEXT_SIZE;
     const numericSize = parseFloat(currentSize);
     const newSize = increment ? numericSize + 2 : numericSize - 2;
     const newSizeString = newSize + "px";
-    const end = editor.state.doc.content.size;
     editor
       .chain()
       .focus()
@@ -166,7 +172,7 @@ export const MenuBar = ({
                 type="number"
                 className="w-12 h-full flex items-center justify-center bg-primary-dark-blue border-0 text-center"
                 style={{ marginLeft: -1 }}
-                value={fontSizeInput}
+                value={DEFAULT_TEXT_SIZE}
                 onChange={(e) => handleFontSizeInput(editor, e.target.value)}
               />
             </div>

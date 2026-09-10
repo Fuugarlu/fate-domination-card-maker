@@ -57,6 +57,7 @@ export const MasterBox = ({ form, isPreview }: props) => {
               width: boxSettings.topRightBlackOverlayWidth,
               height: boxSettings.topRightBlackOverlayHeight,
             }}
+            alt=""
             className="absolute w-full right-0 top-0"
           />
 
@@ -68,6 +69,7 @@ export const MasterBox = ({ form, isPreview }: props) => {
               height: boxSettings.bottomLeftShadowsOverlayHeight,
             }}
             className="absolute w-full left-0 bottom-0"
+            alt=""
           />
 
           {/* Character images */}

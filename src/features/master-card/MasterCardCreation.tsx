@@ -2,8 +2,6 @@
 
 import React, { useState } from "react";
 import { Card } from "./Canvas";
-import ImageCropper from "../../components/image-cropper/ImageCropper";
-import RichTextEditor from "./components/RichTextEditor/RichTextEditor";
 import { ExportImportFeature } from "./components/buttons/ExportImportButtons";
 import { MdTextDecrease, MdTextIncrease } from "react-icons/md";
 import { ATTACK_TYPES } from "@/src/constants/servantConstants";
@@ -13,7 +11,6 @@ import {
   MASTER_NAME_FIELD_SIZES,
 } from "@/src/features/master-card/types/formTypes";
 import { updateForm } from "@/src/utils/formUtils";
-import { ServantAttackTypesInput } from "./components/form/ServantAttackTypesInput";
 import "./styles/master-card-creation.scss";
 import { ClearFormButton } from "../../components/header/ClearFormButton";
 import { PageName } from "../../components/header/PageName";

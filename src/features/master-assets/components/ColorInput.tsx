@@ -1,5 +1,5 @@
 import { Color } from "@/src/types/colorTypes";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ColorResult, SketchPicker } from "react-color";
 import { BiColorFill } from "react-icons/bi";
 
@@ -8,7 +8,7 @@ type SimpleMasterFormInput = {
   handleValue: (color: Color) => void;
   value: Color;
   shape?: "rectangle" | "circle";
-  additionalOnCloseFunction?: any;
+  additionalOnCloseFunction?: ((color: string) => void) | null;
 };
 
 const cover = {
@@ -72,18 +72,21 @@ const ColorInput = ({
   const [presetColors, setPresetColors] =
     useState<PresetColorObject[]>(BASE_PRESET_COLORS);
 
-  useEffect(() => {
-    if (presetColors != BASE_PRESET_COLORS) saveColorsToLocalStorage();
-  }, [presetColors]);
+  const saveColorsToLocalStorage = useCallback(
+    (colors: PresetColorObject[] = presetColors) => {
+      localStorage.setItem(
+        PRESET_COLOR_LOCAL_STORAGE_NAME,
+        JSON.stringify(colors),
+      );
+    },
+    [presetColors],
+  );
 
-  function saveColorsToLocalStorage(
-    colors: PresetColorObject[] = presetColors,
-  ) {
-    localStorage.setItem(
-      PRESET_COLOR_LOCAL_STORAGE_NAME,
-      JSON.stringify(colors),
-    );
-  }
+  useEffect(() => {
+    if (presetColors !== BASE_PRESET_COLORS) {
+      saveColorsToLocalStorage();
+    }
+  }, [presetColors, saveColorsToLocalStorage]);
 
   function handleShowColorPicker() {
     setShowColor(true);
@@ -129,7 +132,8 @@ const ColorInput = ({
     BASE_PRESET_COLORS.length === presetColors.length &&
     BASE_PRESET_COLORS.every(
       (item, i) =>
-        item.color === presetColors[i].color && item.title === presetColors[i].title,
+        item.color === presetColors[i].color &&
+        item.title === presetColors[i].title,
     );
 
   const isColorInPresetList = presetColors.some(
