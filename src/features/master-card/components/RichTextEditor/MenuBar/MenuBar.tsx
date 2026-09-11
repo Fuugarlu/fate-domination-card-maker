@@ -1,6 +1,6 @@
 import type { Editor } from "@tiptap/core";
 import { useEditorState } from "@tiptap/react";
-import React from "react";
+import React, { useState } from "react";
 
 import { FaBold, FaItalic } from "react-icons/fa";
 import { MenuBarState, menuBarStateSelector } from "./MenuBarState";
@@ -48,7 +48,7 @@ export const MenuBarContent = ({
   editor: Editor;
   setLastFontUsed: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-  // const [fontSizeInput, setFontSizeInput] = useState<number>(DEFAULT_TEXT_SIZE);
+  const [fontSizeInput, setFontSizeInput] = useState<number>(DEFAULT_TEXT_SIZE);
 
   const editorState: MenuBarState = useEditorState({
     editor,
@@ -65,16 +65,8 @@ export const MenuBarContent = ({
       .setTextSelection(editor.state.doc.content.size)
       .run();
     setLastFontUsed(newSizeString);
+    setFontSizeInput(parseFloat(newFontSize));
   }
-
-  // const editorFontSize = editor.getAttributes("textStyle").fontSize;
-
-  // useEffect(() => {
-  //   const currentFontSizeString =
-  //     editor.getAttributes("textStyle").fontSize ?? DEFAULT_TEXT_SIZE + "px";
-  //   const currentFontSize = currentFontSizeString.slice(0, -2);
-  //   setFontSizeInput(currentFontSize);
-  // }, [editor, editorFontSize]);
 
   function incrementFontSize(editor: Editor, increment: boolean): void {
     const currentSize =
@@ -91,6 +83,7 @@ export const MenuBarContent = ({
       .setTextSelection(editor.state.doc.content.size)
       .run();
     setLastFontUsed(newSizeString);
+    setFontSizeInput(newSize);
   }
 
   function addEmoji(editor: Editor, emojiName: string): void {
@@ -180,7 +173,7 @@ export const MenuBarContent = ({
                 type="number"
                 className="w-12 h-full flex items-center justify-center bg-primary-dark-blue border-0 text-center"
                 style={{ marginLeft: -1 }}
-                value={DEFAULT_TEXT_SIZE}
+                value={fontSizeInput}
                 onChange={(e) => handleFontSizeInput(editor, e.target.value)}
               />
             </div>
