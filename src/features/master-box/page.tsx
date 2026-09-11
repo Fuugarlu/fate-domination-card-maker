@@ -23,7 +23,6 @@ const MasterBoxCreation = () => {
       <SimpleMasterForm
         emptyState={emptyState}
         setForm={setForm}
-        form={form}
         imageCropSettings={IMAGE_CROP_SETTINGS.MASTER_BOX}
       />
       <ColorInput

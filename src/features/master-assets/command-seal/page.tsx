@@ -18,7 +18,6 @@ const CommandSealCreation = () => {
       <SimpleMasterForm
         emptyState={emptyState}
         setForm={setForm}
-        form={form}
         imageCropSettings={IMAGE_CROP_SETTINGS.COMMAND_SEAL}
       />
 

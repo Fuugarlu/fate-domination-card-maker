@@ -25,7 +25,6 @@ const MasterStandeeCreation = () => {
       <SimpleMasterForm
         emptyState={emptyState}
         setForm={setForm}
-        form={form}
         imageCropSettings={assetType}
       />
       <ColorInputWithGradient form={form} setForm={setForm} />
