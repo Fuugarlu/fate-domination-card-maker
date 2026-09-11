@@ -11,11 +11,10 @@ type HasPic = {
 type SimpleMasterFormInput<T extends HasPic> = {
     setForm: React.Dispatch<React.SetStateAction<T>>,
     emptyState: T,
-    form: T,
     imageCropSettings: IMAGE_CROP_SETTINGS
 }
 
-const SimpleMasterForm = <T extends HasPic,>({setForm, emptyState, form, imageCropSettings}: SimpleMasterFormInput<T>) => {
+const SimpleMasterForm = <T extends HasPic,>({setForm, emptyState, imageCropSettings}: SimpleMasterFormInput<T>) => {
   return (
     <div>
       <div className="flex flex-row items-center gap-2">
