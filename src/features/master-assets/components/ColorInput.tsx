@@ -2,6 +2,7 @@ import { Color } from "@/src/types/colorTypes";
 import { useCallback, useEffect, useState } from "react";
 import { ColorResult, SketchPicker } from "react-color";
 import { BiColorFill } from "react-icons/bi";
+import ResetColorsButton from "./ResetColorsButton";
 
 type SimpleMasterFormInput = {
   label: string;
@@ -123,6 +124,8 @@ const ColorInput = ({
     ]);
   }
 
+
+
   function resetPresetColors() {
     setPresetColors(BASE_PRESET_COLORS);
     saveColorsToLocalStorage(BASE_PRESET_COLORS);
@@ -165,7 +168,7 @@ const ColorInput = ({
               className="z-10 fixed"
               onClick={() => handleClose()}
             />
-            <div className="z-20">
+            <div className="z-20 w-[220px]">
               <SketchPicker
                 presetColors={presetColors}
                 disableAlpha={true}
@@ -182,28 +185,20 @@ const ColorInput = ({
               />
               <div className="w-full bg-white p-1" style={{ color: "black" }}>
                 <div className="flex gap-1 flex-col">
-                  <div className="flex gap-1 w-full h-1/2">
                     <button
-                      className={`p-1 w-1/2 h-1/2 bg-gray-300 rounded flex flex-grow justify-center ${isColorInPresetList ? "opacity-50" : "cursor-pointer"}`}
+                      className={`p-1 h-1/2 bg-gray-300 rounded flex flex-grow justify-center ${isColorInPresetList ? "opacity-50" : "cursor-pointer"}`}
                       onClick={() => savePresetColor()}
                       disabled={isColorInPresetList}
                     >
                       {isColorInPresetList ? "Saved" : "Save color"}
                     </button>
-                    <button
-                      className={`p-1 w-1/2 bg-gray-300 rounded flex flex-grow justify-center ${isCurrentColorListSameAsBase ? "opacity-50" : "cursor-pointer"}`}
-                      onClick={() => resetPresetColors()}
-                      disabled={isCurrentColorListSameAsBase}
-                    >
-                      Reset colors
-                    </button>
-                  </div>
                   <button
                     className="p-1 bg-blue-500 rounded cursor-pointer hover:bg-blue-400"
                     onClick={() => handleClose()}
                   >
                     Confirm
                   </button>
+                  <ResetColorsButton hasNoNewColors={isCurrentColorListSameAsBase} resetColors={resetPresetColors}/>
                 </div>
               </div>
             </div>
