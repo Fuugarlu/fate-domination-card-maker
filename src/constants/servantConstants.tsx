@@ -16,6 +16,8 @@ export const SERVANT_TYPES = {
     "Pretender",
     "Ruler",
     "Shielder",
+    "Beast",
+    "Beast (Black)",
   ],
 };
 
