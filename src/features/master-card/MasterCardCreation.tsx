@@ -8,7 +8,6 @@ import { ATTACK_TYPES } from "@/src/constants/servantConstants";
 import {
   formInput,
   MAIN_CARD,
-  MASTER_NAME_FIELD_SIZES,
 } from "@/src/features/master-card/types/formTypes";
 import { updateForm } from "@/src/utils/formUtils";
 import "./styles/master-card-creation.scss";
@@ -21,6 +20,8 @@ import CardColorInput from "./components/form/CardColorInput";
 import { CARD_COLORS } from "./constants/formConsts";
 import { IMAGE_CROP_SETTINGS } from "@/src/constants/cropConstants";
 import CardSettings from "./components/CardSettings";
+import { NAME_FIELD_SIZES } from "@/src/constants/formConstants";
+import NameLength from "@/src/components/form/NameLength";
 
 const emptyState: formInput = {
   pic: null,
@@ -50,7 +51,7 @@ const emptyState: formInput = {
   hasCardAbility: true,
   revealServantName: false,
   timesPerGame: null,
-  masterNameFieldSize: MASTER_NAME_FIELD_SIZES.short,
+  masterNameFieldSize: NAME_FIELD_SIZES.short,
   cardColorSettings: CARD_COLORS.default,
   cardToMake: MAIN_CARD.general,
 };
@@ -95,6 +96,10 @@ export const MasterCardCreation = () => {
       ...form.attackTypes,
       [index]: !form.attackTypes[index],
     });
+  };
+
+  const updateName = (value: NAME_FIELD_SIZES) => {
+    mainUpdateForm("masterNameFieldSize", value);
   };
 
   return (
@@ -170,73 +175,10 @@ export const MasterCardCreation = () => {
                     </div>
                   </div>
                 </span>
-                <span>
-                  <h2 className="field-header">Name Length</h2>
-                  <div className="flex gap-2">
-                    <div className="flex gap-1">
-                      <input
-                        type="radio"
-                        id="short-name"
-                        name="masterName"
-                        value="short-name"
-                        checked={
-                          form.masterNameFieldSize ==
-                            MASTER_NAME_FIELD_SIZES.short || false
-                        }
-                        onChange={(e) =>
-                          e.target.checked &&
-                          mainUpdateForm(
-                            "masterNameFieldSize",
-                            MASTER_NAME_FIELD_SIZES.short,
-                          )
-                        }
-                      />
-                      <label htmlFor="short-name">Short</label>
-                    </div>
-
-                    <div className="flex gap-1">
-                      <input
-                        type="radio"
-                        id="medium-name"
-                        name="masterName"
-                        value="medium-name"
-                        checked={
-                          form.masterNameFieldSize ==
-                            MASTER_NAME_FIELD_SIZES.medium || false
-                        }
-                        onChange={(e) =>
-                          e.target.checked &&
-                          mainUpdateForm(
-                            "masterNameFieldSize",
-                            MASTER_NAME_FIELD_SIZES.medium,
-                          )
-                        }
-                      />
-                      <label htmlFor="medium-name">Medium</label>
-                    </div>
-
-                    <div className="flex gap-1">
-                      <input
-                        type="radio"
-                        id="long-name"
-                        name="masterName"
-                        value="long-name"
-                        checked={
-                          form.masterNameFieldSize ==
-                            MASTER_NAME_FIELD_SIZES.long || false
-                        }
-                        onChange={(e) =>
-                          e.target.checked &&
-                          mainUpdateForm(
-                            "masterNameFieldSize",
-                            MASTER_NAME_FIELD_SIZES.long,
-                          )
-                        }
-                      />
-                      <label htmlFor="long-name">Long</label>
-                    </div>
-                  </div>
-                </span>
+                <NameLength
+                  nameFieldSize={form.masterNameFieldSize}
+                  updateForm={updateName}
+                />
                 <div>
                   <div>
                     <ColorInput
@@ -428,10 +370,10 @@ export const MasterCardCreation = () => {
           </form>
 
           <div className="flex flex-row w-full gap-2">
-              <DownloadButton
-                idToSave={IMAGE_CROP_SETTINGS.CARD}
-                name={form.masterName}
-              />
+            <DownloadButton
+              idToSave={IMAGE_CROP_SETTINGS.CARD}
+              name={form.masterName}
+            />
             <ExportImportFeature form={form} setForm={setForm} exportOnly />
           </div>
         </div>

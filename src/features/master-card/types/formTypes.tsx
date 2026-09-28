@@ -1,13 +1,8 @@
 import { Color } from "@/src/types/colorTypes";
 import { attackTypesType, servantCardType } from "../../../types/servantTypes";
+import { NAME_FIELD_SIZES } from "@/src/constants/formConstants";
 
 export type AttackTypes = Record<attackTypesType, boolean>;
-
-export enum MASTER_NAME_FIELD_SIZES {
-  short = 'short',
-  medium = 'medium',
-  long = 'long',
-}
 
 export type CardColorSettings = {
   settings: string;
@@ -36,7 +31,7 @@ export type formInput = {
   revealServantName: boolean;
   timesPerGame: number | null;
   cardColorSettings: CardColorSettings;
-  masterNameFieldSize: MASTER_NAME_FIELD_SIZES;
+  masterNameFieldSize: NAME_FIELD_SIZES;
   cardToMake: mainCardType;
 };
 

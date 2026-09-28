@@ -1,7 +1,7 @@
+import { NAME_FIELD_SIZES } from "@/src/constants/formConstants";
 import {
   formInput,
   MAIN_CARD,
-  MASTER_NAME_FIELD_SIZES,
 } from "@/src/features/master-card/types/formTypes";
 import React, { ChangeEvent, useRef } from "react";
 
@@ -74,7 +74,7 @@ export const ExportImportFeature = ({
     }
 
     if (!form.masterNameFieldSize) {
-      form.masterNameFieldSize = MASTER_NAME_FIELD_SIZES.short;
+      form.masterNameFieldSize = NAME_FIELD_SIZES.short;
     }
   };
 

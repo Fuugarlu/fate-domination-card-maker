@@ -10,7 +10,6 @@ import longNameTextlessTemplate from "./images/textless-template-long.png";
 import {
   formInput,
   MAIN_CARD,
-  MASTER_NAME_FIELD_SIZES,
 } from "@/src/features/master-card/types/formTypes";
 import { ATTACK_TYPES } from "@/src/constants/servantConstants";
 import { StaticImageData } from "next/image";
@@ -18,6 +17,7 @@ import {
   IMAGE_CROP_SETTINGS,
   IMAGE_CROP_VALUES,
 } from "@/src/constants/cropConstants";
+import { NAME_FIELD_SIZES } from "@/src/constants/formConstants";
 
 function getCardIcon(key: string) {
   switch (key.toLowerCase()) {
@@ -129,24 +129,24 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
   const TEXTLESS_OFFSET = cardType == MAIN_CARD.textless ? 189 : 0;
 
   function handleTemplate(
-    masterNameFieldSize: MASTER_NAME_FIELD_SIZES,
+    masterNameFieldSize: NAME_FIELD_SIZES,
   ): StaticImageData {
     if (cardType == MAIN_CARD.textless) {
       switch (masterNameFieldSize) {
-        case MASTER_NAME_FIELD_SIZES.short:
+        case NAME_FIELD_SIZES.short:
           return shortNameTextlessTemplate;
-        case MASTER_NAME_FIELD_SIZES.medium:
+        case NAME_FIELD_SIZES.medium:
           return mediumNameTextlessTemplate;
-        case MASTER_NAME_FIELD_SIZES.long:
+        case NAME_FIELD_SIZES.long:
           return longNameTextlessTemplate;
       }
     } else {
       switch (masterNameFieldSize) {
-        case MASTER_NAME_FIELD_SIZES.short:
+        case NAME_FIELD_SIZES.short:
           return shortNameMasterTemplate;
-        case MASTER_NAME_FIELD_SIZES.medium:
+        case NAME_FIELD_SIZES.medium:
           return mediumNameMasterTemplate;
-        case MASTER_NAME_FIELD_SIZES.long:
+        case NAME_FIELD_SIZES.long:
           return longNameMasterTemplate;
       }
     }
