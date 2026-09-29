@@ -78,6 +78,11 @@ const CardSettings = ({
             <ServantAttackTypesInput form={form} setForm={setForm} />
           </div>
         )}
+        {form.cardToMake === MAIN_CARD.textlessBlack && (
+          <div>
+            <span className="italic">(Name Length doesn't work with textless (black). Short only.)</span>
+          </div>
+        )}
       </div>
 
       <div className="input-block w-full">
@@ -86,7 +91,7 @@ const CardSettings = ({
           setCroppedImage={(croppedPic) =>
             setForm((prev) => ({ ...prev, pic: croppedPic }))
           }
-          cropSettings={cardType == MAIN_CARD.textless ? IMAGE_CROP_SETTINGS.TEXTLESS : IMAGE_CROP_SETTINGS.CARD}
+          cropSettings={cardType == MAIN_CARD.textless || cardType == MAIN_CARD.textlessBlack ? IMAGE_CROP_SETTINGS.TEXTLESS : IMAGE_CROP_SETTINGS.CARD}
         />
       </div>
     </>

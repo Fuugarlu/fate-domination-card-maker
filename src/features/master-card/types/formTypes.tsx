@@ -39,7 +39,8 @@ export const enum MAIN_CARD {
   general = 'general',
   servant = 'servant',
   textless = 'textless',
+  textlessBlack = 'textless (black)',
   all = 'all'
 }
 
-export type mainCardType = MAIN_CARD.general | MAIN_CARD.servant | MAIN_CARD.textless | MAIN_CARD.all;
+export type mainCardType = MAIN_CARD.general | MAIN_CARD.servant | MAIN_CARD.textless | MAIN_CARD.textlessBlack | MAIN_CARD.all;

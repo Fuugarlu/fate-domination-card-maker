@@ -7,9 +7,13 @@ import longNameMasterTemplate from "./images/master-template-long.png";
 import shortNameTextlessTemplate from "./images/textless-template-short.png";
 import mediumNameTextlessTemplate from "./images/textless-template-medium.png";
 import longNameTextlessTemplate from "./images/textless-template-long.png";
+import shortNameTextlessBlackTemplate from "./images/textless_black.png";
+import mediumNameTextlessBlackTemplate from "./images/textless_black.png";
+import longNameTextlessBlackTemplate from "./images/textless_black.png";
 import {
   formInput,
   MAIN_CARD,
+  mainCardType,
 } from "@/src/features/master-card/types/formTypes";
 import { ATTACK_TYPES } from "@/src/constants/servantConstants";
 import { StaticImageData } from "next/image";
@@ -125,8 +129,18 @@ type CardProps = {
   cardType: MAIN_CARD;
 };
 
+function getTextlessOffset(cardType: mainCardType) {
+  if (cardType == MAIN_CARD.textless) {
+    return 189;
+  }
+  if (cardType == MAIN_CARD.textlessBlack) {
+    return 195;
+  }
+  return 0;
+}
+
 export const Card = ({ form, isPreview, cardType }: CardProps) => {
-  const TEXTLESS_OFFSET = cardType == MAIN_CARD.textless ? 189 : 0;
+  const TEXTLESS_OFFSET = getTextlessOffset(cardType);
 
   function handleTemplate(
     masterNameFieldSize: NAME_FIELD_SIZES,
@@ -139,6 +153,15 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
           return mediumNameTextlessTemplate;
         case NAME_FIELD_SIZES.long:
           return longNameTextlessTemplate;
+      }
+    } else if (cardType == MAIN_CARD.textlessBlack) {
+      switch (masterNameFieldSize) {
+        case NAME_FIELD_SIZES.short:
+          return shortNameTextlessBlackTemplate;
+        case NAME_FIELD_SIZES.medium:
+          return mediumNameTextlessBlackTemplate;
+        case NAME_FIELD_SIZES.long:
+          return longNameTextlessBlackTemplate;
       }
     } else {
       switch (masterNameFieldSize) {
@@ -224,7 +247,10 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
           {/* Objective Value */}
           {form.objectiveValue !== null && (
             <div className="absolute right-[10px] top-0 w-[190px]">
-              <img src={"./objective-vp/" + form.objectiveValue + " VP.png"} alt="" />
+              <img
+                src={"./objective-vp/" + form.objectiveValue + " VP.png"}
+                alt=""
+              />
             </div>
           )}
 
@@ -236,7 +262,10 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
                 right: form.objectiveValue == null ? 5 : 200,
               }}
             >
-              <img src={"./event-mana/" + form.eventMana + " Mana.png"} alt="" />
+              <img
+                src={"./event-mana/" + form.eventMana + " Mana.png"}
+                alt=""
+              />
             </div>
           )}
 
@@ -251,7 +280,7 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
               }}
             >
               <div className="relative">
-                <img src={"./attack-card/attack.png"} alt="" />
+                <img src={form.cardToMake == MAIN_CARD.textlessBlack ? "./attack-card/attack_black.png" : "./attack-card/attack.png"} alt="" />
                 <div
                   className="absolute"
                   style={{
@@ -281,7 +310,7 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
               }}
             >
               <div className="relative">
-                <img src={"./attack-card/mana.png"} alt="" />
+                <img src={form.cardToMake == MAIN_CARD.textlessBlack ? "./attack-card/mana_black.png" : "./attack-card/mana.png"} alt="" />
                 <div
                   className="absolute"
                   style={{
@@ -290,7 +319,7 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
                     fontFamily: '"Times New Roman"',
                     top: "50%",
                     transform: "translate(-67%, -50%)",
-                    color: "#15e86f",
+                    color: form.cardToMake == MAIN_CARD.textlessBlack ? "#ffffff" : "#15e86f",
                     letterSpacing: form.cardMana.toString().includes("1")
                       ? "-5px"
                       : "-2px",

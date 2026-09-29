@@ -216,6 +216,7 @@ export const MasterCardCreation = () => {
                   </option>
                   <option value={MAIN_CARD.servant}>Servant card</option>
                   <option value={MAIN_CARD.textless}>Textless card</option>
+                  <option value={MAIN_CARD.textlessBlack}>Textless card (black)</option>
                 </select>
               </div>
 
