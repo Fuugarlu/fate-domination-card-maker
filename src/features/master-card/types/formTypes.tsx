@@ -33,6 +33,7 @@ export type formInput = {
   cardColorSettings: CardColorSettings;
   masterNameFieldSize: NAME_FIELD_SIZES;
   cardToMake: mainCardType;
+  blackTextlessTypes: AttackTypes;
 };
 
 export const enum MAIN_CARD {

@@ -37,7 +37,7 @@ const emptyState: formInput = {
     agility: false,
     magic: false,
     special: false,
-    "noble phantasm": false,
+    noblephantasm: false,
   },
   masterAbility: "",
   grayscaleFilter: false,
@@ -54,6 +54,13 @@ const emptyState: formInput = {
   masterNameFieldSize: NAME_FIELD_SIZES.short,
   cardColorSettings: CARD_COLORS.default,
   cardToMake: MAIN_CARD.general,
+  blackTextlessTypes: {
+    strength: false,
+    agility: false,
+    magic: false,
+    special: false,
+    noblephantasm: false,
+  },
 };
 
 const initialState = {
@@ -279,9 +286,9 @@ export const MasterCardCreation = () => {
                       <input
                         id={"attackType" + i}
                         type="checkbox"
-                        checked={form.attackTypes[type.toLowerCase()] ?? false}
+                        checked={form.attackTypes[type.toLowerCase().replaceAll(' ', '')] ?? false}
                         onChange={() =>
-                          handleAttackTypeChange(type.toLowerCase())
+                          handleAttackTypeChange(type.toLowerCase().replaceAll(' ', ''))
                         }
                       />
                       {ATTACK_TYPES[i]}
@@ -360,7 +367,7 @@ export const MasterCardCreation = () => {
                           mainUpdateForm("grayscaleFilter", e.target.checked)
                         }
                       />
-                      Grayscale filter{" "}
+                      Grayscale filter
                       <span className="tooltip">(includes card art)</span>
                     </div>
                   </div>

@@ -11,6 +11,7 @@ import shortNameTextlessBlackTemplate from "./images/textless-black-short.png";
 import mediumNameTextlessBlackTemplate from "./images/textless-black-medium.png";
 import longNameTextlessBlackTemplate from "./images/textless-black-long.png";
 import {
+  AttackTypes,
   formInput,
   MAIN_CARD,
   mainCardType,
@@ -23,8 +24,10 @@ import {
 } from "@/src/constants/cropConstants";
 import { NAME_FIELD_SIZES } from "@/src/constants/formConstants";
 
+const TEXTLESS_BLACK_SPACING = 50;
+
 function getCardIcon(key: string) {
-  switch (key.toLowerCase()) {
+  switch (key.toLowerCase().replaceAll(' ', '')) {
     case "strength":
       return "./attack-types-text/strength.png";
     case "agility":
@@ -129,18 +132,27 @@ type CardProps = {
   cardType: MAIN_CARD;
 };
 
-function getTextlessOffset(cardType: mainCardType) {
+function getTextlessOffset(
+  cardType: mainCardType,
+  blackTextlessTypes: AttackTypes,
+) {
+  let verticalOffset = 0;
+  let horizontalOffset = 0;
   if (cardType == MAIN_CARD.textless) {
-    return 189;
+    verticalOffset = 189;
+  } else if (cardType == MAIN_CARD.textlessBlack) {
+    verticalOffset = 195;
+    const selectedTypes = Object.entries(blackTextlessTypes).filter(
+      ([_, value]) => value === true,
+    );
+    const selectedTypesCount = Object.keys(selectedTypes).length;
+    horizontalOffset = selectedTypesCount * TEXTLESS_BLACK_SPACING;
   }
-  if (cardType == MAIN_CARD.textlessBlack) {
-    return 195;
-  }
-  return 0;
+  return { horizontalOffset, verticalOffset };
 }
 
 export const Card = ({ form, isPreview, cardType }: CardProps) => {
-  const TEXTLESS_OFFSET = getTextlessOffset(cardType);
+  const TEXTLESS_OFFSET = getTextlessOffset(cardType, form.blackTextlessTypes);
 
   function handleTemplate(
     masterNameFieldSize: NAME_FIELD_SIZES,
@@ -228,12 +240,32 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
             }}
           />
 
+          {/* Black Textless Types (next to name) */}
+          {form.blackTextlessTypes && form.cardToMake == MAIN_CARD.textlessBlack && <div className="absolute" style={{ top: 775 + TEXTLESS_OFFSET.verticalOffset, left: 25 }}>
+              <div className="flex flex-row">
+                <div className="flex flex-row justify-center items-center align-center" style={{height: "64px"}}>
+                {ATTACK_TYPES.map(
+                  (attackType) =>
+                    form.blackTextlessTypes[attackType.toLowerCase().replaceAll(' ', '')] && (
+                        <img
+                          src={`attack-types-text/${attackType.toLowerCase().replaceAll(' ', '')}.png`}
+                          alt={attackType}
+                          style={{width: TEXTLESS_BLACK_SPACING + "px"}}
+                          key={attackType.toLowerCase().replaceAll(' ', '')}
+                        />
+                    ),
+                )}
+                </div>
+            </div>
+          </div>
+          }
+
           {/* Name */}
           <div
             className="absolute flex items-center"
             style={{
-              left: 30,
-              top: 778 + TEXTLESS_OFFSET,
+              left: 30 + TEXTLESS_OFFSET.horizontalOffset,
+              top: 778 + TEXTLESS_OFFSET.verticalOffset,
               fontSize: form.masterNameFontSize,
               fontFamily: '"Times New Roman"',
               height: "60px",
@@ -276,11 +308,18 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
               className="absolute"
               style={{
                 right: 10,
-                top: 770 + TEXTLESS_OFFSET,
+                top: 770 + TEXTLESS_OFFSET.verticalOffset,
               }}
             >
               <div className="relative">
-                <img src={form.cardToMake == MAIN_CARD.textlessBlack ? "./attack-card/attack_black.png" : "./attack-card/attack.png"} alt="" />
+                <img
+                  src={
+                    form.cardToMake == MAIN_CARD.textlessBlack
+                      ? "./attack-card/attack_black.png"
+                      : "./attack-card/attack.png"
+                  }
+                  alt=""
+                />
                 <div
                   className="absolute"
                   style={{
@@ -306,11 +345,18 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
               className="absolute"
               style={{
                 right: 169,
-                top: 770 + TEXTLESS_OFFSET,
+                top: 770 + TEXTLESS_OFFSET.verticalOffset,
               }}
             >
               <div className="relative">
-                <img src={form.cardToMake == MAIN_CARD.textlessBlack ? "./attack-card/mana_black.png" : "./attack-card/mana.png"} alt="" />
+                <img
+                  src={
+                    form.cardToMake == MAIN_CARD.textlessBlack
+                      ? "./attack-card/mana_black.png"
+                      : "./attack-card/mana.png"
+                  }
+                  alt=""
+                />
                 <div
                   className="absolute"
                   style={{
@@ -319,7 +365,10 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
                     fontFamily: '"Times New Roman"',
                     top: "50%",
                     transform: "translate(-67%, -50%)",
-                    color: form.cardToMake == MAIN_CARD.textlessBlack ? "#ffffff" : "#15e86f",
+                    color:
+                      form.cardToMake == MAIN_CARD.textlessBlack
+                        ? "#ffffff"
+                        : "#15e86f",
                     letterSpacing: form.cardMana.toString().includes("1")
                       ? "-5px"
                       : "-2px",
@@ -337,10 +386,10 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
               <div className="flex flex-col gap-[2px]">
                 {ATTACK_TYPES.map(
                   (attackType) =>
-                    form.attackTypes[attackType.toLowerCase()] && (
-                      <div key={attackType.toLowerCase()}>
+                    form.attackTypes[attackType.toLowerCase().replaceAll(' ', '')] && (
+                      <div key={attackType.toLowerCase().replaceAll(' ', '')}>
                         <img
-                          src={`attack-types-card/${attackType.toLowerCase()}.png`}
+                          src={`attack-types-card/${attackType.toLowerCase().replaceAll(' ', '')}.png`}
                           alt={attackType}
                         />
                       </div>
@@ -393,7 +442,7 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
                     .map((cardItem, i) => (
                       <div
                         key={i}
-                        className={`flex items-center gap-2 ${cardItem.cardType.toLowerCase()} h-10`}
+                        className={`flex items-center gap-2 ${cardItem.cardType.toLowerCase().replaceAll(' ', '')} h-10`}
                       >
                         <img
                           style={{ width: "35px", height: "28px" }}
@@ -421,7 +470,7 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
                         {group.map((cardItem, i) => (
                           <div
                             key={i}
-                            className={`flex flex-row gap-2 items-center ${cardItem.cardType.toLowerCase()}`}
+                            className={`flex flex-row gap-2 items-center ${cardItem.cardType.toLowerCase().replaceAll(' ', '')}`}
                           >
                             <img
                               className={`block attack-type-icon ${cardItem.cardType == "noblephantasm" && "noblephantasm"}`}

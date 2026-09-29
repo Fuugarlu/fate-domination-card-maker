@@ -4,6 +4,7 @@ import RichTextEditor from "./RichTextEditor/RichTextEditor";
 import ImageCropper from "@/src/components/image-cropper/ImageCropper";
 import { IMAGE_CROP_SETTINGS } from "@/src/constants/cropConstants";
 import { ServantAttackTypesInput } from "./form/ServantAttackTypesInput";
+import BlackTextlessTypeOptions from "./blackTextless/BlackTextlessTypeOptions";
 
 const CardSettings = ({
   form,
@@ -79,8 +80,7 @@ const CardSettings = ({
           </div>
         )}
         {form.cardToMake === MAIN_CARD.textlessBlack && (
-          <div>
-          </div>
+          <BlackTextlessTypeOptions setForm={setForm} form={form}/>
         )}
       </div>
 
