@@ -7,9 +7,9 @@ import longNameMasterTemplate from "./images/master-template-long.png";
 import shortNameTextlessTemplate from "./images/textless-template-short.png";
 import mediumNameTextlessTemplate from "./images/textless-template-medium.png";
 import longNameTextlessTemplate from "./images/textless-template-long.png";
-import shortNameTextlessBlackTemplate from "./images/textless_black.png";
-import mediumNameTextlessBlackTemplate from "./images/textless_black.png";
-import longNameTextlessBlackTemplate from "./images/textless_black.png";
+import shortNameTextlessBlackTemplate from "./images/textless-black-short.png";
+import mediumNameTextlessBlackTemplate from "./images/textless-black-medium.png";
+import longNameTextlessBlackTemplate from "./images/textless-black-long.png";
 import {
   formInput,
   MAIN_CARD,

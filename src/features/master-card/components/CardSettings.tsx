@@ -80,7 +80,6 @@ const CardSettings = ({
         )}
         {form.cardToMake === MAIN_CARD.textlessBlack && (
           <div>
-            <span className="italic">(Name Length doesn't work with textless (black). Short only.)</span>
           </div>
         )}
       </div>
