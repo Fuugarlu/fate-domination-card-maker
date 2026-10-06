@@ -11,13 +11,13 @@ export const SERVANT_TYPES = {
   EXTRA: [
     "Alter Ego",
     "Avenger",
+    "Beast",
+    "Beast (Black)",
     "Foreigner",
     "Moon Cancer",
     "Pretender",
     "Ruler",
     "Shielder",
-    "Beast",
-    "Beast (Black)",
   ],
 };
 
