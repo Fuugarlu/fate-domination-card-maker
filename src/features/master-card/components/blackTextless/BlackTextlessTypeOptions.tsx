@@ -1,6 +1,6 @@
 import { ALL_CARDS } from "@/src/constants/cardConstants";
 import { capitalizeString } from "@/src/utils/TextUtils";
-import React, { useState } from "react";
+import React from "react";
 import { formInput } from "../../types/formTypes";
 
 const BlackTextlessTypeOptions = ({
@@ -25,7 +25,7 @@ const BlackTextlessTypeOptions = ({
           <label className="field-header" htmlFor="cardType">
             Card Type
           </label>
-          <span>(next to card name)</span>
+          <span className="tooltip">(next to card name)</span>
         </div>
         {ALL_CARDS.map((type, _) => (
           <div className="flex flex-row gap-1" key={type + "-textless-black"}>
