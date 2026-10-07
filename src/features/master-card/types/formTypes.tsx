@@ -37,7 +37,7 @@ export type formInput = {
 };
 
 export const enum MAIN_CARD {
-  general = 'card',
+  general = 'general',
   servant = 'servant',
   textless = 'textless',
   textlessBlack = 'textless (black)',

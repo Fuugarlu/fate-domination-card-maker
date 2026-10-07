@@ -1,5 +1,5 @@
 export const enum IMAGE_CROP_SETTINGS {
-  CARD = "card",
+  CARD = "general",
   TOKEN = "token",
   STANDEE = "standee",
   MASTER_BOX = "master-box",

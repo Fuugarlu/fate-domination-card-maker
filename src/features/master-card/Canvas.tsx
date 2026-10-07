@@ -213,12 +213,12 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
               className="absolute object-cover bg-black"
               style={{
                 ...IMAGE_CROP_VALUES[
-                  cardType == (MAIN_CARD.textless || MAIN_CARD.textlessBlack)
+                  cardType == MAIN_CARD.textless || cardType == MAIN_CARD.textlessBlack
                     ? IMAGE_CROP_SETTINGS.TEXTLESS
                     : IMAGE_CROP_SETTINGS.CARD
                 ].position,
                 ...IMAGE_CROP_VALUES[
-                  cardType == (MAIN_CARD.textless || MAIN_CARD.textlessBlack)
+                  cardType == MAIN_CARD.textless || cardType == MAIN_CARD.textlessBlack
                     ? IMAGE_CROP_SETTINGS.TEXTLESS
                     : IMAGE_CROP_SETTINGS.CARD
                 ].dimensions,
