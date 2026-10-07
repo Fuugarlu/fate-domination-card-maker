@@ -5,17 +5,27 @@ import Cropper, { Area, Point } from "react-easy-crop";
 import { getCroppedImg } from "../../features/master-card/CanvasUtils";
 import UploadImageButton from "./components/UploadImageButton";
 import { IMAGE_CROP_SETTINGS, IMAGE_CROP_VALUES } from "@/src/constants/cropConstants";
+import RecropImagebutton from "./components/RecropImagebutton";
+
+type cropInfoType = {
+  imageSrc: string | null;
+  crop: Point;
+  zoom: number;
+  allowZoomingOut: boolean;
+};
 
 const ImageCropper = ({
-  setCroppedImage,
+  setCroppedImageForForm,
   cropSettings,
 }: {
-  setCroppedImage: (value: string | null) => void;
+  setCroppedImageForForm: (value: string | null) => void;
   cropSettings: IMAGE_CROP_SETTINGS;
 }) => {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [cropperVisible, setCropperVisible] = useState<boolean>(true);
   const [allowZoomingOut, setAllowZoomingOut] = useState<boolean>(false);
+  const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const [oldCropInfo, setOldCropInfo] = useState<cropInfoType | null>(null);
 
   function handleAllowZoomingOut(allow: boolean) {
     setAllowZoomingOut(allow);
@@ -40,6 +50,11 @@ const ImageCropper = ({
     return width / height;
   }
 
+  function handleNewImage(croppedImage: string | null) {
+    setCroppedImage(croppedImage);
+    setCroppedImageForForm(croppedImage);
+  }
+
   const cropShape = getCropShape(cropSettings);
   const cropAspectRatio = getCropAspectRatio(cropSettings);
 
@@ -47,7 +62,7 @@ const ImageCropper = ({
     try {
       if (!imageSrc || !croppedAreaPixels) return;
       const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels);
-      setCroppedImage(croppedImage);
+      handleNewImage(croppedImage);
       cancelCropper();
     } catch (e) {
       console.error(e);
@@ -77,12 +92,26 @@ const ImageCropper = ({
 
   function cancelCropper() {
     setCropperVisible(false);
+    setOldCropInfo({imageSrc: imageSrc, crop: crop, zoom: zoom, allowZoomingOut: allowZoomingOut});
     setImageSrc(null);
     setCrop({ x: 0, y: 0 });
     setZoom(1);
     setAllowZoomingOut(false);
   }
 
+  function recropImage() {
+    if (oldCropInfo) {
+      setCropperVisible(true);
+      setImageSrc(oldCropInfo.imageSrc);
+      setCrop(oldCropInfo.crop);
+      setZoom(oldCropInfo.zoom);
+      setAllowZoomingOut(oldCropInfo.allowZoomingOut);
+    }
+  }
+
+  console.log(cropSettings);
+  console.log(IMAGE_CROP_VALUES[cropSettings].dimensions);
+  console.log("dimensions");
   return (
     <div className="ImageCropper">
       {imageSrc && cropperVisible ? (
@@ -157,8 +186,9 @@ const ImageCropper = ({
           </div>
         </div>
       ) : (
-        <div>
+        <div className="flex flex-col gap-2">
           <UploadImageButton setUploadedImage={handleUploadedImage} dimensions={IMAGE_CROP_VALUES[cropSettings].dimensions} />
+          {croppedImage && <RecropImagebutton croppedImage={croppedImage} recropImage={recropImage} />}
         </div>
       )}
     </div>
