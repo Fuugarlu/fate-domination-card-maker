@@ -199,7 +199,7 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
           id={
             isPreview ? "card-preview" : IMAGE_CROP_SETTINGS.CARD + "-to-save"
           }
-          className={`relative overflow-hidden ${form.grayscaleFilter && "grayscale "}`}
+          className={`relative overflow-hidden ${form.grayscaleFilter ? "grayscale" : ""}`}
           style={{
             width: 750,
             height: 1050,
@@ -213,12 +213,12 @@ export const Card = ({ form, isPreview, cardType }: CardProps) => {
               className="absolute object-cover bg-black"
               style={{
                 ...IMAGE_CROP_VALUES[
-                  cardType == MAIN_CARD.textless || MAIN_CARD.textlessBlack
+                  cardType == (MAIN_CARD.textless || MAIN_CARD.textlessBlack)
                     ? IMAGE_CROP_SETTINGS.TEXTLESS
                     : IMAGE_CROP_SETTINGS.CARD
                 ].position,
                 ...IMAGE_CROP_VALUES[
-                  cardType == MAIN_CARD.textless || MAIN_CARD.textlessBlack
+                  cardType == (MAIN_CARD.textless || MAIN_CARD.textlessBlack)
                     ? IMAGE_CROP_SETTINGS.TEXTLESS
                     : IMAGE_CROP_SETTINGS.CARD
                 ].dimensions,

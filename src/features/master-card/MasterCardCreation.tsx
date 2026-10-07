@@ -215,7 +215,6 @@ export const MasterCardCreation = () => {
                       ...prev,
                       cardToMake: e.target.value as MAIN_CARD,
                     }));
-                    console.log(form);
                   }}
                 >
                   <option value={MAIN_CARD.general}>
